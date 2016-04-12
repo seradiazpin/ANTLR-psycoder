@@ -1,0 +1,26 @@
+
+funcion_principal
+    imprimir(2);
+fin_principal
+
+/*
+funcion_principal
+seleccionar(i) entre
+    caso 1: imprimir("1");
+    caso 2: imprimir("2");
+    caso 4: romper;
+    defecto:
+    fin_seleccionar
+fin_principal
+//------------------------------
+funcion_principal
+para(i = 1;i<= 10;id)hacer
+    imprimir(i);
+fin_para
+fin_principal
+
+funcion entero hola(entero a) hacer
+    imprimir(a);
+    //Mirar el return
+fin_funcion
+*/
