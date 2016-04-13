@@ -26,6 +26,22 @@ public class Value {
     public boolean isDouble() {
         return value instanceof Double;
     }
+    public boolean isBoolean() {
+        return value instanceof Boolean;
+    }
+    public boolean isInteger() {
+        return value instanceof Integer;
+    }
+    public boolean isString() {
+        return value instanceof String;
+    }
+    public boolean isCharacter() {
+        return value instanceof Character;
+    }
+    public boolean isStruct() {
+        return value instanceof Struct;
+    }
+
 
     @Override
     public int hashCode() {

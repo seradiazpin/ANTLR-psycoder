@@ -27,15 +27,15 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitElement(PsycoderParser.ElementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#element_pri}.
+	 * Enter a parse tree produced by {@link PsycoderParser#function_declaration}.
 	 * @param ctx the parse tree
 	 */
-	void enterElement_pri(PsycoderParser.Element_priContext ctx);
+	void enterFunction_declaration(PsycoderParser.Function_declarationContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#element_pri}.
+	 * Exit a parse tree produced by {@link PsycoderParser#function_declaration}.
 	 * @param ctx the parse tree
 	 */
-	void exitElement_pri(PsycoderParser.Element_priContext ctx);
+	void exitFunction_declaration(PsycoderParser.Function_declarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PsycoderParser#params}.
 	 * @param ctx the parse tree
@@ -377,13 +377,87 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitIdentifier_pri(PsycoderParser.Identifier_priContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#terminal_value}.
+	 * Enter a parse tree produced by the {@code id_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
 	 * @param ctx the parse tree
 	 */
-	void enterTerminal_value(PsycoderParser.Terminal_valueContext ctx);
+	void enterId_terminal(PsycoderParser.Id_terminalContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#terminal_value}.
+	 * Exit a parse tree produced by the {@code id_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
 	 * @param ctx the parse tree
 	 */
-	void exitTerminal_value(PsycoderParser.Terminal_valueContext ctx);
+	void exitId_terminal(PsycoderParser.Id_terminalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code entero_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void enterEntero_terminal(PsycoderParser.Entero_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code entero_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void exitEntero_terminal(PsycoderParser.Entero_terminalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code real_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void enterReal_terminal(PsycoderParser.Real_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code real_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void exitReal_terminal(PsycoderParser.Real_terminalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code cadena_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void enterCadena_terminal(PsycoderParser.Cadena_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code cadena_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void exitCadena_terminal(PsycoderParser.Cadena_terminalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code caracter_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void enterCaracter_terminal(PsycoderParser.Caracter_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code caracter_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void exitCaracter_terminal(PsycoderParser.Caracter_terminalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code verdadero_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void enterVerdadero_terminal(PsycoderParser.Verdadero_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code verdadero_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void exitVerdadero_terminal(PsycoderParser.Verdadero_terminalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code falso_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void enterFalso_terminal(PsycoderParser.Falso_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code falso_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 */
+	void exitFalso_terminal(PsycoderParser.Falso_terminalContext ctx);
 }

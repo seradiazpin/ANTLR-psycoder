@@ -1,8 +1,6 @@
 // Generated from src/Psycoder.g4 by ANTLR 4.5.3
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
-import java.util.List;
-
 /**
  * This class provides an empty implementation of {@link PsycoderVisitor},
  * which can be extended to create a visitor which only needs to handle a subset
@@ -32,7 +30,7 @@ public class PsycoderBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitElement_pri(PsycoderParser.Element_priContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFunction_declaration(PsycoderParser.Function_declarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -137,23 +135,14 @@ public class PsycoderBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitRead_declaration(PsycoderParser.Read_declarationContext ctx) {
-        return visitChildren(ctx);
-    }
+	@Override public T visitRead_declaration(PsycoderParser.Read_declarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitPrint_declaration(PsycoderParser.Print_declarationContext ctx) {
-        List<PsycoderParser.ExpressionContext> conditions =  ctx.str_struct().expression().expression();
-        for(PsycoderParser.ExpressionContext x:conditions){
-            System.out.println(x.getText());
-        }
-        System.out.println("HOLA");
-        return visitChildren(ctx);
-    }
+	@Override public T visitPrint_declaration(PsycoderParser.Print_declarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -286,5 +275,47 @@ public class PsycoderBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTerminal_value(PsycoderParser.Terminal_valueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitId_terminal(PsycoderParser.Id_terminalContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitEntero_terminal(PsycoderParser.Entero_terminalContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitReal_terminal(PsycoderParser.Real_terminalContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitCadena_terminal(PsycoderParser.Cadena_terminalContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitCaracter_terminal(PsycoderParser.Caracter_terminalContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitVerdadero_terminal(PsycoderParser.Verdadero_terminalContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitFalso_terminal(PsycoderParser.Falso_terminalContext ctx) { return visitChildren(ctx); }
 }

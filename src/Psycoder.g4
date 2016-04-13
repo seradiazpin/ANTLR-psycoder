@@ -4,6 +4,9 @@ grammar Psycoder;
 //http://stackoverflow.com/questions/15610183/if-else-statements-in-antlr-using-listeners
 //https://github.com/bkiers/Mu
 
+/*
+    Se agrego ID a type
+*/
 
 
 COMMENT : '/*' .*? '*/' -> channel(HIDDEN) ;
@@ -21,12 +24,11 @@ program : element* 'funcion_principal' cmp_declaration 'fin_principal' EOF
         |
         ;
 
-element : 'funcion' element_pri
+element : 'funcion' function_declaration
         | 'estructura' ID cmp_declaration 'fin_estructura'
         ;
 
-element_pri: type ID '(' params ')' 'hacer' cmp_declaration 'fin_funcion'
-           | ID ID '(' params ')' 'hacer' cmp_declaration 'fin_funcion'
+function_declaration: type ID '(' params ')' 'hacer' cmp_declaration 'fin_funcion'
            ;
 
 params  : mandatory_params
@@ -34,14 +36,14 @@ params  : mandatory_params
         ;
 
 mandatory_params    : type ID mandatory_params_pri
-                    | ID ID mandatory_params_pri
                     ;
 
 mandatory_params_pri    : ',' mandatory_params
                         |
                         ;
-assign   : identifier_id assign_fun
-         | type ID assign_pri
+
+assign   : type ID assign_pri
+         | ID assign_pri
          ;
 
 assign_pri  : '=' expression assign_pri_pri
@@ -79,6 +81,7 @@ type    : 'entero'
         | 'booleano'
         | 'cadena'
         | 'caracter'
+        | ID
         ;
 
 declaration : assign ';'
@@ -182,12 +185,12 @@ identifier_pri  : '.' identifier
                 ;
 
 
-terminal_value    : identifier
-                  | TK_ENTERO
-                  | TK_REAL
-                  | TK_CADENA
-                  | TK_CARACTER
-                  | 'verdadero'
-                  | 'falso'
+terminal_value    : identifier  #id_terminal
+                  | TK_ENTERO   #entero_terminal
+                  | TK_REAL     #real_terminal
+                  | TK_CADENA   #cadena_terminal
+                  | TK_CARACTER #caracter_terminal
+                  | 'verdadero' #verdadero_terminal
+                  | 'falso'     #falso_terminal
                   ;
 

@@ -22,11 +22,11 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitElement(PsycoderParser.ElementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#element_pri}.
+	 * Visit a parse tree produced by {@link PsycoderParser#function_declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitElement_pri(PsycoderParser.Element_priContext ctx);
+	T visitFunction_declaration(PsycoderParser.Function_declarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#params}.
 	 * @param ctx the parse tree
@@ -232,9 +232,52 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdentifier_pri(PsycoderParser.Identifier_priContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#terminal_value}.
+	 * Visit a parse tree produced by the {@code id_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTerminal_value(PsycoderParser.Terminal_valueContext ctx);
+	T visitId_terminal(PsycoderParser.Id_terminalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code entero_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEntero_terminal(PsycoderParser.Entero_terminalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code real_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReal_terminal(PsycoderParser.Real_terminalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code cadena_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCadena_terminal(PsycoderParser.Cadena_terminalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code caracter_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCaracter_terminal(PsycoderParser.Caracter_terminalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code verdadero_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVerdadero_terminal(PsycoderParser.Verdadero_terminalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code falso_terminal}
+	 * labeled alternative in {@link PsycoderParser#terminal_value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFalso_terminal(PsycoderParser.Falso_terminalContext ctx);
 }

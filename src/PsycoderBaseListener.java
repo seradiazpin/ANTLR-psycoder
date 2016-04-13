@@ -39,13 +39,13 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElement_pri(PsycoderParser.Element_priContext ctx) { }
+	@Override public void enterFunction_declaration(PsycoderParser.Function_declarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElement_pri(PsycoderParser.Element_priContext ctx) { }
+	@Override public void exitFunction_declaration(PsycoderParser.Function_declarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -459,13 +459,85 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTerminal_value(PsycoderParser.Terminal_valueContext ctx) { }
+	@Override public void enterId_terminal(PsycoderParser.Id_terminalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTerminal_value(PsycoderParser.Terminal_valueContext ctx) { }
+	@Override public void exitId_terminal(PsycoderParser.Id_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEntero_terminal(PsycoderParser.Entero_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEntero_terminal(PsycoderParser.Entero_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterReal_terminal(PsycoderParser.Real_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReal_terminal(PsycoderParser.Real_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCadena_terminal(PsycoderParser.Cadena_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCadena_terminal(PsycoderParser.Cadena_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCaracter_terminal(PsycoderParser.Caracter_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCaracter_terminal(PsycoderParser.Caracter_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVerdadero_terminal(PsycoderParser.Verdadero_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVerdadero_terminal(PsycoderParser.Verdadero_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFalso_terminal(PsycoderParser.Falso_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFalso_terminal(PsycoderParser.Falso_terminalContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

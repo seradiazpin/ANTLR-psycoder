@@ -22,7 +22,7 @@ public class Interpreter {
         // create a parser that feeds off the tokens buffer
         PsycoderParser parser = new PsycoderParser(tokens);
         ParseTree tree = parser.program(); // begin parsing at init rule
-        PsycoderBaseVisitor visitor = new PsycoderBaseVisitor();
+        EvalVisitor visitor = new EvalVisitor();
         visitor.visit(tree);
         // Create a generic parse tree walker that can trigger callbacks
         //ParseTreeWalker walker = new ParseTreeWalker();

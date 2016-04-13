@@ -1,6 +1,11 @@
 
 funcion_principal
-    imprimir(2);
+    booleano a = verdadero;
+    booleano a = falso;
+    booleano a = verdadero;
+    caracter b = '1';
+    cadena c = "Hola mundo";
+    b = 1;
 fin_principal
 
 /*
