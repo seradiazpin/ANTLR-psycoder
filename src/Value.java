@@ -42,6 +42,24 @@ public class Value {
         return value instanceof Struct;
     }
 
+    public String getType(){
+        if(this.isDouble()){
+            return "real";
+        }else if (this.isString()){
+            return "cadena";
+        }else if (this.isBoolean()){
+            return "booleano";
+        }else if (this.isCharacter()){
+            return "caracter";
+        }else if (this.isInteger()){
+            return "entero";
+        }else if (this.isStruct()){
+            Struct temp = (Struct)this.value;
+            return temp.toString();
+        }else{
+            return "NONE";
+        }
+    }
 
     @Override
     public int hashCode() {

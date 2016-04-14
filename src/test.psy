@@ -4,8 +4,10 @@ funcion_principal
     booleano a = falso;
     booleano a = verdadero;
     caracter b = '1';
-    cadena c = "Hola mundo";
-    b = 1;
+    cadena  d = "1";
+    b = '2';
+    a = falso;
+    cadena s = "HOLA\n";
 fin_principal
 
 /*

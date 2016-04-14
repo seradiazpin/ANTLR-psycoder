@@ -9,6 +9,7 @@ public class Struct {
     private Map<String,Value> myVar;
     private String name ;
 
+    public  Struct(){}
     public Struct(ArrayList<String> myVar){
         for (String x:myVar){
             this.myVar.put(x,null);
