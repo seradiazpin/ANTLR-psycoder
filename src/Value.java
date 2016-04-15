@@ -4,42 +4,47 @@
 public class Value {
 
     public static Value VOID = new Value(new Object());
+    public static Value REAL = new Value(0.0);
+    public static Value INTEGER = new Value(0);
+    public static Value STRING = new Value("");
+    public static Value CHAR = new Value(' ');
+    public static Value BOOLEAN = new Value(false);
 
-    final Object value;
+    private Object value;
 
     public Value(Object value) {
-        this.value = value;
+        this.setValue(value);
     }
 
     public Boolean asBoolean() {
-        return (Boolean)value;
+        return (Boolean) getValue();
     }
 
     public Double asDouble() {
-        return (Double)value;
+        return (Double) getValue();
     }
 
     public String asString() {
-        return String.valueOf(value);
+        return String.valueOf(getValue());
     }
 
     public boolean isDouble() {
-        return value instanceof Double;
+        return getValue() instanceof Double;
     }
     public boolean isBoolean() {
-        return value instanceof Boolean;
+        return getValue() instanceof Boolean;
     }
     public boolean isInteger() {
-        return value instanceof Integer;
+        return getValue() instanceof Integer;
     }
     public boolean isString() {
-        return value instanceof String;
+        return getValue() instanceof String;
     }
     public boolean isCharacter() {
-        return value instanceof Character;
+        return getValue() instanceof Character;
     }
     public boolean isStruct() {
-        return value instanceof Struct;
+        return getValue() instanceof Struct;
     }
 
     public String getType(){
@@ -54,7 +59,7 @@ public class Value {
         }else if (this.isInteger()){
             return "entero";
         }else if (this.isStruct()){
-            Struct temp = (Struct)this.value;
+            Struct temp = (Struct) this.getValue();
             return temp.toString();
         }else{
             return "NONE";
@@ -64,31 +69,39 @@ public class Value {
     @Override
     public int hashCode() {
 
-        if(value == null) {
+        if(getValue() == null) {
             return 0;
         }
 
-        return this.value.hashCode();
+        return this.getValue().hashCode();
     }
 
     @Override
     public boolean equals(Object o) {
 
-        if(value == o) {
+        if(getValue() == o) {
             return true;
         }
 
-        if(value == null || o == null || o.getClass() != value.getClass()) {
+        if(getValue() == null || o == null || o.getClass() != getValue().getClass()) {
             return false;
         }
 
         Value that = (Value)o;
 
-        return this.value.equals(that.value);
+        return this.getValue().equals(that.getValue());
     }
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return String.valueOf(getValue());
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
+    public Object getValue() {
+        return value;
     }
 }

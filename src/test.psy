@@ -1,8 +1,8 @@
 
 funcion_principal
     booleano a = verdadero;
-    booleano a = falso;
-    booleano a = verdadero;
+    a = falso;
+    //a = verdadero;
     caracter b = '1';
     cadena  d = "1";
     b = '2';

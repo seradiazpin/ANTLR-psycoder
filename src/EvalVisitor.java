@@ -10,19 +10,17 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     public static final double SMALL_VALUE = 0.00000000001;
 
     // store variables (there's only one global scope!)
-    private Map<String, Value> memory = new HashMap<String, Value>();
+    private MemoryManager memory;
     private Map<String, List<String>> structMemory = new HashMap<String, List<String>>();
     private Map<String, List<String>> functionMemory = new HashMap<String, List<String>>();
-    private Stack<ContextMemory> localMemory = new Stack<ContextMemory>();
-    private Stack<ContextMemory> auxiliar = new Stack<ContextMemory>();
+
 
     public EvalVisitor(){
-        localMemory.push(new ContextMemory(new HashMap<String, Value>(),false));
+        memory = new MemoryManager();
     }
 
     @Override
     public Value visitProgram(PsycoderParser.ProgramContext ctx) {
-
         return super.visitProgram(ctx);
     }
 
@@ -61,38 +59,38 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                     }
                 }
             }
-            return memory.put(id,value);
+
+            memory.addId(id, value);
+            return value;
         }else{
             String id = ctx.ID().getText();
             Value value = this.visit(ctx.assign_pri().expression());
-            Value idVal;
-            if(!memory.containsKey(id)) {
+            Value idVal = memory.getId(id);
+
+            if(idVal == null) {
                 throw new RuntimeException("No a sido delcarado : " + id);
-            }else{
-                idVal = memory.remove(id);
-                System.out.println("");
-                if (idVal.getType() != value.getType()) {
-                        throw new RuntimeException("variable: "+id + " is " +idVal.getType()+" and "+value.toString()+" is "+value.getType());
-                }else {
-                    idVal = new Value(value);
+            } else {
+                //idVal = memory.remove(id);
+                if (!idVal.getType().equals(value.getType())) {
+                        throw new RuntimeException(ctx.getStart().getLine() + " variable " + id + " is " + idVal.getType() + " y " + value.toString() + " is " + value.getType());
+                } else {
+                    idVal.setValue(value.getValue());
                 }
             }
-            /*
             System.out.println("---------------------------");
             System.out.println("id->" + id);
             System.out.println("value->" + value.toString());
             System.out.println("Class->" + value.getType());
             System.out.println("----------------------------");
-            */
-            return memory.put(id,idVal);
+            //return memory.put(id,idVal);
+            return value;
         }
-
     }
 
     @Override
     public Value visitId_terminal(PsycoderParser.Id_terminalContext ctx) {
         String id = ctx.getText();
-        Value value = memory.get(id);
+        Value value = memory.getId(id);
         if(value == null) {
             throw new RuntimeException("No a sido delcarado : " + id);
         }
