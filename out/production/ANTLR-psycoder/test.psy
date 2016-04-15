@@ -3,7 +3,7 @@ funcion_principal
     booleano a = verdadero;
     entero i = 0;
     leer(i);
-    cadena bol;
+    String bol;
     imprimir(i);
     a = falso;
     //a = verdadero;

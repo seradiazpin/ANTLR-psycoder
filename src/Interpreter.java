@@ -28,6 +28,6 @@ public class Interpreter {
         //ParseTreeWalker walker = new ParseTreeWalker();
         // Walk the tree created during the parse, trigger callbacks
         //walker.walk(new PsycoderBaseListener(), tree);
-        System.out.println(); // print a \n after translation
+        System.out.println("EXIT"); // print a \n after translation
     }
 }

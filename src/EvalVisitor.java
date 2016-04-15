@@ -27,32 +27,33 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
             String type = ctx.type().getText();
             String id = ctx.ID().getText();
             Value value = this.visit(ctx.assign_pri().expression());
+
             if (type.equals("booleano")) {
                 if (!value.isBoolean()) {
-                    throw new RuntimeException("variable: "+id + " is " +type+" and "+value.toString()+" is "+value.getType());
+                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
                 }
             } else if (type.equals("entero")) {
                 if (!value.isInteger()) {
-                    throw new RuntimeException("variable: "+id + " is " +type+" and "+value.toString()+" is "+value.getType()); 
+                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
                 }
             } else if (type.equals("real")) {
                 if (!value.isDouble()) {
-                    throw new RuntimeException("variable: "+id + " is " +type+" and "+value.toString()+" is "+value.getType()); 
+                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
                 }
             } else if (type.equals("cadena")) {
                 if (!value.isString()) {
-                    throw new RuntimeException("variable: "+id + " is " +type+" and "+value.toString()+" is "+value.getType()); 
+                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
                 }
             } else if (type.equals("caracter")) {
                 if (!value.isCharacter()) {
-                    throw new RuntimeException("variable: "+id + " is " +type+" and "+value.toString()+" is "+value.getType()); 
+                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
                 }
             } else {
                 if (!value.isStruct() && structMemory.get(type) == null) {
-                    if(structMemory.get(type) == null){
-                            throw new RuntimeException("type: "+id +" not created");
-                    }else{
-                        throw new RuntimeException("variable: "+id + " is " +type+" and "+value.toString()+" is "+value.getType());
+                    if (structMemory.get(type) == null) {
+                        throw new RuntimeException("type: " + id + " not created");
+                    } else {
+                        throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
                     }
                 }
             }
@@ -68,7 +69,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 throw new RuntimeException("No a sido delcarado : " + id);
             } else {
                 //idVal = memory.remove(id);
-                if (!idVal.getType().equals(value.getType())) {
+                if (!idVal.getType().equals(value.getType()) && value.equals(Value.VOID)) {
                         throw new RuntimeException(ctx.getStart().getLine() + " variable " + id + " is " + idVal.getType() + " y " + value.toString() + " is " + value.getType());
                 } else {
                     idVal.setValue(value.getValue());
@@ -143,7 +144,11 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     @Override
     public Value visitStr_struct(PsycoderParser.Str_structContext ctx) {
         Value value = this.visit(ctx.expression());
-        System.out.print(value + " ");
+        if(value.toString().contains("\\n")){
+            System.out.print(value.toString().replace("\\n","\n"));
+        }else {
+            System.out.print(value + " ");
+        }
         return visitChildren(ctx);
     }
 
