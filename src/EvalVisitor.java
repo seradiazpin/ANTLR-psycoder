@@ -10,6 +10,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     private MemoryManager memory;
     private Map<String, Map<String, String>> structMemory = new HashMap<String, Map<String, String>>();
     private Map<String, List<String>> functionMemory = new HashMap<String, List<String>>();
+    private String currentTypeToAssign = "";
 
 
     public EvalVisitor(){
@@ -22,67 +23,38 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     }
 
     @Override
-    public Value visitAssign(PsycoderParser.AssignContext ctx) {
-        if(ctx.type() != null) {
-            String type = ctx.type().getText();
-            String id = ctx.ID().getText();
-            Value value = this.visit(ctx.assign_pri().expression());
+    public Value visitTypedAssign(PsycoderParser.TypedAssignContext ctx) {
+        this.currentTypeToAssign = ctx.type().getText();
+        this.visitChildren(ctx);
+        this.currentTypeToAssign = "";
 
-            if (type.equals("booleano")) {
-                if (!value.isBoolean()) {
-                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
-                }
-            } else if (type.equals("entero")) {
-                if (!value.isInteger()) {
-                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
-                }
-            } else if (type.equals("real")) {
-                if (!value.isDouble()) {
-                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
-                }
-            } else if (type.equals("cadena")) {
-                if (!value.isString()) {
-                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
-                }
-            } else if (type.equals("caracter")) {
-                if (!value.isCharacter()) {
-                    throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
-                }
-            } else {
-                if (!value.isStruct() && structMemory.get(type) == null) {
-                    if (structMemory.get(type) == null) {
-                        throw new RuntimeException("type: " + id + " not created");
-                    } else {
-                        throw new RuntimeException("variable: " + id + " is " + type + " and " + value.toString() + " is " + value.getType());
-                    }
-                }
-            }
+        return null;
+    }
 
-            memory.addId(id, value);
-            return value;
-        }else{
-            String id = ctx.ID().getText();
-            Value value = this.visit(ctx.assign_pri().expression());
-            Value idVal = memory.getId(id);
+    @Override
+    public Value visitAssign_type(PsycoderParser.Assign_typeContext ctx) {
+        String id = ctx.ID().getText();
 
-            if(idVal == null) {
-                throw new RuntimeException("No a sido delcarado : " + id);
-            } else {
-                //idVal = memory.remove(id);
-                if (!idVal.getType().equals(value.getType()) && value.equals(Value.VOID)) {
-                        throw new RuntimeException(ctx.getStart().getLine() + " variable " + id + " is " + idVal.getType() + " y " + value.toString() + " is " + value.getType());
-                } else {
-                    idVal.setValue(value.getValue());
-                }
-            }
-            /*System.out.println("---------------------------");
-            System.out.println("id->" + id);
-            System.out.println("value->" + value.toString());
-            System.out.println("Class->" + value.getType());
-            System.out.println("----------------------------");*/
-            //return memory.put(id,idVal);
-            return value;
+        if(memory.containsId(id)) {
+            throw new RuntimeException("El identificador " + id + " ya existe y no se puede declarar de nuevo.");
         }
+
+        if(ctx.expression() == null) { // asignación por omisión
+            memory.addId(id, currentTypeToAssign);
+        } else { // asignación por expresión
+            memory.addId(id, this.visit(ctx.expression()));
+        }
+
+        return this.visitChildren(ctx);
+    }
+
+    @Override
+    public Value visitAssign_id(PsycoderParser.Assign_idContext ctx) {
+        String id = ctx.identifier().getText();
+        Value val = memory.getId(id);
+        val.setValue(this.visit(ctx.expression()));
+
+        return this.visitChildren(ctx);
     }
 
     @Override

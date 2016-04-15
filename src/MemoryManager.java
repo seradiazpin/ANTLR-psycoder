@@ -74,6 +74,16 @@ public class MemoryManager {
         return val;
     }
 
+    public boolean containsId(String id) {
+        try {
+            getId(id);
+        } catch (RuntimeException ex) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void removeLocalMemory() {
         if(localMemory.empty()) throw new IllegalStateException("no hay más memoria");
         localMemory.pop();

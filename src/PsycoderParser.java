@@ -26,34 +26,34 @@ public class PsycoderParser extends Parser {
 		COMMENT=53, WS=54, LineComment=55, ID=56, TK_ENTERO=57, TK_REAL=58, TK_CADENA=59, 
 		TK_CARACTER=60;
 	public static final int
-		RULE_program = 0, RULE_element = 1, RULE_function_declaration = 2, RULE_params = 3, 
-		RULE_mandatory_params = 4, RULE_mandatory_params_pri = 5, RULE_assign = 6, 
-		RULE_assign_pri = 7, RULE_assign_pri_pri = 8, RULE_assign_id = 9, RULE_assign_special = 10, 
-		RULE_assign_fun = 11, RULE_args_fun = 12, RULE_args_fun_pri = 13, RULE_type = 14, 
-		RULE_declaration = 15, RULE_if_declaration = 16, RULE_read_declaration = 17, 
-		RULE_print_declaration = 18, RULE_while_declaration = 19, RULE_for_declaration = 20, 
-		RULE_dowhile_declaration = 21, RULE_switch_declaration = 22, RULE_break_declaration = 23, 
-		RULE_return_declaration = 24, RULE_declaration_if = 25, RULE_end_loop = 26, 
-		RULE_str_struct = 27, RULE_str_struct_pri = 28, RULE_case_l = 29, RULE_cmp_declaration = 30, 
-		RULE_expression = 31, RULE_function_call = 32, RULE_primary = 33, RULE_identifier_id = 34, 
+		RULE_program = 0, RULE_element = 1, RULE_struct_declaration = 2, RULE_function_declaration = 3, 
+		RULE_params = 4, RULE_mandatory_params = 5, RULE_mandatory_params_pri = 6, 
+		RULE_assign = 7, RULE_assign_type = 8, RULE_assign_type_pri = 9, RULE_assign_id = 10, 
+		RULE_assign_id_pri = 11, RULE_type = 12, RULE_declaration = 13, RULE_if_declaration = 14, 
+		RULE_read_declaration = 15, RULE_print_declaration = 16, RULE_while_declaration = 17, 
+		RULE_for_declaration = 18, RULE_dowhile_declaration = 19, RULE_switch_declaration = 20, 
+		RULE_break_declaration = 21, RULE_return_declaration = 22, RULE_declaration_if = 23, 
+		RULE_end_loop = 24, RULE_str_struct = 25, RULE_str_struct_pri = 26, RULE_case_l = 27, 
+		RULE_cmp_declaration = 28, RULE_expression = 29, RULE_function_call = 30, 
+		RULE_args_fun = 31, RULE_args_fun_pri = 32, RULE_primary = 33, RULE_identifier_id = 34, 
 		RULE_identifier_id_pri = 35, RULE_identifier = 36, RULE_identifier_pri = 37, 
 		RULE_terminal_value = 38;
 	public static final String[] ruleNames = {
-		"program", "element", "function_declaration", "params", "mandatory_params", 
-		"mandatory_params_pri", "assign", "assign_pri", "assign_pri_pri", "assign_id", 
-		"assign_special", "assign_fun", "args_fun", "args_fun_pri", "type", "declaration", 
-		"if_declaration", "read_declaration", "print_declaration", "while_declaration", 
-		"for_declaration", "dowhile_declaration", "switch_declaration", "break_declaration", 
-		"return_declaration", "declaration_if", "end_loop", "str_struct", "str_struct_pri", 
-		"case_l", "cmp_declaration", "expression", "function_call", "primary", 
-		"identifier_id", "identifier_id_pri", "identifier", "identifier_pri", 
+		"program", "element", "struct_declaration", "function_declaration", "params", 
+		"mandatory_params", "mandatory_params_pri", "assign", "assign_type", "assign_type_pri", 
+		"assign_id", "assign_id_pri", "type", "declaration", "if_declaration", 
+		"read_declaration", "print_declaration", "while_declaration", "for_declaration", 
+		"dowhile_declaration", "switch_declaration", "break_declaration", "return_declaration", 
+		"declaration_if", "end_loop", "str_struct", "str_struct_pri", "case_l", 
+		"cmp_declaration", "expression", "function_call", "args_fun", "args_fun_pri", 
+		"primary", "identifier_id", "identifier_id_pri", "identifier", "identifier_pri", 
 		"terminal_value"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
 		null, "'funcion_principal'", "'fin_principal'", "'funcion'", "'estructura'", 
-		"'fin_estructura'", "'('", "')'", "'hacer'", "'fin_funcion'", "','", "'='", 
-		"'entero'", "'real'", "'booleano'", "'cadena'", "'caracter'", "';'", "'si'", 
+		"'fin_estructura'", "';'", "'('", "')'", "'hacer'", "'fin_funcion'", "','", 
+		"'='", "'entero'", "'real'", "'booleano'", "'cadena'", "'caracter'", "'si'", 
 		"'entonces'", "'leer'", "'imprimir'", "'mientras'", "'fin_mientras'", 
 		"'para'", "'fin_para'", "'seleccionar'", "'entre'", "'fin_seleccionar'", 
 		"'romper'", "'retornar'", "'fin_si'", "'si_no'", "'caso'", "':'", "'defecto'", 
@@ -273,6 +273,74 @@ public class PsycoderParser extends Parser {
 		return _localctx;
 	}
 
+	public static class Struct_declarationContext extends ParserRuleContext {
+		public List<TypeContext> type() {
+			return getRuleContexts(TypeContext.class);
+		}
+		public TypeContext type(int i) {
+			return getRuleContext(TypeContext.class,i);
+		}
+		public List<TerminalNode> ID() { return getTokens(PsycoderParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(PsycoderParser.ID, i);
+		}
+		public Struct_declarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_struct_declaration; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterStruct_declaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitStruct_declaration(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitStruct_declaration(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Struct_declarationContext struct_declaration() throws RecognitionException {
+		Struct_declarationContext _localctx = new Struct_declarationContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_struct_declaration);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(107);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << ID))) != 0)) {
+				{
+				{
+				setState(101);
+				type();
+				setState(102);
+				match(ID);
+				setState(103);
+				match(T__5);
+				}
+				}
+				setState(109);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static class Function_declarationContext extends ParserRuleContext {
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
@@ -305,26 +373,26 @@ public class PsycoderParser extends Parser {
 
 	public final Function_declarationContext function_declaration() throws RecognitionException {
 		Function_declarationContext _localctx = new Function_declarationContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_function_declaration);
+		enterRule(_localctx, 6, RULE_function_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(101);
+			setState(110);
 			type();
-			setState(102);
+			setState(111);
 			match(ID);
-			setState(103);
-			match(T__5);
-			setState(104);
-			params();
-			setState(105);
+			setState(112);
 			match(T__6);
-			setState(106);
+			setState(113);
+			params();
+			setState(114);
 			match(T__7);
-			setState(107);
-			cmp_declaration();
-			setState(108);
+			setState(115);
 			match(T__8);
+			setState(116);
+			cmp_declaration();
+			setState(117);
+			match(T__9);
 			}
 		}
 		catch (RecognitionException re) {
@@ -363,23 +431,23 @@ public class PsycoderParser extends Parser {
 
 	public final ParamsContext params() throws RecognitionException {
 		ParamsContext _localctx = new ParamsContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_params);
+		enterRule(_localctx, 8, RULE_params);
 		try {
-			setState(112);
+			setState(121);
 			switch (_input.LA(1)) {
-			case T__11:
 			case T__12:
 			case T__13:
 			case T__14:
 			case T__15:
+			case T__16:
 			case ID:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(110);
+				setState(119);
 				mandatory_params();
 				}
 				break;
-			case T__6:
+			case T__7:
 				enterOuterAlt(_localctx, 2);
 				{
 				}
@@ -428,15 +496,15 @@ public class PsycoderParser extends Parser {
 
 	public final Mandatory_paramsContext mandatory_params() throws RecognitionException {
 		Mandatory_paramsContext _localctx = new Mandatory_paramsContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_mandatory_params);
+		enterRule(_localctx, 10, RULE_mandatory_params);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(114);
+			setState(123);
 			type();
-			setState(115);
+			setState(124);
 			match(ID);
-			setState(116);
+			setState(125);
 			mandatory_params_pri();
 			}
 		}
@@ -476,20 +544,20 @@ public class PsycoderParser extends Parser {
 
 	public final Mandatory_params_priContext mandatory_params_pri() throws RecognitionException {
 		Mandatory_params_priContext _localctx = new Mandatory_params_priContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_mandatory_params_pri);
+		enterRule(_localctx, 12, RULE_mandatory_params_pri);
 		try {
-			setState(121);
+			setState(130);
 			switch (_input.LA(1)) {
-			case T__9:
+			case T__10:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(118);
-				match(T__9);
-				setState(119);
+				setState(127);
+				match(T__10);
+				setState(128);
 				mandatory_params();
 				}
 				break;
-			case T__6:
+			case T__7:
 				enterOuterAlt(_localctx, 2);
 				{
 				}
@@ -510,126 +578,81 @@ public class PsycoderParser extends Parser {
 	}
 
 	public static class AssignContext extends ParserRuleContext {
-		public TypeContext type() {
-			return getRuleContext(TypeContext.class,0);
-		}
-		public TerminalNode ID() { return getToken(PsycoderParser.ID, 0); }
-		public Assign_priContext assign_pri() {
-			return getRuleContext(Assign_priContext.class,0);
-		}
 		public AssignContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assign; }
+	 
+		public AssignContext() { }
+		public void copyFrom(AssignContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class UnTypedAssignContext extends AssignContext {
+		public Assign_idContext assign_id() {
+			return getRuleContext(Assign_idContext.class,0);
+		}
+		public UnTypedAssignContext(AssignContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterAssign(this);
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterUnTypedAssign(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitAssign(this);
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitUnTypedAssign(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitAssign(this);
+			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitUnTypedAssign(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TypedAssignContext extends AssignContext {
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
+		public Assign_typeContext assign_type() {
+			return getRuleContext(Assign_typeContext.class,0);
+		}
+		public TypedAssignContext(AssignContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterTypedAssign(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitTypedAssign(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitTypedAssign(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
 	public final AssignContext assign() throws RecognitionException {
 		AssignContext _localctx = new AssignContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_assign);
+		enterRule(_localctx, 14, RULE_assign);
 		try {
-			setState(129);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(123);
-				type();
-				setState(124);
-				match(ID);
-				setState(125);
-				assign_pri();
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(127);
-				match(ID);
-				setState(128);
-				assign_pri();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class Assign_priContext extends ParserRuleContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public Assign_pri_priContext assign_pri_pri() {
-			return getRuleContext(Assign_pri_priContext.class,0);
-		}
-		public Assign_priContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_assign_pri; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterAssign_pri(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitAssign_pri(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitAssign_pri(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final Assign_priContext assign_pri() throws RecognitionException {
-		Assign_priContext _localctx = new Assign_priContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_assign_pri);
-		try {
-			setState(137);
+			setState(136);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 			case 1:
+				_localctx = new TypedAssignContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(131);
-				match(T__10);
 				setState(132);
-				expression(0);
+				type();
 				setState(133);
-				assign_pri_pri();
+				assign_type();
 				}
 				break;
 			case 2:
+				_localctx = new UnTypedAssignContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(135);
-				assign_pri_pri();
-				}
-				break;
-			case 3:
-				enterOuterAlt(_localctx, 3);
-				{
+				assign_id();
 				}
 				break;
 			}
@@ -645,49 +668,107 @@ public class PsycoderParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Assign_pri_priContext extends ParserRuleContext {
+	public static class Assign_typeContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(PsycoderParser.ID, 0); }
-		public Assign_idContext assign_id() {
-			return getRuleContext(Assign_idContext.class,0);
+		public Assign_type_priContext assign_type_pri() {
+			return getRuleContext(Assign_type_priContext.class,0);
 		}
-		public Assign_pri_priContext(ParserRuleContext parent, int invokingState) {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public Assign_typeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_assign_pri_pri; }
+		@Override public int getRuleIndex() { return RULE_assign_type; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterAssign_pri_pri(this);
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterAssign_type(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitAssign_pri_pri(this);
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitAssign_type(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitAssign_pri_pri(this);
+			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitAssign_type(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Assign_pri_priContext assign_pri_pri() throws RecognitionException {
-		Assign_pri_priContext _localctx = new Assign_pri_priContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_assign_pri_pri);
+	public final Assign_typeContext assign_type() throws RecognitionException {
+		Assign_typeContext _localctx = new Assign_typeContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_assign_type);
+		int _la;
 		try {
-			setState(143);
-			switch (_input.LA(1)) {
-			case T__9:
-				enterOuterAlt(_localctx, 1);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(138);
+			match(ID);
+			setState(141);
+			_la = _input.LA(1);
+			if (_la==T__11) {
 				{
 				setState(139);
-				match(T__9);
+				match(T__11);
 				setState(140);
-				match(ID);
-				setState(141);
-				assign_id();
+				expression(0);
+				}
+			}
+
+			setState(143);
+			assign_type_pri();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Assign_type_priContext extends ParserRuleContext {
+		public Assign_typeContext assign_type() {
+			return getRuleContext(Assign_typeContext.class,0);
+		}
+		public Assign_type_priContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_assign_type_pri; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterAssign_type_pri(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitAssign_type_pri(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitAssign_type_pri(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Assign_type_priContext assign_type_pri() throws RecognitionException {
+		Assign_type_priContext _localctx = new Assign_type_priContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_assign_type_pri);
+		try {
+			setState(148);
+			switch (_input.LA(1)) {
+			case T__10:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(145);
+				match(T__10);
+				setState(146);
+				assign_type();
 				}
 				break;
-			case EOF:
-			case T__16:
+			case T__5:
 				enterOuterAlt(_localctx, 2);
 				{
 				}
@@ -708,11 +789,14 @@ public class PsycoderParser extends Parser {
 	}
 
 	public static class Assign_idContext extends ParserRuleContext {
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public Assign_pri_priContext assign_pri_pri() {
-			return getRuleContext(Assign_pri_priContext.class,0);
+		public Assign_id_priContext assign_id_pri() {
+			return getRuleContext(Assign_id_priContext.class,0);
 		}
 		public Assign_idContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -735,34 +819,18 @@ public class PsycoderParser extends Parser {
 
 	public final Assign_idContext assign_id() throws RecognitionException {
 		Assign_idContext _localctx = new Assign_idContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_assign_id);
+		enterRule(_localctx, 20, RULE_assign_id);
 		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(150);
+			identifier();
 			setState(151);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(145);
-				match(T__10);
-				setState(146);
-				expression(0);
-				setState(147);
-				assign_pri_pri();
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(149);
-				assign_pri_pri();
-				}
-				break;
-			case 3:
-				enterOuterAlt(_localctx, 3);
-				{
-				}
-				break;
+			match(T__11);
+			setState(152);
+			expression(0);
+			setState(153);
+			assign_id_pri();
 			}
 		}
 		catch (RecognitionException re) {
@@ -776,251 +844,45 @@ public class PsycoderParser extends Parser {
 		return _localctx;
 	}
 
-	public static class Assign_specialContext extends ParserRuleContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
+	public static class Assign_id_priContext extends ParserRuleContext {
+		public Assign_idContext assign_id() {
+			return getRuleContext(Assign_idContext.class,0);
 		}
-		public TerminalNode ID() { return getToken(PsycoderParser.ID, 0); }
-		public Assign_priContext assign_pri() {
-			return getRuleContext(Assign_priContext.class,0);
-		}
-		public Assign_specialContext(ParserRuleContext parent, int invokingState) {
+		public Assign_id_priContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_assign_special; }
+		@Override public int getRuleIndex() { return RULE_assign_id_pri; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterAssign_special(this);
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterAssign_id_pri(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitAssign_special(this);
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitAssign_id_pri(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitAssign_special(this);
+			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitAssign_id_pri(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Assign_specialContext assign_special() throws RecognitionException {
-		Assign_specialContext _localctx = new Assign_specialContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_assign_special);
+	public final Assign_id_priContext assign_id_pri() throws RecognitionException {
+		Assign_id_priContext _localctx = new Assign_id_priContext(_ctx, getState());
+		enterRule(_localctx, 22, RULE_assign_id_pri);
 		try {
-			setState(157);
+			setState(158);
 			switch (_input.LA(1)) {
 			case T__10:
 				enterOuterAlt(_localctx, 1);
-				{
-				setState(153);
-				match(T__10);
-				setState(154);
-				expression(0);
-				}
-				break;
-			case ID:
-				enterOuterAlt(_localctx, 2);
 				{
 				setState(155);
-				match(ID);
+				match(T__10);
 				setState(156);
-				assign_pri();
+				assign_id();
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class Assign_funContext extends ParserRuleContext {
-		public Args_funContext args_fun() {
-			return getRuleContext(Args_funContext.class,0);
-		}
-		public Assign_specialContext assign_special() {
-			return getRuleContext(Assign_specialContext.class,0);
-		}
-		public Assign_funContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_assign_fun; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterAssign_fun(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitAssign_fun(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitAssign_fun(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final Assign_funContext assign_fun() throws RecognitionException {
-		Assign_funContext _localctx = new Assign_funContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_assign_fun);
-		try {
-			setState(164);
-			switch (_input.LA(1)) {
 			case T__5:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(159);
-				match(T__5);
-				setState(160);
-				args_fun();
-				setState(161);
-				match(T__6);
-				}
-				break;
-			case T__10:
-			case ID:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(163);
-				assign_special();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class Args_funContext extends ParserRuleContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public Args_fun_priContext args_fun_pri() {
-			return getRuleContext(Args_fun_priContext.class,0);
-		}
-		public Args_funContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_args_fun; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterArgs_fun(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitArgs_fun(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitArgs_fun(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final Args_funContext args_fun() throws RecognitionException {
-		Args_funContext _localctx = new Args_funContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_args_fun);
-		try {
-			setState(170);
-			switch (_input.LA(1)) {
-			case T__5:
-			case T__36:
-			case T__50:
-			case T__51:
-			case ID:
-			case TK_ENTERO:
-			case TK_REAL:
-			case TK_CADENA:
-			case TK_CARACTER:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(166);
-				expression(0);
-				setState(167);
-				args_fun_pri();
-				}
-				break;
-			case T__6:
-				enterOuterAlt(_localctx, 2);
-				{
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class Args_fun_priContext extends ParserRuleContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public Args_fun_priContext args_fun_pri() {
-			return getRuleContext(Args_fun_priContext.class,0);
-		}
-		public Args_fun_priContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_args_fun_pri; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterArgs_fun_pri(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitArgs_fun_pri(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitArgs_fun_pri(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final Args_fun_priContext args_fun_pri() throws RecognitionException {
-		Args_fun_priContext _localctx = new Args_fun_priContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_args_fun_pri);
-		try {
-			setState(177);
-			switch (_input.LA(1)) {
-			case T__9:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(172);
-				match(T__9);
-				setState(173);
-				expression(0);
-				setState(174);
-				args_fun_pri();
-				}
-				break;
-			case T__6:
 				enterOuterAlt(_localctx, 2);
 				{
 				}
@@ -1063,14 +925,14 @@ public class PsycoderParser extends Parser {
 
 	public final TypeContext type() throws RecognitionException {
 		TypeContext _localctx = new TypeContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_type);
+		enterRule(_localctx, 24, RULE_type);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(179);
+			setState(160);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << ID))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << ID))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			} else {
 				consume();
@@ -1140,84 +1002,84 @@ public class PsycoderParser extends Parser {
 
 	public final DeclarationContext declaration() throws RecognitionException {
 		DeclarationContext _localctx = new DeclarationContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_declaration);
+		enterRule(_localctx, 26, RULE_declaration);
 		try {
-			setState(193);
+			setState(174);
 			switch (_input.LA(1)) {
-			case T__11:
 			case T__12:
 			case T__13:
 			case T__14:
 			case T__15:
+			case T__16:
 			case ID:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(181);
+				setState(162);
 				assign();
-				setState(182);
-				match(T__16);
+				setState(163);
+				match(T__5);
 				}
 				break;
 			case T__17:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(184);
+				setState(165);
 				if_declaration();
 				}
 				break;
 			case T__19:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(185);
+				setState(166);
 				read_declaration();
 				}
 				break;
 			case T__20:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(186);
+				setState(167);
 				print_declaration();
 				}
 				break;
 			case T__21:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(187);
+				setState(168);
 				while_declaration();
 				}
 				break;
 			case T__23:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(188);
+				setState(169);
 				for_declaration();
 				}
 				break;
-			case T__7:
+			case T__8:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(189);
+				setState(170);
 				dowhile_declaration();
 				}
 				break;
 			case T__25:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(190);
+				setState(171);
 				switch_declaration();
 				}
 				break;
 			case T__28:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(191);
+				setState(172);
 				break_declaration();
 				}
 				break;
 			case T__29:
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(192);
+				setState(173);
 				return_declaration();
 				}
 				break;
@@ -1267,23 +1129,23 @@ public class PsycoderParser extends Parser {
 
 	public final If_declarationContext if_declaration() throws RecognitionException {
 		If_declarationContext _localctx = new If_declarationContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_if_declaration);
+		enterRule(_localctx, 28, RULE_if_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(195);
+			setState(176);
 			match(T__17);
-			setState(196);
-			match(T__5);
-			setState(197);
-			expression(0);
-			setState(198);
+			setState(177);
 			match(T__6);
-			setState(199);
+			setState(178);
+			expression(0);
+			setState(179);
+			match(T__7);
+			setState(180);
 			match(T__18);
-			setState(200);
+			setState(181);
 			cmp_declaration();
-			setState(201);
+			setState(182);
 			declaration_if();
 			}
 		}
@@ -1323,20 +1185,20 @@ public class PsycoderParser extends Parser {
 
 	public final Read_declarationContext read_declaration() throws RecognitionException {
 		Read_declarationContext _localctx = new Read_declarationContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_read_declaration);
+		enterRule(_localctx, 30, RULE_read_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(203);
+			setState(184);
 			match(T__19);
-			setState(204);
-			match(T__5);
-			setState(205);
-			identifier();
-			setState(206);
+			setState(185);
 			match(T__6);
-			setState(207);
-			match(T__16);
+			setState(186);
+			identifier();
+			setState(187);
+			match(T__7);
+			setState(188);
+			match(T__5);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1375,20 +1237,20 @@ public class PsycoderParser extends Parser {
 
 	public final Print_declarationContext print_declaration() throws RecognitionException {
 		Print_declarationContext _localctx = new Print_declarationContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_print_declaration);
+		enterRule(_localctx, 32, RULE_print_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(209);
+			setState(190);
 			match(T__20);
-			setState(210);
-			match(T__5);
-			setState(211);
-			str_struct();
-			setState(212);
+			setState(191);
 			match(T__6);
-			setState(213);
-			match(T__16);
+			setState(192);
+			str_struct();
+			setState(193);
+			match(T__7);
+			setState(194);
+			match(T__5);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1430,23 +1292,23 @@ public class PsycoderParser extends Parser {
 
 	public final While_declarationContext while_declaration() throws RecognitionException {
 		While_declarationContext _localctx = new While_declarationContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_while_declaration);
+		enterRule(_localctx, 34, RULE_while_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(215);
+			setState(196);
 			match(T__21);
-			setState(216);
-			match(T__5);
-			setState(217);
-			expression(0);
-			setState(218);
+			setState(197);
 			match(T__6);
-			setState(219);
+			setState(198);
+			expression(0);
+			setState(199);
 			match(T__7);
-			setState(220);
+			setState(200);
+			match(T__8);
+			setState(201);
 			cmp_declaration();
-			setState(221);
+			setState(202);
 			match(T__22);
 			}
 		}
@@ -1495,31 +1357,31 @@ public class PsycoderParser extends Parser {
 
 	public final For_declarationContext for_declaration() throws RecognitionException {
 		For_declarationContext _localctx = new For_declarationContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_for_declaration);
+		enterRule(_localctx, 36, RULE_for_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(223);
+			setState(204);
 			match(T__23);
-			setState(224);
-			match(T__5);
-			setState(225);
-			assign();
-			setState(226);
-			match(T__16);
-			setState(227);
-			expression(0);
-			setState(228);
-			match(T__16);
-			setState(229);
-			end_loop();
-			setState(230);
+			setState(205);
 			match(T__6);
-			setState(231);
+			setState(206);
+			assign();
+			setState(207);
+			match(T__5);
+			setState(208);
+			expression(0);
+			setState(209);
+			match(T__5);
+			setState(210);
+			end_loop();
+			setState(211);
 			match(T__7);
-			setState(232);
+			setState(212);
+			match(T__8);
+			setState(213);
 			cmp_declaration();
-			setState(233);
+			setState(214);
 			match(T__24);
 			}
 		}
@@ -1562,24 +1424,24 @@ public class PsycoderParser extends Parser {
 
 	public final Dowhile_declarationContext dowhile_declaration() throws RecognitionException {
 		Dowhile_declarationContext _localctx = new Dowhile_declarationContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_dowhile_declaration);
+		enterRule(_localctx, 38, RULE_dowhile_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(235);
-			match(T__7);
-			setState(236);
+			setState(216);
+			match(T__8);
+			setState(217);
 			cmp_declaration();
-			setState(237);
+			setState(218);
 			match(T__21);
-			setState(238);
-			match(T__5);
-			setState(239);
-			expression(0);
-			setState(240);
+			setState(219);
 			match(T__6);
-			setState(241);
-			match(T__16);
+			setState(220);
+			expression(0);
+			setState(221);
+			match(T__7);
+			setState(222);
+			match(T__5);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1621,23 +1483,23 @@ public class PsycoderParser extends Parser {
 
 	public final Switch_declarationContext switch_declaration() throws RecognitionException {
 		Switch_declarationContext _localctx = new Switch_declarationContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_switch_declaration);
+		enterRule(_localctx, 40, RULE_switch_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(243);
+			setState(224);
 			match(T__25);
-			setState(244);
-			match(T__5);
-			setState(245);
-			identifier();
-			setState(246);
+			setState(225);
 			match(T__6);
-			setState(247);
+			setState(226);
+			identifier();
+			setState(227);
+			match(T__7);
+			setState(228);
 			match(T__26);
-			setState(248);
+			setState(229);
 			case_l();
-			setState(249);
+			setState(230);
 			match(T__27);
 			}
 		}
@@ -1674,14 +1536,14 @@ public class PsycoderParser extends Parser {
 
 	public final Break_declarationContext break_declaration() throws RecognitionException {
 		Break_declarationContext _localctx = new Break_declarationContext(_ctx, getState());
-		enterRule(_localctx, 46, RULE_break_declaration);
+		enterRule(_localctx, 42, RULE_break_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(251);
+			setState(232);
 			match(T__28);
-			setState(252);
-			match(T__16);
+			setState(233);
+			match(T__5);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1720,16 +1582,16 @@ public class PsycoderParser extends Parser {
 
 	public final Return_declarationContext return_declaration() throws RecognitionException {
 		Return_declarationContext _localctx = new Return_declarationContext(_ctx, getState());
-		enterRule(_localctx, 48, RULE_return_declaration);
+		enterRule(_localctx, 44, RULE_return_declaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(254);
+			setState(235);
 			match(T__29);
-			setState(255);
+			setState(236);
 			expression(0);
-			setState(256);
-			match(T__16);
+			setState(237);
+			match(T__5);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1768,25 +1630,25 @@ public class PsycoderParser extends Parser {
 
 	public final Declaration_ifContext declaration_if() throws RecognitionException {
 		Declaration_ifContext _localctx = new Declaration_ifContext(_ctx, getState());
-		enterRule(_localctx, 50, RULE_declaration_if);
+		enterRule(_localctx, 46, RULE_declaration_if);
 		try {
-			setState(263);
+			setState(244);
 			switch (_input.LA(1)) {
 			case T__30:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(258);
+				setState(239);
 				match(T__30);
 				}
 				break;
 			case T__31:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(259);
+				setState(240);
 				match(T__31);
-				setState(260);
+				setState(241);
 				cmp_declaration();
-				setState(261);
+				setState(242);
 				match(T__30);
 				}
 				break;
@@ -1830,12 +1692,12 @@ public class PsycoderParser extends Parser {
 
 	public final End_loopContext end_loop() throws RecognitionException {
 		End_loopContext _localctx = new End_loopContext(_ctx, getState());
-		enterRule(_localctx, 52, RULE_end_loop);
+		enterRule(_localctx, 48, RULE_end_loop);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(265);
+			setState(246);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ID) | (1L << TK_ENTERO) | (1L << TK_REAL))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1883,13 +1745,13 @@ public class PsycoderParser extends Parser {
 
 	public final Str_structContext str_struct() throws RecognitionException {
 		Str_structContext _localctx = new Str_structContext(_ctx, getState());
-		enterRule(_localctx, 54, RULE_str_struct);
+		enterRule(_localctx, 50, RULE_str_struct);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(267);
+			setState(248);
 			expression(0);
-			setState(268);
+			setState(249);
 			str_struct_pri();
 			}
 		}
@@ -1929,20 +1791,20 @@ public class PsycoderParser extends Parser {
 
 	public final Str_struct_priContext str_struct_pri() throws RecognitionException {
 		Str_struct_priContext _localctx = new Str_struct_priContext(_ctx, getState());
-		enterRule(_localctx, 56, RULE_str_struct_pri);
+		enterRule(_localctx, 52, RULE_str_struct_pri);
 		try {
-			setState(273);
+			setState(254);
 			switch (_input.LA(1)) {
-			case T__9:
+			case T__10:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(270);
-				match(T__9);
-				setState(271);
+				setState(251);
+				match(T__10);
+				setState(252);
 				str_struct();
 				}
 				break;
-			case T__6:
+			case T__7:
 				enterOuterAlt(_localctx, 2);
 				{
 				}
@@ -1993,33 +1855,33 @@ public class PsycoderParser extends Parser {
 
 	public final Case_lContext case_l() throws RecognitionException {
 		Case_lContext _localctx = new Case_lContext(_ctx, getState());
-		enterRule(_localctx, 58, RULE_case_l);
+		enterRule(_localctx, 54, RULE_case_l);
 		try {
-			setState(285);
+			setState(266);
 			switch (_input.LA(1)) {
 			case T__32:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(275);
+				setState(256);
 				match(T__32);
-				setState(276);
+				setState(257);
 				terminal_value();
-				setState(277);
+				setState(258);
 				match(T__33);
-				setState(278);
+				setState(259);
 				cmp_declaration();
-				setState(279);
+				setState(260);
 				case_l();
 				}
 				break;
 			case T__34:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(281);
+				setState(262);
 				match(T__34);
-				setState(282);
+				setState(263);
 				match(T__33);
-				setState(283);
+				setState(264);
 				cmp_declaration();
 				}
 				break;
@@ -2071,17 +1933,17 @@ public class PsycoderParser extends Parser {
 
 	public final Cmp_declarationContext cmp_declaration() throws RecognitionException {
 		Cmp_declarationContext _localctx = new Cmp_declarationContext(_ctx, getState());
-		enterRule(_localctx, 60, RULE_cmp_declaration);
+		enterRule(_localctx, 56, RULE_cmp_declaration);
 		try {
-			setState(291);
+			setState(272);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(287);
+				setState(268);
 				declaration();
-				setState(288);
+				setState(269);
 				cmp_declaration();
 				}
 				break;
@@ -2361,23 +2223,23 @@ public class PsycoderParser extends Parser {
 		int _parentState = getState();
 		ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
 		ExpressionContext _prevctx = _localctx;
-		int _startState = 62;
-		enterRecursionRule(_localctx, 62, RULE_expression, _p);
+		int _startState = 58;
+		enterRecursionRule(_localctx, 58, RULE_expression, _p);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(306);
+			setState(287);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				{
 				_localctx = new PrimaryExpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(294);
+				setState(275);
 				primary();
 				}
 				break;
@@ -2386,11 +2248,11 @@ public class PsycoderParser extends Parser {
 				_localctx = new FunctionDotOpExpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(295);
+				setState(276);
 				function_call();
-				setState(296);
+				setState(277);
 				match(T__35);
-				setState(297);
+				setState(278);
 				identifier();
 				}
 				break;
@@ -2399,7 +2261,7 @@ public class PsycoderParser extends Parser {
 				_localctx = new FunctionExpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(299);
+				setState(280);
 				function_call();
 				}
 				break;
@@ -2408,9 +2270,9 @@ public class PsycoderParser extends Parser {
 				_localctx = new NegExpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(300);
+				setState(281);
 				match(T__36);
-				setState(301);
+				setState(282);
 				expression(8);
 				}
 				break;
@@ -2419,34 +2281,34 @@ public class PsycoderParser extends Parser {
 				_localctx = new AssigExpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(302);
+				setState(283);
 				identifier();
-				setState(303);
-				match(T__10);
-				setState(304);
+				setState(284);
+				match(T__11);
+				setState(285);
 				expression(1);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(328);
+			setState(309);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,20,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(326);
+					setState(307);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 					case 1:
 						{
 						_localctx = new MultiplicationExpContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(308);
+						setState(289);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(309);
+						setState(290);
 						((MultiplicationExpContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__37) | (1L << T__38) | (1L << T__39))) != 0)) ) {
@@ -2454,7 +2316,7 @@ public class PsycoderParser extends Parser {
 						} else {
 							consume();
 						}
-						setState(310);
+						setState(291);
 						expression(8);
 						}
 						break;
@@ -2462,9 +2324,9 @@ public class PsycoderParser extends Parser {
 						{
 						_localctx = new AdditionExpContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(311);
+						setState(292);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(312);
+						setState(293);
 						((AdditionExpContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__40 || _la==T__41) ) {
@@ -2472,7 +2334,7 @@ public class PsycoderParser extends Parser {
 						} else {
 							consume();
 						}
-						setState(313);
+						setState(294);
 						expression(7);
 						}
 						break;
@@ -2480,9 +2342,9 @@ public class PsycoderParser extends Parser {
 						{
 						_localctx = new RelationalExpContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(314);
+						setState(295);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
-						setState(315);
+						setState(296);
 						((RelationalExpContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__42) | (1L << T__43) | (1L << T__44) | (1L << T__45))) != 0)) ) {
@@ -2490,7 +2352,7 @@ public class PsycoderParser extends Parser {
 						} else {
 							consume();
 						}
-						setState(316);
+						setState(297);
 						expression(6);
 						}
 						break;
@@ -2498,9 +2360,9 @@ public class PsycoderParser extends Parser {
 						{
 						_localctx = new EqualityExpContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(317);
+						setState(298);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(318);
+						setState(299);
 						((EqualityExpContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==T__46 || _la==T__47) ) {
@@ -2508,7 +2370,7 @@ public class PsycoderParser extends Parser {
 						} else {
 							consume();
 						}
-						setState(319);
+						setState(300);
 						expression(5);
 						}
 						break;
@@ -2516,11 +2378,11 @@ public class PsycoderParser extends Parser {
 						{
 						_localctx = new AndExpContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(320);
+						setState(301);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(321);
+						setState(302);
 						match(T__48);
-						setState(322);
+						setState(303);
 						expression(4);
 						}
 						break;
@@ -2528,20 +2390,20 @@ public class PsycoderParser extends Parser {
 						{
 						_localctx = new OrExpContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(323);
+						setState(304);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(324);
+						setState(305);
 						match(T__49);
-						setState(325);
+						setState(306);
 						expression(3);
 						}
 						break;
 					}
 					} 
 				}
-				setState(330);
+				setState(311);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,20,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
 			}
 			}
 		}
@@ -2582,18 +2444,150 @@ public class PsycoderParser extends Parser {
 
 	public final Function_callContext function_call() throws RecognitionException {
 		Function_callContext _localctx = new Function_callContext(_ctx, getState());
-		enterRule(_localctx, 64, RULE_function_call);
+		enterRule(_localctx, 60, RULE_function_call);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(331);
+			setState(312);
 			match(ID);
-			setState(332);
-			match(T__5);
-			setState(333);
-			args_fun();
-			setState(334);
+			setState(313);
 			match(T__6);
+			setState(314);
+			args_fun();
+			setState(315);
+			match(T__7);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Args_funContext extends ParserRuleContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public Args_fun_priContext args_fun_pri() {
+			return getRuleContext(Args_fun_priContext.class,0);
+		}
+		public Args_funContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_args_fun; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterArgs_fun(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitArgs_fun(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitArgs_fun(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Args_funContext args_fun() throws RecognitionException {
+		Args_funContext _localctx = new Args_funContext(_ctx, getState());
+		enterRule(_localctx, 62, RULE_args_fun);
+		try {
+			setState(321);
+			switch (_input.LA(1)) {
+			case T__6:
+			case T__36:
+			case T__50:
+			case T__51:
+			case ID:
+			case TK_ENTERO:
+			case TK_REAL:
+			case TK_CADENA:
+			case TK_CARACTER:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(317);
+				expression(0);
+				setState(318);
+				args_fun_pri();
+				}
+				break;
+			case T__7:
+				enterOuterAlt(_localctx, 2);
+				{
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Args_fun_priContext extends ParserRuleContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public Args_fun_priContext args_fun_pri() {
+			return getRuleContext(Args_fun_priContext.class,0);
+		}
+		public Args_fun_priContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_args_fun_pri; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).enterArgs_fun_pri(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PsycoderListener ) ((PsycoderListener)listener).exitArgs_fun_pri(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PsycoderVisitor ) return ((PsycoderVisitor<? extends T>)visitor).visitArgs_fun_pri(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Args_fun_priContext args_fun_pri() throws RecognitionException {
+		Args_fun_priContext _localctx = new Args_fun_priContext(_ctx, getState());
+		enterRule(_localctx, 64, RULE_args_fun_pri);
+		try {
+			setState(328);
+			switch (_input.LA(1)) {
+			case T__10:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(323);
+				match(T__10);
+				setState(324);
+				expression(0);
+				setState(325);
+				args_fun_pri();
+				}
+				break;
+			case T__7:
+				enterOuterAlt(_localctx, 2);
+				{
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -2661,18 +2655,18 @@ public class PsycoderParser extends Parser {
 		PrimaryContext _localctx = new PrimaryContext(_ctx, getState());
 		enterRule(_localctx, 66, RULE_primary);
 		try {
-			setState(341);
+			setState(335);
 			switch (_input.LA(1)) {
-			case T__5:
+			case T__6:
 				_localctx = new ParenPriExpContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(336);
-				match(T__5);
-				setState(337);
-				expression(0);
-				setState(338);
+				setState(330);
 				match(T__6);
+				setState(331);
+				expression(0);
+				setState(332);
+				match(T__7);
 				}
 				break;
 			case T__50:
@@ -2685,7 +2679,7 @@ public class PsycoderParser extends Parser {
 				_localctx = new TerminalPriExpContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(340);
+				setState(334);
 				terminal_value();
 				}
 				break;
@@ -2734,9 +2728,9 @@ public class PsycoderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(343);
+			setState(337);
 			match(ID);
-			setState(344);
+			setState(338);
 			identifier_id_pri();
 			}
 		}
@@ -2778,15 +2772,15 @@ public class PsycoderParser extends Parser {
 		Identifier_id_priContext _localctx = new Identifier_id_priContext(_ctx, getState());
 		enterRule(_localctx, 70, RULE_identifier_id_pri);
 		try {
-			setState(349);
+			setState(343);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,21,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(346);
+				setState(340);
 				match(T__35);
-				setState(347);
+				setState(341);
 				identifier_id();
 				}
 				break;
@@ -2838,9 +2832,9 @@ public class PsycoderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(351);
+			setState(345);
 			match(ID);
-			setState(352);
+			setState(346);
 			identifier_pri();
 			}
 		}
@@ -2882,15 +2876,15 @@ public class PsycoderParser extends Parser {
 		Identifier_priContext _localctx = new Identifier_priContext(_ctx, getState());
 		enterRule(_localctx, 74, RULE_identifier_pri);
 		try {
-			setState(357);
+			setState(351);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(354);
+				setState(348);
 				match(T__35);
-				setState(355);
+				setState(349);
 				identifier();
 				}
 				break;
@@ -3047,13 +3041,13 @@ public class PsycoderParser extends Parser {
 		Terminal_valueContext _localctx = new Terminal_valueContext(_ctx, getState());
 		enterRule(_localctx, 76, RULE_terminal_value);
 		try {
-			setState(366);
+			setState(360);
 			switch (_input.LA(1)) {
 			case ID:
 				_localctx = new Id_terminalContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(359);
+				setState(353);
 				identifier();
 				}
 				break;
@@ -3061,7 +3055,7 @@ public class PsycoderParser extends Parser {
 				_localctx = new Entero_terminalContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(360);
+				setState(354);
 				match(TK_ENTERO);
 				}
 				break;
@@ -3069,7 +3063,7 @@ public class PsycoderParser extends Parser {
 				_localctx = new Real_terminalContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(361);
+				setState(355);
 				match(TK_REAL);
 				}
 				break;
@@ -3077,7 +3071,7 @@ public class PsycoderParser extends Parser {
 				_localctx = new Cadena_terminalContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(362);
+				setState(356);
 				match(TK_CADENA);
 				}
 				break;
@@ -3085,7 +3079,7 @@ public class PsycoderParser extends Parser {
 				_localctx = new Caracter_terminalContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(363);
+				setState(357);
 				match(TK_CARACTER);
 				}
 				break;
@@ -3093,7 +3087,7 @@ public class PsycoderParser extends Parser {
 				_localctx = new Verdadero_terminalContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(364);
+				setState(358);
 				match(T__50);
 				}
 				break;
@@ -3101,7 +3095,7 @@ public class PsycoderParser extends Parser {
 				_localctx = new Falso_terminalContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(365);
+				setState(359);
 				match(T__51);
 				}
 				break;
@@ -3122,7 +3116,7 @@ public class PsycoderParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 31:
+		case 29:
 			return expression_sempred((ExpressionContext)_localctx, predIndex);
 		}
 		return true;
@@ -3146,129 +3140,128 @@ public class PsycoderParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3>\u0173\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3>\u016d\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
 		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\4\37\t\37\4 \t \4!"+
 		"\t!\4\"\t\"\4#\t#\4$\t$\4%\t%\4&\t&\4\'\t\'\4(\t(\3\2\7\2R\n\2\f\2\16"+
 		"\2U\13\2\3\2\3\2\3\2\3\2\3\2\3\2\5\2]\n\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\5\3f\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\5\3\5\5\5s\n\5\3\6\3\6"+
-		"\3\6\3\6\3\7\3\7\3\7\5\7|\n\7\3\b\3\b\3\b\3\b\3\b\3\b\5\b\u0084\n\b\3"+
-		"\t\3\t\3\t\3\t\3\t\3\t\5\t\u008c\n\t\3\n\3\n\3\n\3\n\5\n\u0092\n\n\3\13"+
-		"\3\13\3\13\3\13\3\13\3\13\5\13\u009a\n\13\3\f\3\f\3\f\3\f\5\f\u00a0\n"+
-		"\f\3\r\3\r\3\r\3\r\3\r\5\r\u00a7\n\r\3\16\3\16\3\16\3\16\5\16\u00ad\n"+
-		"\16\3\17\3\17\3\17\3\17\3\17\5\17\u00b4\n\17\3\20\3\20\3\21\3\21\3\21"+
-		"\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\5\21\u00c4\n\21\3\22\3\22"+
-		"\3\22\3\22\3\22\3\22\3\22\3\22\3\23\3\23\3\23\3\23\3\23\3\23\3\24\3\24"+
-		"\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\26\3\26"+
-		"\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\26\3\27\3\27\3\27\3\27"+
-		"\3\27\3\27\3\27\3\27\3\30\3\30\3\30\3\30\3\30\3\30\3\30\3\30\3\31\3\31"+
-		"\3\31\3\32\3\32\3\32\3\32\3\33\3\33\3\33\3\33\3\33\5\33\u010a\n\33\3\34"+
-		"\3\34\3\35\3\35\3\35\3\36\3\36\3\36\5\36\u0114\n\36\3\37\3\37\3\37\3\37"+
-		"\3\37\3\37\3\37\3\37\3\37\3\37\5\37\u0120\n\37\3 \3 \3 \3 \5 \u0126\n"+
-		" \3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\5!\u0135\n!\3!\3!\3!\3!\3!\3"+
-		"!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\7!\u0149\n!\f!\16!\u014c\13!\3\""+
-		"\3\"\3\"\3\"\3\"\3#\3#\3#\3#\3#\5#\u0158\n#\3$\3$\3$\3%\3%\3%\5%\u0160"+
-		"\n%\3&\3&\3&\3\'\3\'\3\'\5\'\u0168\n\'\3(\3(\3(\3(\3(\3(\3(\5(\u0171\n"+
-		"(\3(\2\3@)\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\66"+
-		"8:<>@BDFHJLN\2\b\4\2\16\22::\3\2:<\3\2(*\3\2+,\3\2-\60\3\2\61\62\u017b"+
-		"\2\\\3\2\2\2\4e\3\2\2\2\6g\3\2\2\2\br\3\2\2\2\nt\3\2\2\2\f{\3\2\2\2\16"+
-		"\u0083\3\2\2\2\20\u008b\3\2\2\2\22\u0091\3\2\2\2\24\u0099\3\2\2\2\26\u009f"+
-		"\3\2\2\2\30\u00a6\3\2\2\2\32\u00ac\3\2\2\2\34\u00b3\3\2\2\2\36\u00b5\3"+
-		"\2\2\2 \u00c3\3\2\2\2\"\u00c5\3\2\2\2$\u00cd\3\2\2\2&\u00d3\3\2\2\2(\u00d9"+
-		"\3\2\2\2*\u00e1\3\2\2\2,\u00ed\3\2\2\2.\u00f5\3\2\2\2\60\u00fd\3\2\2\2"+
-		"\62\u0100\3\2\2\2\64\u0109\3\2\2\2\66\u010b\3\2\2\28\u010d\3\2\2\2:\u0113"+
-		"\3\2\2\2<\u011f\3\2\2\2>\u0125\3\2\2\2@\u0134\3\2\2\2B\u014d\3\2\2\2D"+
-		"\u0157\3\2\2\2F\u0159\3\2\2\2H\u015f\3\2\2\2J\u0161\3\2\2\2L\u0167\3\2"+
-		"\2\2N\u0170\3\2\2\2PR\5\4\3\2QP\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2"+
-		"TV\3\2\2\2US\3\2\2\2VW\7\3\2\2WX\5> \2XY\7\4\2\2YZ\7\2\2\3Z]\3\2\2\2["+
-		"]\3\2\2\2\\S\3\2\2\2\\[\3\2\2\2]\3\3\2\2\2^_\7\5\2\2_f\5\6\4\2`a\7\6\2"+
-		"\2ab\7:\2\2bc\5> \2cd\7\7\2\2df\3\2\2\2e^\3\2\2\2e`\3\2\2\2f\5\3\2\2\2"+
-		"gh\5\36\20\2hi\7:\2\2ij\7\b\2\2jk\5\b\5\2kl\7\t\2\2lm\7\n\2\2mn\5> \2"+
-		"no\7\13\2\2o\7\3\2\2\2ps\5\n\6\2qs\3\2\2\2rp\3\2\2\2rq\3\2\2\2s\t\3\2"+
-		"\2\2tu\5\36\20\2uv\7:\2\2vw\5\f\7\2w\13\3\2\2\2xy\7\f\2\2y|\5\n\6\2z|"+
-		"\3\2\2\2{x\3\2\2\2{z\3\2\2\2|\r\3\2\2\2}~\5\36\20\2~\177\7:\2\2\177\u0080"+
-		"\5\20\t\2\u0080\u0084\3\2\2\2\u0081\u0082\7:\2\2\u0082\u0084\5\20\t\2"+
-		"\u0083}\3\2\2\2\u0083\u0081\3\2\2\2\u0084\17\3\2\2\2\u0085\u0086\7\r\2"+
-		"\2\u0086\u0087\5@!\2\u0087\u0088\5\22\n\2\u0088\u008c\3\2\2\2\u0089\u008c"+
-		"\5\22\n\2\u008a\u008c\3\2\2\2\u008b\u0085\3\2\2\2\u008b\u0089\3\2\2\2"+
-		"\u008b\u008a\3\2\2\2\u008c\21\3\2\2\2\u008d\u008e\7\f\2\2\u008e\u008f"+
-		"\7:\2\2\u008f\u0092\5\24\13\2\u0090\u0092\3\2\2\2\u0091\u008d\3\2\2\2"+
-		"\u0091\u0090\3\2\2\2\u0092\23\3\2\2\2\u0093\u0094\7\r\2\2\u0094\u0095"+
-		"\5@!\2\u0095\u0096\5\22\n\2\u0096\u009a\3\2\2\2\u0097\u009a\5\22\n\2\u0098"+
-		"\u009a\3\2\2\2\u0099\u0093\3\2\2\2\u0099\u0097\3\2\2\2\u0099\u0098\3\2"+
-		"\2\2\u009a\25\3\2\2\2\u009b\u009c\7\r\2\2\u009c\u00a0\5@!\2\u009d\u009e"+
-		"\7:\2\2\u009e\u00a0\5\20\t\2\u009f\u009b\3\2\2\2\u009f\u009d\3\2\2\2\u00a0"+
-		"\27\3\2\2\2\u00a1\u00a2\7\b\2\2\u00a2\u00a3\5\32\16\2\u00a3\u00a4\7\t"+
-		"\2\2\u00a4\u00a7\3\2\2\2\u00a5\u00a7\5\26\f\2\u00a6\u00a1\3\2\2\2\u00a6"+
-		"\u00a5\3\2\2\2\u00a7\31\3\2\2\2\u00a8\u00a9\5@!\2\u00a9\u00aa\5\34\17"+
-		"\2\u00aa\u00ad\3\2\2\2\u00ab\u00ad\3\2\2\2\u00ac\u00a8\3\2\2\2\u00ac\u00ab"+
-		"\3\2\2\2\u00ad\33\3\2\2\2\u00ae\u00af\7\f\2\2\u00af\u00b0\5@!\2\u00b0"+
-		"\u00b1\5\34\17\2\u00b1\u00b4\3\2\2\2\u00b2\u00b4\3\2\2\2\u00b3\u00ae\3"+
-		"\2\2\2\u00b3\u00b2\3\2\2\2\u00b4\35\3\2\2\2\u00b5\u00b6\t\2\2\2\u00b6"+
-		"\37\3\2\2\2\u00b7\u00b8\5\16\b\2\u00b8\u00b9\7\23\2\2\u00b9\u00c4\3\2"+
-		"\2\2\u00ba\u00c4\5\"\22\2\u00bb\u00c4\5$\23\2\u00bc\u00c4\5&\24\2\u00bd"+
-		"\u00c4\5(\25\2\u00be\u00c4\5*\26\2\u00bf\u00c4\5,\27\2\u00c0\u00c4\5."+
-		"\30\2\u00c1\u00c4\5\60\31\2\u00c2\u00c4\5\62\32\2\u00c3\u00b7\3\2\2\2"+
-		"\u00c3\u00ba\3\2\2\2\u00c3\u00bb\3\2\2\2\u00c3\u00bc\3\2\2\2\u00c3\u00bd"+
-		"\3\2\2\2\u00c3\u00be\3\2\2\2\u00c3\u00bf\3\2\2\2\u00c3\u00c0\3\2\2\2\u00c3"+
-		"\u00c1\3\2\2\2\u00c3\u00c2\3\2\2\2\u00c4!\3\2\2\2\u00c5\u00c6\7\24\2\2"+
-		"\u00c6\u00c7\7\b\2\2\u00c7\u00c8\5@!\2\u00c8\u00c9\7\t\2\2\u00c9\u00ca"+
-		"\7\25\2\2\u00ca\u00cb\5> \2\u00cb\u00cc\5\64\33\2\u00cc#\3\2\2\2\u00cd"+
-		"\u00ce\7\26\2\2\u00ce\u00cf\7\b\2\2\u00cf\u00d0\5J&\2\u00d0\u00d1\7\t"+
-		"\2\2\u00d1\u00d2\7\23\2\2\u00d2%\3\2\2\2\u00d3\u00d4\7\27\2\2\u00d4\u00d5"+
-		"\7\b\2\2\u00d5\u00d6\58\35\2\u00d6\u00d7\7\t\2\2\u00d7\u00d8\7\23\2\2"+
-		"\u00d8\'\3\2\2\2\u00d9\u00da\7\30\2\2\u00da\u00db\7\b\2\2\u00db\u00dc"+
-		"\5@!\2\u00dc\u00dd\7\t\2\2\u00dd\u00de\7\n\2\2\u00de\u00df\5> \2\u00df"+
-		"\u00e0\7\31\2\2\u00e0)\3\2\2\2\u00e1\u00e2\7\32\2\2\u00e2\u00e3\7\b\2"+
-		"\2\u00e3\u00e4\5\16\b\2\u00e4\u00e5\7\23\2\2\u00e5\u00e6\5@!\2\u00e6\u00e7"+
-		"\7\23\2\2\u00e7\u00e8\5\66\34\2\u00e8\u00e9\7\t\2\2\u00e9\u00ea\7\n\2"+
-		"\2\u00ea\u00eb\5> \2\u00eb\u00ec\7\33\2\2\u00ec+\3\2\2\2\u00ed\u00ee\7"+
-		"\n\2\2\u00ee\u00ef\5> \2\u00ef\u00f0\7\30\2\2\u00f0\u00f1\7\b\2\2\u00f1"+
-		"\u00f2\5@!\2\u00f2\u00f3\7\t\2\2\u00f3\u00f4\7\23\2\2\u00f4-\3\2\2\2\u00f5"+
-		"\u00f6\7\34\2\2\u00f6\u00f7\7\b\2\2\u00f7\u00f8\5J&\2\u00f8\u00f9\7\t"+
-		"\2\2\u00f9\u00fa\7\35\2\2\u00fa\u00fb\5<\37\2\u00fb\u00fc\7\36\2\2\u00fc"+
-		"/\3\2\2\2\u00fd\u00fe\7\37\2\2\u00fe\u00ff\7\23\2\2\u00ff\61\3\2\2\2\u0100"+
-		"\u0101\7 \2\2\u0101\u0102\5@!\2\u0102\u0103\7\23\2\2\u0103\63\3\2\2\2"+
-		"\u0104\u010a\7!\2\2\u0105\u0106\7\"\2\2\u0106\u0107\5> \2\u0107\u0108"+
-		"\7!\2\2\u0108\u010a\3\2\2\2\u0109\u0104\3\2\2\2\u0109\u0105\3\2\2\2\u010a"+
-		"\65\3\2\2\2\u010b\u010c\t\3\2\2\u010c\67\3\2\2\2\u010d\u010e\5@!\2\u010e"+
-		"\u010f\5:\36\2\u010f9\3\2\2\2\u0110\u0111\7\f\2\2\u0111\u0114\58\35\2"+
-		"\u0112\u0114\3\2\2\2\u0113\u0110\3\2\2\2\u0113\u0112\3\2\2\2\u0114;\3"+
-		"\2\2\2\u0115\u0116\7#\2\2\u0116\u0117\5N(\2\u0117\u0118\7$\2\2\u0118\u0119"+
-		"\5> \2\u0119\u011a\5<\37\2\u011a\u0120\3\2\2\2\u011b\u011c\7%\2\2\u011c"+
-		"\u011d\7$\2\2\u011d\u0120\5> \2\u011e\u0120\3\2\2\2\u011f\u0115\3\2\2"+
-		"\2\u011f\u011b\3\2\2\2\u011f\u011e\3\2\2\2\u0120=\3\2\2\2\u0121\u0122"+
-		"\5 \21\2\u0122\u0123\5> \2\u0123\u0126\3\2\2\2\u0124\u0126\3\2\2\2\u0125"+
-		"\u0121\3\2\2\2\u0125\u0124\3\2\2\2\u0126?\3\2\2\2\u0127\u0128\b!\1\2\u0128"+
-		"\u0135\5D#\2\u0129\u012a\5B\"\2\u012a\u012b\7&\2\2\u012b\u012c\5J&\2\u012c"+
-		"\u0135\3\2\2\2\u012d\u0135\5B\"\2\u012e\u012f\7\'\2\2\u012f\u0135\5@!"+
-		"\n\u0130\u0131\5J&\2\u0131\u0132\7\r\2\2\u0132\u0133\5@!\3\u0133\u0135"+
-		"\3\2\2\2\u0134\u0127\3\2\2\2\u0134\u0129\3\2\2\2\u0134\u012d\3\2\2\2\u0134"+
-		"\u012e\3\2\2\2\u0134\u0130\3\2\2\2\u0135\u014a\3\2\2\2\u0136\u0137\f\t"+
-		"\2\2\u0137\u0138\t\4\2\2\u0138\u0149\5@!\n\u0139\u013a\f\b\2\2\u013a\u013b"+
-		"\t\5\2\2\u013b\u0149\5@!\t\u013c\u013d\f\7\2\2\u013d\u013e\t\6\2\2\u013e"+
-		"\u0149\5@!\b\u013f\u0140\f\6\2\2\u0140\u0141\t\7\2\2\u0141\u0149\5@!\7"+
-		"\u0142\u0143\f\5\2\2\u0143\u0144\7\63\2\2\u0144\u0149\5@!\6\u0145\u0146"+
-		"\f\4\2\2\u0146\u0147\7\64\2\2\u0147\u0149\5@!\5\u0148\u0136\3\2\2\2\u0148"+
-		"\u0139\3\2\2\2\u0148\u013c\3\2\2\2\u0148\u013f\3\2\2\2\u0148\u0142\3\2"+
-		"\2\2\u0148\u0145\3\2\2\2\u0149\u014c\3\2\2\2\u014a\u0148\3\2\2\2\u014a"+
-		"\u014b\3\2\2\2\u014bA\3\2\2\2\u014c\u014a\3\2\2\2\u014d\u014e\7:\2\2\u014e"+
-		"\u014f\7\b\2\2\u014f\u0150\5\32\16\2\u0150\u0151\7\t\2\2\u0151C\3\2\2"+
-		"\2\u0152\u0153\7\b\2\2\u0153\u0154\5@!\2\u0154\u0155\7\t\2\2\u0155\u0158"+
-		"\3\2\2\2\u0156\u0158\5N(\2\u0157\u0152\3\2\2\2\u0157\u0156\3\2\2\2\u0158"+
-		"E\3\2\2\2\u0159\u015a\7:\2\2\u015a\u015b\5H%\2\u015bG\3\2\2\2\u015c\u015d"+
-		"\7&\2\2\u015d\u0160\5F$\2\u015e\u0160\3\2\2\2\u015f\u015c\3\2\2\2\u015f"+
-		"\u015e\3\2\2\2\u0160I\3\2\2\2\u0161\u0162\7:\2\2\u0162\u0163\5L\'\2\u0163"+
-		"K\3\2\2\2\u0164\u0165\7&\2\2\u0165\u0168\5J&\2\u0166\u0168\3\2\2\2\u0167"+
-		"\u0164\3\2\2\2\u0167\u0166\3\2\2\2\u0168M\3\2\2\2\u0169\u0171\5J&\2\u016a"+
-		"\u0171\7;\2\2\u016b\u0171\7<\2\2\u016c\u0171\7=\2\2\u016d\u0171\7>\2\2"+
-		"\u016e\u0171\7\65\2\2\u016f\u0171\7\66\2\2\u0170\u0169\3\2\2\2\u0170\u016a"+
-		"\3\2\2\2\u0170\u016b\3\2\2\2\u0170\u016c\3\2\2\2\u0170\u016d\3\2\2\2\u0170"+
-		"\u016e\3\2\2\2\u0170\u016f\3\2\2\2\u0171O\3\2\2\2\33S\\er{\u0083\u008b"+
-		"\u0091\u0099\u009f\u00a6\u00ac\u00b3\u00c3\u0109\u0113\u011f\u0125\u0134"+
-		"\u0148\u014a\u0157\u015f\u0167\u0170";
+		"\5\3f\n\3\3\4\3\4\3\4\3\4\7\4l\n\4\f\4\16\4o\13\4\3\5\3\5\3\5\3\5\3\5"+
+		"\3\5\3\5\3\5\3\5\3\6\3\6\5\6|\n\6\3\7\3\7\3\7\3\7\3\b\3\b\3\b\5\b\u0085"+
+		"\n\b\3\t\3\t\3\t\3\t\5\t\u008b\n\t\3\n\3\n\3\n\5\n\u0090\n\n\3\n\3\n\3"+
+		"\13\3\13\3\13\5\13\u0097\n\13\3\f\3\f\3\f\3\f\3\f\3\r\3\r\3\r\5\r\u00a1"+
+		"\n\r\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
+		"\3\17\5\17\u00b1\n\17\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\21\3\21"+
+		"\3\21\3\21\3\21\3\21\3\22\3\22\3\22\3\22\3\22\3\22\3\23\3\23\3\23\3\23"+
+		"\3\23\3\23\3\23\3\23\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24"+
+		"\3\24\3\24\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\26\3\26\3\26\3\26"+
+		"\3\26\3\26\3\26\3\26\3\27\3\27\3\27\3\30\3\30\3\30\3\30\3\31\3\31\3\31"+
+		"\3\31\3\31\5\31\u00f7\n\31\3\32\3\32\3\33\3\33\3\33\3\34\3\34\3\34\5\34"+
+		"\u0101\n\34\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\3\35\5\35\u010d"+
+		"\n\35\3\36\3\36\3\36\3\36\5\36\u0113\n\36\3\37\3\37\3\37\3\37\3\37\3\37"+
+		"\3\37\3\37\3\37\3\37\3\37\3\37\3\37\5\37\u0122\n\37\3\37\3\37\3\37\3\37"+
+		"\3\37\3\37\3\37\3\37\3\37\3\37\3\37\3\37\3\37\3\37\3\37\3\37\3\37\3\37"+
+		"\7\37\u0136\n\37\f\37\16\37\u0139\13\37\3 \3 \3 \3 \3 \3!\3!\3!\3!\5!"+
+		"\u0144\n!\3\"\3\"\3\"\3\"\3\"\5\"\u014b\n\"\3#\3#\3#\3#\3#\5#\u0152\n"+
+		"#\3$\3$\3$\3%\3%\3%\5%\u015a\n%\3&\3&\3&\3\'\3\'\3\'\5\'\u0162\n\'\3("+
+		"\3(\3(\3(\3(\3(\3(\5(\u016b\n(\3(\2\3<)\2\4\6\b\n\f\16\20\22\24\26\30"+
+		"\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJLN\2\b\4\2\17\23::\3\2:<\3\2("+
+		"*\3\2+,\3\2-\60\3\2\61\62\u0172\2\\\3\2\2\2\4e\3\2\2\2\6m\3\2\2\2\bp\3"+
+		"\2\2\2\n{\3\2\2\2\f}\3\2\2\2\16\u0084\3\2\2\2\20\u008a\3\2\2\2\22\u008c"+
+		"\3\2\2\2\24\u0096\3\2\2\2\26\u0098\3\2\2\2\30\u00a0\3\2\2\2\32\u00a2\3"+
+		"\2\2\2\34\u00b0\3\2\2\2\36\u00b2\3\2\2\2 \u00ba\3\2\2\2\"\u00c0\3\2\2"+
+		"\2$\u00c6\3\2\2\2&\u00ce\3\2\2\2(\u00da\3\2\2\2*\u00e2\3\2\2\2,\u00ea"+
+		"\3\2\2\2.\u00ed\3\2\2\2\60\u00f6\3\2\2\2\62\u00f8\3\2\2\2\64\u00fa\3\2"+
+		"\2\2\66\u0100\3\2\2\28\u010c\3\2\2\2:\u0112\3\2\2\2<\u0121\3\2\2\2>\u013a"+
+		"\3\2\2\2@\u0143\3\2\2\2B\u014a\3\2\2\2D\u0151\3\2\2\2F\u0153\3\2\2\2H"+
+		"\u0159\3\2\2\2J\u015b\3\2\2\2L\u0161\3\2\2\2N\u016a\3\2\2\2PR\5\4\3\2"+
+		"QP\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2TV\3\2\2\2US\3\2\2\2VW\7\3\2\2"+
+		"WX\5:\36\2XY\7\4\2\2YZ\7\2\2\3Z]\3\2\2\2[]\3\2\2\2\\S\3\2\2\2\\[\3\2\2"+
+		"\2]\3\3\2\2\2^_\7\5\2\2_f\5\b\5\2`a\7\6\2\2ab\7:\2\2bc\5:\36\2cd\7\7\2"+
+		"\2df\3\2\2\2e^\3\2\2\2e`\3\2\2\2f\5\3\2\2\2gh\5\32\16\2hi\7:\2\2ij\7\b"+
+		"\2\2jl\3\2\2\2kg\3\2\2\2lo\3\2\2\2mk\3\2\2\2mn\3\2\2\2n\7\3\2\2\2om\3"+
+		"\2\2\2pq\5\32\16\2qr\7:\2\2rs\7\t\2\2st\5\n\6\2tu\7\n\2\2uv\7\13\2\2v"+
+		"w\5:\36\2wx\7\f\2\2x\t\3\2\2\2y|\5\f\7\2z|\3\2\2\2{y\3\2\2\2{z\3\2\2\2"+
+		"|\13\3\2\2\2}~\5\32\16\2~\177\7:\2\2\177\u0080\5\16\b\2\u0080\r\3\2\2"+
+		"\2\u0081\u0082\7\r\2\2\u0082\u0085\5\f\7\2\u0083\u0085\3\2\2\2\u0084\u0081"+
+		"\3\2\2\2\u0084\u0083\3\2\2\2\u0085\17\3\2\2\2\u0086\u0087\5\32\16\2\u0087"+
+		"\u0088\5\22\n\2\u0088\u008b\3\2\2\2\u0089\u008b\5\26\f\2\u008a\u0086\3"+
+		"\2\2\2\u008a\u0089\3\2\2\2\u008b\21\3\2\2\2\u008c\u008f\7:\2\2\u008d\u008e"+
+		"\7\16\2\2\u008e\u0090\5<\37\2\u008f\u008d\3\2\2\2\u008f\u0090\3\2\2\2"+
+		"\u0090\u0091\3\2\2\2\u0091\u0092\5\24\13\2\u0092\23\3\2\2\2\u0093\u0094"+
+		"\7\r\2\2\u0094\u0097\5\22\n\2\u0095\u0097\3\2\2\2\u0096\u0093\3\2\2\2"+
+		"\u0096\u0095\3\2\2\2\u0097\25\3\2\2\2\u0098\u0099\5J&\2\u0099\u009a\7"+
+		"\16\2\2\u009a\u009b\5<\37\2\u009b\u009c\5\30\r\2\u009c\27\3\2\2\2\u009d"+
+		"\u009e\7\r\2\2\u009e\u00a1\5\26\f\2\u009f\u00a1\3\2\2\2\u00a0\u009d\3"+
+		"\2\2\2\u00a0\u009f\3\2\2\2\u00a1\31\3\2\2\2\u00a2\u00a3\t\2\2\2\u00a3"+
+		"\33\3\2\2\2\u00a4\u00a5\5\20\t\2\u00a5\u00a6\7\b\2\2\u00a6\u00b1\3\2\2"+
+		"\2\u00a7\u00b1\5\36\20\2\u00a8\u00b1\5 \21\2\u00a9\u00b1\5\"\22\2\u00aa"+
+		"\u00b1\5$\23\2\u00ab\u00b1\5&\24\2\u00ac\u00b1\5(\25\2\u00ad\u00b1\5*"+
+		"\26\2\u00ae\u00b1\5,\27\2\u00af\u00b1\5.\30\2\u00b0\u00a4\3\2\2\2\u00b0"+
+		"\u00a7\3\2\2\2\u00b0\u00a8\3\2\2\2\u00b0\u00a9\3\2\2\2\u00b0\u00aa\3\2"+
+		"\2\2\u00b0\u00ab\3\2\2\2\u00b0\u00ac\3\2\2\2\u00b0\u00ad\3\2\2\2\u00b0"+
+		"\u00ae\3\2\2\2\u00b0\u00af\3\2\2\2\u00b1\35\3\2\2\2\u00b2\u00b3\7\24\2"+
+		"\2\u00b3\u00b4\7\t\2\2\u00b4\u00b5\5<\37\2\u00b5\u00b6\7\n\2\2\u00b6\u00b7"+
+		"\7\25\2\2\u00b7\u00b8\5:\36\2\u00b8\u00b9\5\60\31\2\u00b9\37\3\2\2\2\u00ba"+
+		"\u00bb\7\26\2\2\u00bb\u00bc\7\t\2\2\u00bc\u00bd\5J&\2\u00bd\u00be\7\n"+
+		"\2\2\u00be\u00bf\7\b\2\2\u00bf!\3\2\2\2\u00c0\u00c1\7\27\2\2\u00c1\u00c2"+
+		"\7\t\2\2\u00c2\u00c3\5\64\33\2\u00c3\u00c4\7\n\2\2\u00c4\u00c5\7\b\2\2"+
+		"\u00c5#\3\2\2\2\u00c6\u00c7\7\30\2\2\u00c7\u00c8\7\t\2\2\u00c8\u00c9\5"+
+		"<\37\2\u00c9\u00ca\7\n\2\2\u00ca\u00cb\7\13\2\2\u00cb\u00cc\5:\36\2\u00cc"+
+		"\u00cd\7\31\2\2\u00cd%\3\2\2\2\u00ce\u00cf\7\32\2\2\u00cf\u00d0\7\t\2"+
+		"\2\u00d0\u00d1\5\20\t\2\u00d1\u00d2\7\b\2\2\u00d2\u00d3\5<\37\2\u00d3"+
+		"\u00d4\7\b\2\2\u00d4\u00d5\5\62\32\2\u00d5\u00d6\7\n\2\2\u00d6\u00d7\7"+
+		"\13\2\2\u00d7\u00d8\5:\36\2\u00d8\u00d9\7\33\2\2\u00d9\'\3\2\2\2\u00da"+
+		"\u00db\7\13\2\2\u00db\u00dc\5:\36\2\u00dc\u00dd\7\30\2\2\u00dd\u00de\7"+
+		"\t\2\2\u00de\u00df\5<\37\2\u00df\u00e0\7\n\2\2\u00e0\u00e1\7\b\2\2\u00e1"+
+		")\3\2\2\2\u00e2\u00e3\7\34\2\2\u00e3\u00e4\7\t\2\2\u00e4\u00e5\5J&\2\u00e5"+
+		"\u00e6\7\n\2\2\u00e6\u00e7\7\35\2\2\u00e7\u00e8\58\35\2\u00e8\u00e9\7"+
+		"\36\2\2\u00e9+\3\2\2\2\u00ea\u00eb\7\37\2\2\u00eb\u00ec\7\b\2\2\u00ec"+
+		"-\3\2\2\2\u00ed\u00ee\7 \2\2\u00ee\u00ef\5<\37\2\u00ef\u00f0\7\b\2\2\u00f0"+
+		"/\3\2\2\2\u00f1\u00f7\7!\2\2\u00f2\u00f3\7\"\2\2\u00f3\u00f4\5:\36\2\u00f4"+
+		"\u00f5\7!\2\2\u00f5\u00f7\3\2\2\2\u00f6\u00f1\3\2\2\2\u00f6\u00f2\3\2"+
+		"\2\2\u00f7\61\3\2\2\2\u00f8\u00f9\t\3\2\2\u00f9\63\3\2\2\2\u00fa\u00fb"+
+		"\5<\37\2\u00fb\u00fc\5\66\34\2\u00fc\65\3\2\2\2\u00fd\u00fe\7\r\2\2\u00fe"+
+		"\u0101\5\64\33\2\u00ff\u0101\3\2\2\2\u0100\u00fd\3\2\2\2\u0100\u00ff\3"+
+		"\2\2\2\u0101\67\3\2\2\2\u0102\u0103\7#\2\2\u0103\u0104\5N(\2\u0104\u0105"+
+		"\7$\2\2\u0105\u0106\5:\36\2\u0106\u0107\58\35\2\u0107\u010d\3\2\2\2\u0108"+
+		"\u0109\7%\2\2\u0109\u010a\7$\2\2\u010a\u010d\5:\36\2\u010b\u010d\3\2\2"+
+		"\2\u010c\u0102\3\2\2\2\u010c\u0108\3\2\2\2\u010c\u010b\3\2\2\2\u010d9"+
+		"\3\2\2\2\u010e\u010f\5\34\17\2\u010f\u0110\5:\36\2\u0110\u0113\3\2\2\2"+
+		"\u0111\u0113\3\2\2\2\u0112\u010e\3\2\2\2\u0112\u0111\3\2\2\2\u0113;\3"+
+		"\2\2\2\u0114\u0115\b\37\1\2\u0115\u0122\5D#\2\u0116\u0117\5> \2\u0117"+
+		"\u0118\7&\2\2\u0118\u0119\5J&\2\u0119\u0122\3\2\2\2\u011a\u0122\5> \2"+
+		"\u011b\u011c\7\'\2\2\u011c\u0122\5<\37\n\u011d\u011e\5J&\2\u011e\u011f"+
+		"\7\16\2\2\u011f\u0120\5<\37\3\u0120\u0122\3\2\2\2\u0121\u0114\3\2\2\2"+
+		"\u0121\u0116\3\2\2\2\u0121\u011a\3\2\2\2\u0121\u011b\3\2\2\2\u0121\u011d"+
+		"\3\2\2\2\u0122\u0137\3\2\2\2\u0123\u0124\f\t\2\2\u0124\u0125\t\4\2\2\u0125"+
+		"\u0136\5<\37\n\u0126\u0127\f\b\2\2\u0127\u0128\t\5\2\2\u0128\u0136\5<"+
+		"\37\t\u0129\u012a\f\7\2\2\u012a\u012b\t\6\2\2\u012b\u0136\5<\37\b\u012c"+
+		"\u012d\f\6\2\2\u012d\u012e\t\7\2\2\u012e\u0136\5<\37\7\u012f\u0130\f\5"+
+		"\2\2\u0130\u0131\7\63\2\2\u0131\u0136\5<\37\6\u0132\u0133\f\4\2\2\u0133"+
+		"\u0134\7\64\2\2\u0134\u0136\5<\37\5\u0135\u0123\3\2\2\2\u0135\u0126\3"+
+		"\2\2\2\u0135\u0129\3\2\2\2\u0135\u012c\3\2\2\2\u0135\u012f\3\2\2\2\u0135"+
+		"\u0132\3\2\2\2\u0136\u0139\3\2\2\2\u0137\u0135\3\2\2\2\u0137\u0138\3\2"+
+		"\2\2\u0138=\3\2\2\2\u0139\u0137\3\2\2\2\u013a\u013b\7:\2\2\u013b\u013c"+
+		"\7\t\2\2\u013c\u013d\5@!\2\u013d\u013e\7\n\2\2\u013e?\3\2\2\2\u013f\u0140"+
+		"\5<\37\2\u0140\u0141\5B\"\2\u0141\u0144\3\2\2\2\u0142\u0144\3\2\2\2\u0143"+
+		"\u013f\3\2\2\2\u0143\u0142\3\2\2\2\u0144A\3\2\2\2\u0145\u0146\7\r\2\2"+
+		"\u0146\u0147\5<\37\2\u0147\u0148\5B\"\2\u0148\u014b\3\2\2\2\u0149\u014b"+
+		"\3\2\2\2\u014a\u0145\3\2\2\2\u014a\u0149\3\2\2\2\u014bC\3\2\2\2\u014c"+
+		"\u014d\7\t\2\2\u014d\u014e\5<\37\2\u014e\u014f\7\n\2\2\u014f\u0152\3\2"+
+		"\2\2\u0150\u0152\5N(\2\u0151\u014c\3\2\2\2\u0151\u0150\3\2\2\2\u0152E"+
+		"\3\2\2\2\u0153\u0154\7:\2\2\u0154\u0155\5H%\2\u0155G\3\2\2\2\u0156\u0157"+
+		"\7&\2\2\u0157\u015a\5F$\2\u0158\u015a\3\2\2\2\u0159\u0156\3\2\2\2\u0159"+
+		"\u0158\3\2\2\2\u015aI\3\2\2\2\u015b\u015c\7:\2\2\u015c\u015d\5L\'\2\u015d"+
+		"K\3\2\2\2\u015e\u015f\7&\2\2\u015f\u0162\5J&\2\u0160\u0162\3\2\2\2\u0161"+
+		"\u015e\3\2\2\2\u0161\u0160\3\2\2\2\u0162M\3\2\2\2\u0163\u016b\5J&\2\u0164"+
+		"\u016b\7;\2\2\u0165\u016b\7<\2\2\u0166\u016b\7=\2\2\u0167\u016b\7>\2\2"+
+		"\u0168\u016b\7\65\2\2\u0169\u016b\7\66\2\2\u016a\u0163\3\2\2\2\u016a\u0164"+
+		"\3\2\2\2\u016a\u0165\3\2\2\2\u016a\u0166\3\2\2\2\u016a\u0167\3\2\2\2\u016a"+
+		"\u0168\3\2\2\2\u016a\u0169\3\2\2\2\u016bO\3\2\2\2\32S\\em{\u0084\u008a"+
+		"\u008f\u0096\u00a0\u00b0\u00f6\u0100\u010c\u0112\u0121\u0135\u0137\u0143"+
+		"\u014a\u0151\u0159\u0161\u016a";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

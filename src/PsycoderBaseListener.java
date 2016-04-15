@@ -39,6 +39,18 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStruct_declaration(PsycoderParser.Struct_declarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStruct_declaration(PsycoderParser.Struct_declarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFunction_declaration(PsycoderParser.Function_declarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -87,37 +99,49 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssign(PsycoderParser.AssignContext ctx) { }
+	@Override public void enterTypedAssign(PsycoderParser.TypedAssignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssign(PsycoderParser.AssignContext ctx) { }
+	@Override public void exitTypedAssign(PsycoderParser.TypedAssignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssign_pri(PsycoderParser.Assign_priContext ctx) { }
+	@Override public void enterUnTypedAssign(PsycoderParser.UnTypedAssignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssign_pri(PsycoderParser.Assign_priContext ctx) { }
+	@Override public void exitUnTypedAssign(PsycoderParser.UnTypedAssignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssign_pri_pri(PsycoderParser.Assign_pri_priContext ctx) { }
+	@Override public void enterAssign_type(PsycoderParser.Assign_typeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssign_pri_pri(PsycoderParser.Assign_pri_priContext ctx) { }
+	@Override public void exitAssign_type(PsycoderParser.Assign_typeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssign_type_pri(PsycoderParser.Assign_type_priContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssign_type_pri(PsycoderParser.Assign_type_priContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -135,49 +159,13 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssign_special(PsycoderParser.Assign_specialContext ctx) { }
+	@Override public void enterAssign_id_pri(PsycoderParser.Assign_id_priContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssign_special(PsycoderParser.Assign_specialContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAssign_fun(PsycoderParser.Assign_funContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAssign_fun(PsycoderParser.Assign_funContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArgs_fun(PsycoderParser.Args_funContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArgs_fun(PsycoderParser.Args_funContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx) { }
+	@Override public void exitAssign_id_pri(PsycoderParser.Assign_id_priContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -526,6 +514,30 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunction_call(PsycoderParser.Function_callContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArgs_fun(PsycoderParser.Args_funContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArgs_fun(PsycoderParser.Args_funContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

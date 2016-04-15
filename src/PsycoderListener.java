@@ -27,6 +27,16 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitElement(PsycoderParser.ElementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PsycoderParser#struct_declaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterStruct_declaration(PsycoderParser.Struct_declarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PsycoderParser#struct_declaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitStruct_declaration(PsycoderParser.Struct_declarationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PsycoderParser#function_declaration}.
 	 * @param ctx the parse tree
 	 */
@@ -67,35 +77,49 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitMandatory_params_pri(PsycoderParser.Mandatory_params_priContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#assign}.
+	 * Enter a parse tree produced by the {@code typedAssign}
+	 * labeled alternative in {@link PsycoderParser#assign}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssign(PsycoderParser.AssignContext ctx);
+	void enterTypedAssign(PsycoderParser.TypedAssignContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#assign}.
+	 * Exit a parse tree produced by the {@code typedAssign}
+	 * labeled alternative in {@link PsycoderParser#assign}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssign(PsycoderParser.AssignContext ctx);
+	void exitTypedAssign(PsycoderParser.TypedAssignContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#assign_pri}.
+	 * Enter a parse tree produced by the {@code unTypedAssign}
+	 * labeled alternative in {@link PsycoderParser#assign}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssign_pri(PsycoderParser.Assign_priContext ctx);
+	void enterUnTypedAssign(PsycoderParser.UnTypedAssignContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#assign_pri}.
+	 * Exit a parse tree produced by the {@code unTypedAssign}
+	 * labeled alternative in {@link PsycoderParser#assign}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssign_pri(PsycoderParser.Assign_priContext ctx);
+	void exitUnTypedAssign(PsycoderParser.UnTypedAssignContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#assign_pri_pri}.
+	 * Enter a parse tree produced by {@link PsycoderParser#assign_type}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssign_pri_pri(PsycoderParser.Assign_pri_priContext ctx);
+	void enterAssign_type(PsycoderParser.Assign_typeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#assign_pri_pri}.
+	 * Exit a parse tree produced by {@link PsycoderParser#assign_type}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssign_pri_pri(PsycoderParser.Assign_pri_priContext ctx);
+	void exitAssign_type(PsycoderParser.Assign_typeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PsycoderParser#assign_type_pri}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssign_type_pri(PsycoderParser.Assign_type_priContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PsycoderParser#assign_type_pri}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssign_type_pri(PsycoderParser.Assign_type_priContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PsycoderParser#assign_id}.
 	 * @param ctx the parse tree
@@ -107,45 +131,15 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitAssign_id(PsycoderParser.Assign_idContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#assign_special}.
+	 * Enter a parse tree produced by {@link PsycoderParser#assign_id_pri}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssign_special(PsycoderParser.Assign_specialContext ctx);
+	void enterAssign_id_pri(PsycoderParser.Assign_id_priContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#assign_special}.
+	 * Exit a parse tree produced by {@link PsycoderParser#assign_id_pri}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssign_special(PsycoderParser.Assign_specialContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#assign_fun}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssign_fun(PsycoderParser.Assign_funContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#assign_fun}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssign_fun(PsycoderParser.Assign_funContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#args_fun}.
-	 * @param ctx the parse tree
-	 */
-	void enterArgs_fun(PsycoderParser.Args_funContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#args_fun}.
-	 * @param ctx the parse tree
-	 */
-	void exitArgs_fun(PsycoderParser.Args_funContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#args_fun_pri}.
-	 * @param ctx the parse tree
-	 */
-	void enterArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#args_fun_pri}.
-	 * @param ctx the parse tree
-	 */
-	void exitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
+	void exitAssign_id_pri(PsycoderParser.Assign_id_priContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PsycoderParser#type}.
 	 * @param ctx the parse tree
@@ -458,6 +452,26 @@ public interface PsycoderListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunction_call(PsycoderParser.Function_callContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PsycoderParser#args_fun}.
+	 * @param ctx the parse tree
+	 */
+	void enterArgs_fun(PsycoderParser.Args_funContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PsycoderParser#args_fun}.
+	 * @param ctx the parse tree
+	 */
+	void exitArgs_fun(PsycoderParser.Args_funContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PsycoderParser#args_fun_pri}.
+	 * @param ctx the parse tree
+	 */
+	void enterArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PsycoderParser#args_fun_pri}.
+	 * @param ctx the parse tree
+	 */
+	void exitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code parenPriExp}
 	 * labeled alternative in {@link PsycoderParser#primary}.

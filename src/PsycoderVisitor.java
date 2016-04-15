@@ -22,6 +22,12 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitElement(PsycoderParser.ElementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PsycoderParser#struct_declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStruct_declaration(PsycoderParser.Struct_declarationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#function_declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -46,23 +52,31 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMandatory_params_pri(PsycoderParser.Mandatory_params_priContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#assign}.
+	 * Visit a parse tree produced by the {@code typedAssign}
+	 * labeled alternative in {@link PsycoderParser#assign}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssign(PsycoderParser.AssignContext ctx);
+	T visitTypedAssign(PsycoderParser.TypedAssignContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#assign_pri}.
+	 * Visit a parse tree produced by the {@code unTypedAssign}
+	 * labeled alternative in {@link PsycoderParser#assign}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssign_pri(PsycoderParser.Assign_priContext ctx);
+	T visitUnTypedAssign(PsycoderParser.UnTypedAssignContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#assign_pri_pri}.
+	 * Visit a parse tree produced by {@link PsycoderParser#assign_type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssign_pri_pri(PsycoderParser.Assign_pri_priContext ctx);
+	T visitAssign_type(PsycoderParser.Assign_typeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PsycoderParser#assign_type_pri}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssign_type_pri(PsycoderParser.Assign_type_priContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#assign_id}.
 	 * @param ctx the parse tree
@@ -70,29 +84,11 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssign_id(PsycoderParser.Assign_idContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#assign_special}.
+	 * Visit a parse tree produced by {@link PsycoderParser#assign_id_pri}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssign_special(PsycoderParser.Assign_specialContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#assign_fun}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAssign_fun(PsycoderParser.Assign_funContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#args_fun}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArgs_fun(PsycoderParser.Args_funContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#args_fun_pri}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
+	T visitAssign_id_pri(PsycoderParser.Assign_id_priContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#type}.
 	 * @param ctx the parse tree
@@ -278,6 +274,18 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFunction_call(PsycoderParser.Function_callContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PsycoderParser#args_fun}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArgs_fun(PsycoderParser.Args_funContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PsycoderParser#args_fun_pri}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code parenPriExp}
 	 * labeled alternative in {@link PsycoderParser#primary}.

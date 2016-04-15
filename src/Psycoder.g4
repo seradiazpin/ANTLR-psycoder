@@ -46,39 +46,23 @@ mandatory_params_pri    : ',' mandatory_params
                         |
                         ;
 
-assign   : type ID assign_pri
-         | ID assign_pri
+assign   : type assign_type #typedAssign
+         | assign_id        #unTypedAssign
          ;
 
-assign_pri  : '=' expression assign_pri_pri
-            | assign_pri_pri
-            |
+assign_type  : ID ('=' expression)? assign_type_pri
             ;
 
-assign_pri_pri  : ',' ID assign_id
+assign_type_pri  : ',' assign_type
                 |
                 ;
 
-assign_id   : '=' expression assign_pri_pri
-            | assign_pri_pri
-            |
+assign_id   : identifier '=' expression assign_id_pri
             ;
 
-assign_special  : '=' expression
-                | ID assign_pri
-                ;
-
-assign_fun  : '('args_fun')'
-            | assign_special
-            ;
-
-args_fun    : expression args_fun_pri
-            |
-            ;
-
-args_fun_pri    : ',' expression args_fun_pri
-                |
-                ;
+assign_id_pri  : ',' assign_id
+               |
+               ;
 
 type    : 'entero'
         | 'real'
@@ -176,7 +160,16 @@ expression
     ;
 
 function_call
-    :  ID '('args_fun')';
+    :  ID '('args_fun')'
+    ;
+
+args_fun : expression args_fun_pri
+         |
+         ;
+
+args_fun_pri : ',' expression args_fun_pri
+             |
+             ;
 
 primary : '(' expression ')' #parenPriExp
         | terminal_value #terminalPriExp

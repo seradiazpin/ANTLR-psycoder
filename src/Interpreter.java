@@ -14,7 +14,7 @@ public class Interpreter {
         System.out.println("parsing: " + args[0]);
 
         // create a CharStream that reads from standard input
-        //ANTLRInputStream input = new ANTLRInputStream(System.in);
+        // ANTLRInputStream input = new ANTLRInputStream(System.in);
         // create a lexer that feeds off of input CharStream
         PsycoderLexer lexer = new PsycoderLexer(new ANTLRFileStream(args[0]));
         // create a buffer of tokens pulled from the lexer
