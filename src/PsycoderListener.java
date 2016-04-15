@@ -1,4 +1,4 @@
-// Generated from src/Psycoder.g4 by ANTLR 4.5.3
+// Generated from Psycoder.g4 by ANTLR 4.5.3
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -317,25 +317,171 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitCmp_declaration(PsycoderParser.Cmp_declarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#expression}.
+	 * Enter a parse tree produced by the {@code multiplicationExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpression(PsycoderParser.ExpressionContext ctx);
+	void enterMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#expression}.
+	 * Exit a parse tree produced by the {@code multiplicationExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpression(PsycoderParser.ExpressionContext ctx);
+	void exitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#primary}.
+	 * Enter a parse tree produced by the {@code andExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterPrimary(PsycoderParser.PrimaryContext ctx);
+	void enterAndExp(PsycoderParser.AndExpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#primary}.
+	 * Exit a parse tree produced by the {@code andExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitPrimary(PsycoderParser.PrimaryContext ctx);
+	void exitAndExp(PsycoderParser.AndExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code equalityExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualityExp(PsycoderParser.EqualityExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code equalityExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualityExp(PsycoderParser.EqualityExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code functionDotOpExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDotOpExp(PsycoderParser.FunctionDotOpExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code functionDotOpExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDotOpExp(PsycoderParser.FunctionDotOpExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code primaryExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimaryExp(PsycoderParser.PrimaryExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code primaryExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimaryExp(PsycoderParser.PrimaryExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code negExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNegExp(PsycoderParser.NegExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code negExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNegExp(PsycoderParser.NegExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code relationalExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelationalExp(PsycoderParser.RelationalExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code relationalExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelationalExp(PsycoderParser.RelationalExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code orExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrExp(PsycoderParser.OrExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code orExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrExp(PsycoderParser.OrExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code additionExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdditionExp(PsycoderParser.AdditionExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code additionExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdditionExp(PsycoderParser.AdditionExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code assigExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssigExp(PsycoderParser.AssigExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code assigExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssigExp(PsycoderParser.AssigExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code functionExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionExp(PsycoderParser.FunctionExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code functionExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionExp(PsycoderParser.FunctionExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PsycoderParser#function_call}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction_call(PsycoderParser.Function_callContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PsycoderParser#function_call}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction_call(PsycoderParser.Function_callContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code parenPriExp}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenPriExp(PsycoderParser.ParenPriExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code parenPriExp}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenPriExp(PsycoderParser.ParenPriExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code terminalPriExp}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void enterTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code terminalPriExp}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void exitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PsycoderParser#identifier_id}.
 	 * @param ctx the parse tree

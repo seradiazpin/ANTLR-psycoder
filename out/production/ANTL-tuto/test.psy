@@ -1,13 +1,18 @@
 
 funcion_principal
     booleano a = verdadero;
-    booleano a = falso;
-    booleano a = verdadero;
+    entero i = 0;
+    leer(i);
+    imprimir(i);
+    a = falso;
+    //a = verdadero;
     caracter b = '1';
-    cadena  d = "1";
+    cadena d = "123456789";
     b = '2';
     a = falso;
+    imprimir(a, b, d);
     cadena s = "HOLA\n";
+    imprimir(s);
 fin_principal
 
 /*

@@ -28,6 +28,10 @@ public class Value {
         return String.valueOf(getValue());
     }
 
+    public Struct asStruct() {
+        return (Struct) getValue();
+    }
+
     public boolean isDouble() {
         return getValue() instanceof Double;
     }
@@ -94,6 +98,14 @@ public class Value {
 
     @Override
     public String toString() {
+        if(this.isBoolean()) {
+            if(this.asBoolean()) {
+                return "verdadero";
+            } else {
+                return "falso";
+            }
+        }
+
         return String.valueOf(getValue());
     }
 

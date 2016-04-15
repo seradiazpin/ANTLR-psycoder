@@ -52,16 +52,16 @@ public class MemoryManager {
 
     public Value getId(String id) {
         Value val = null;
-        ContextMemory memory;
+        ContextMemory memory = null;
 
         do {
             memory = localMemory.peek();
             val = memory.getMemory().get(id);
-            if(!memory.isRemovable()) {
+            if(val != null) {
                 break;
-            } else {
+            } else if(memory.isRemovable()) {
                 auxiliar.push(memory);
-                memory = localMemory.pop();
+                localMemory.pop();
             }
         } while (memory.isRemovable());
 

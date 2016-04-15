@@ -1,4 +1,4 @@
-// Generated from src/Psycoder.g4 by ANTLR 4.5.3
+// Generated from Psycoder.g4 by ANTLR 4.5.3
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -196,17 +196,102 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCmp_declaration(PsycoderParser.Cmp_declarationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#expression}.
+	 * Visit a parse tree produced by the {@code multiplicationExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpression(PsycoderParser.ExpressionContext ctx);
+	T visitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#primary}.
+	 * Visit a parse tree produced by the {@code andExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPrimary(PsycoderParser.PrimaryContext ctx);
+	T visitAndExp(PsycoderParser.AndExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code equalityExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualityExp(PsycoderParser.EqualityExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code functionDotOpExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionDotOpExp(PsycoderParser.FunctionDotOpExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code primaryExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrimaryExp(PsycoderParser.PrimaryExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code negExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegExp(PsycoderParser.NegExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code relationalExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelationalExp(PsycoderParser.RelationalExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code orExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrExp(PsycoderParser.OrExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code additionExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAdditionExp(PsycoderParser.AdditionExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code assigExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssigExp(PsycoderParser.AssigExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code functionExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionExp(PsycoderParser.FunctionExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PsycoderParser#function_call}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction_call(PsycoderParser.Function_callContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parenPriExp}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParenPriExp(PsycoderParser.ParenPriExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code terminalPriExp}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#identifier_id}.
 	 * @param ctx the parse tree

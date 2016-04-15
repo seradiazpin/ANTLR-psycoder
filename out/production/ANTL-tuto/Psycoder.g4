@@ -158,21 +158,21 @@ exp_pri : '||' expression exp_pri
 */
 
 expression
-    :   primary
-    |   expression '.' identifier
-    |   ID '('args_fun')'
-    |   <assoc=right> '!' expression
-    |   expression ('*'|'/'|'%') expression
-    |   expression ('+'|'-') expression
-    |   expression ('<=' | '>=' | '>' | '<') expression
-    |   expression ('==' | '!=') expression
-    |   expression '&&' expression
-    |   expression '||' expression
-    |   <assoc=right> identifier '=' expression
+    :   primary                                          #primaryExp
+    |   expression '.' identifier                        #dotOpExp
+    |   ID '('args_fun')'                                #functionExp
+    |   <assoc=right> '!' expression                     #negExp
+    |   expression ('*'|'/'|'%') expression              #multiplicationExp
+    |   expression ('+'|'-') expression                  #additionExp
+    |   expression ('<=' | '>=' | '>' | '<') expression  #relationalExp
+    |   expression ('==' | '!=') expression              #equalityExp
+    |   expression '&&' expression                       #andExp
+    |   expression '||' expression                       #orExp
+    |   <assoc=right> identifier '=' expression          #assigExp
     ;
 
-primary : '(' expression ')'
-        | terminal_value
+primary : '(' expression ')' #parenPriExp
+        | terminal_value #terminalPriExp
         ;
 
 identifier_id   : ID identifier_id_pri;

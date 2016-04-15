@@ -28,6 +28,10 @@ element : 'funcion' function_declaration
         | 'estructura' ID cmp_declaration 'fin_estructura'
         ;
 
+struct_declaration
+        : (type ID ';')*
+        ;
+
 function_declaration: type ID '(' params ')' 'hacer' cmp_declaration 'fin_funcion'
            ;
 
@@ -158,21 +162,24 @@ exp_pri : '||' expression exp_pri
 */
 
 expression
-    :   primary
-    |   expression '.' identifier
-    |   ID '('args_fun')'
-    |   <assoc=right> '!' expression
-    |   expression ('*'|'/'|'%') expression
-    |   expression ('+'|'-') expression
-    |   expression ('<=' | '>=' | '>' | '<') expression
-    |   expression ('==' | '!=') expression
-    |   expression '&&' expression
-    |   expression '||' expression
-    |   <assoc=right> identifier '=' expression
+    :   primary                                             #primaryExp
+    |   function_call '.' identifier                        #functionDotOpExp
+    |   function_call                                       #functionExp
+    |   <assoc=right> '!' expression                        #negExp
+    |   expression op=('*'|'/'|'%') expression              #multiplicationExp
+    |   expression op=('+'|'-') expression                  #additionExp
+    |   expression op=('<=' | '>=' | '>' | '<') expression  #relationalExp
+    |   expression op=('==' | '!=') expression              #equalityExp
+    |   expression '&&' expression                          #andExp
+    |   expression '||' expression                          #orExp
+    |   <assoc=right> identifier '=' expression             #assigExp
     ;
 
-primary : '(' expression ')'
-        | terminal_value
+function_call
+    :  ID '('args_fun')';
+
+primary : '(' expression ')' #parenPriExp
+        | terminal_value #terminalPriExp
         ;
 
 identifier_id   : ID identifier_id_pri;
