@@ -1,42 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b194f374-0d6a-412c-93b1-4a4e0deb0e39" name="Default" comment="Update with the new memory structure.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/EvalVisitor.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/EvalVisitor.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderBaseListener.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderBaseListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderBaseVisitor.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderBaseVisitor.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderListener.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Cadena_terminalContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Cadena_terminalContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Caracter_terminalContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Caracter_terminalContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Entero_terminalContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Entero_terminalContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$ExpressionContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$ExpressionContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Falso_terminalContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Falso_terminalContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Id_terminalContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Id_terminalContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$IdentifierContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$IdentifierContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Identifier_idContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Identifier_idContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Identifier_id_priContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Identifier_id_priContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Identifier_priContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Identifier_priContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$PrimaryContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$PrimaryContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Real_terminalContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Real_terminalContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Terminal_valueContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Terminal_valueContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Verdadero_terminalContext.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser$Verdadero_terminalContext.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderVisitor.class" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/PsycoderVisitor.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/Psycoder.g4" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/Psycoder.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/ANTL-tuto/test.psy" afterPath="$PROJECT_DIR$/out/production/ANTL-tuto/test.psy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EvalVisitor.java" afterPath="$PROJECT_DIR$/src/EvalVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MemoryManager.java" afterPath="$PROJECT_DIR$/src/MemoryManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Psycoder.g4" afterPath="$PROJECT_DIR$/src/Psycoder.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PsycoderBaseListener.java" afterPath="$PROJECT_DIR$/src/PsycoderBaseListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PsycoderBaseVisitor.java" afterPath="$PROJECT_DIR$/src/PsycoderBaseVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PsycoderLexer.java" afterPath="$PROJECT_DIR$/src/PsycoderLexer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PsycoderListener.java" afterPath="$PROJECT_DIR$/src/PsycoderListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PsycoderParser.java" afterPath="$PROJECT_DIR$/src/PsycoderParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PsycoderVisitor.java" afterPath="$PROJECT_DIR$/src/PsycoderVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Value.java" afterPath="$PROJECT_DIR$/src/Value.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test.psy" afterPath="$PROJECT_DIR$/src/test.psy" />
-    </list>
+    <list default="true" id="b194f374-0d6a-412c-93b1-4a4e0deb0e39" name="Default" comment="Update with the new memory structure." />
     <ignored path="ANTLR-tuto.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -887,7 +852,7 @@
       <workItem from="1460506514333" duration="1584000" />
       <workItem from="1460557158479" duration="8860000" />
       <workItem from="1460595615766" duration="3316000" />
-      <workItem from="1460676696902" duration="23618000" />
+      <workItem from="1460676696902" duration="23688000" />
     </task>
     <task id="LOCAL-00001" summary="Update with the new memory structure.">
       <created>1460693523782</created>
@@ -900,7 +865,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60568000" />
+    <option name="totallyTimeSpent" value="60638000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
