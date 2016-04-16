@@ -27,13 +27,25 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterElement(PsycoderParser.ElementContext ctx) { }
+	@Override public void enterFunctionElement(PsycoderParser.FunctionElementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitElement(PsycoderParser.ElementContext ctx) { }
+	@Override public void exitFunctionElement(PsycoderParser.FunctionElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStructElement(PsycoderParser.StructElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStructElement(PsycoderParser.StructElementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -507,6 +519,30 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterParenPriExp(PsycoderParser.ParenPriExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParenPriExp(PsycoderParser.ParenPriExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFunction_call(PsycoderParser.Function_callContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -538,30 +574,6 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterParenPriExp(PsycoderParser.ParenPriExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitParenPriExp(PsycoderParser.ParenPriExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

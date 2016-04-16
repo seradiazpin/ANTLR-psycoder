@@ -16,11 +16,19 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgram(PsycoderParser.ProgramContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#element}.
+	 * Visit a parse tree produced by the {@code functionElement}
+	 * labeled alternative in {@link PsycoderParser#element}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitElement(PsycoderParser.ElementContext ctx);
+	T visitFunctionElement(PsycoderParser.FunctionElementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code structElement}
+	 * labeled alternative in {@link PsycoderParser#element}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStructElement(PsycoderParser.StructElementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#struct_declaration}.
 	 * @param ctx the parse tree
@@ -269,6 +277,20 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunctionExp(PsycoderParser.FunctionExpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code parenPriExp}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParenPriExp(PsycoderParser.ParenPriExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code terminalPriExp}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#function_call}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -286,20 +308,6 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code parenPriExp}
-	 * labeled alternative in {@link PsycoderParser#primary}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParenPriExp(PsycoderParser.ParenPriExpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code terminalPriExp}
-	 * labeled alternative in {@link PsycoderParser#primary}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#identifier_id}.
 	 * @param ctx the parse tree

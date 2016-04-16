@@ -24,19 +24,18 @@ program : element* 'funcion_principal' cmp_declaration 'fin_principal' EOF
         |
         ;
 
-element : 'funcion' function_declaration
-        | 'estructura' ID cmp_declaration 'fin_estructura'
+element : 'funcion' function_declaration                    #functionElement
+        | 'estructura' ID struct_declaration 'fin_estructura'  #structElement
         ;
 
 struct_declaration
-        : (type ID ';')*
+        : (type ID ';')+
         ;
 
-function_declaration: type ID '(' params ')' 'hacer' cmp_declaration 'fin_funcion'
+function_declaration: type ID '(' params ')' 'hacer' cmp_declaration return_declaration 'fin_funcion'
            ;
 
-params  : mandatory_params
-        |
+params  : mandatory_params?
         ;
 
 mandatory_params    : type ID mandatory_params_pri
@@ -81,7 +80,6 @@ declaration : assign ';'
             | dowhile_declaration
             | switch_declaration
             | break_declaration
-            | return_declaration
             ;
 
 
@@ -159,6 +157,10 @@ expression
     |   <assoc=right> identifier '=' expression             #assigExp
     ;
 
+primary : '(' expression ')' #parenPriExp
+        | terminal_value #terminalPriExp
+        ;
+
 function_call
     :  ID '('args_fun')'
     ;
@@ -167,13 +169,11 @@ args_fun : expression args_fun_pri
          |
          ;
 
-args_fun_pri : ',' expression args_fun_pri
+args_fun_pri : ',' args_fun
              |
              ;
 
-primary : '(' expression ')' #parenPriExp
-        | terminal_value #terminalPriExp
-        ;
+
 
 identifier_id   : ID identifier_id_pri;
 identifier_id_pri   : '.' identifier_id

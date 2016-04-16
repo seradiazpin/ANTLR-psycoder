@@ -1,3 +1,4 @@
+import javax.xml.bind.ValidationEvent;
 import java.util.*;
 
 /**
@@ -9,9 +10,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     // store variables (there's only one global scope!)
     private MemoryManager memory;
     private Map<String, Map<String, String>> structMemory = new HashMap<String, Map<String, String>>();
-    private Map<String, List<String>> functionMemory = new HashMap<String, List<String>>();
+    private Map<String, Function> functionMemory = new HashMap<String, Function>();
     private String currentTypeToAssign = "";
-
 
     public EvalVisitor(){
         memory = new MemoryManager();
@@ -45,7 +45,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
             memory.addId(id, this.visit(ctx.expression()));
         }
 
-        return this.visitChildren(ctx);
+        return ctx.assign_type_pri() != null ? this.visit(ctx.assign_type_pri()) : null;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         Value val = memory.getId(id);
         val.setValue(this.visit(ctx.expression()));
 
-        return this.visitChildren(ctx);
+        return this.visit(ctx.assign_id_pri());
     }
 
     @Override
@@ -108,7 +108,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
    @Override
     public Value visitPrint_declaration(PsycoderParser.Print_declarationContext ctx) {
-        visitChildren(ctx);
+        this.visitChildren(ctx);
         System.out.println();
         return null;
     }
@@ -121,7 +121,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         }else {
             System.out.print(value + " ");
         }
-        return visitChildren(ctx);
+        return this.visitChildren(ctx);
     }
 
     @Override
@@ -149,19 +149,120 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         }
 
         idVar.setValue(toAssign);
-        return null;
+        return this.visitChildren(ctx);
     }
 
     /**
-     * Operadores de expresiones
+     * Declaración y llamado de funciones
      */
 
-    // pendiente
-    /*@Override public Value visitFunctionDotOpExp(PsycoderParser.FunctionDotOpExpContext ctx) {
-        Value val = this.visit(ctx.function_call());
-        if(!val.isStruct()) throw new RuntimeException("El valor retornado por la función no es una estructura");
+    private List<Tuple> paramsFun = new ArrayList<>();
+    private int currentParam = 0;
 
-        Struct struct = val.asStruct();
+    @Override
+    public Value visitFunction_declaration(PsycoderParser.Function_declarationContext ctx) {
+        String returnType = ctx.type().getText();
+        String id = ctx.ID().getText();
 
-    }*/
+        paramsFun.clear();
+        this.visit(ctx.params());
+
+        Function fun = new Function(returnType, this.paramsFun, ctx.cmp_declaration(), ctx.return_declaration());
+        functionMemory.put(id, fun);
+        return null;
+    }
+
+    @Override
+    public Value visitFunction_call(PsycoderParser.Function_callContext ctx) {
+        String id = ctx.ID().getText();
+        Function currentFunction = functionMemory.get(id);
+
+        if(currentFunction == null) throw new RuntimeException("La función \"" + id + "\" no ha sido declarada.");
+
+        paramsFun = currentFunction.getParams();
+        currentParam = 0;
+        memory.addLocalMemory(false);
+
+        this.visitChildren(ctx);
+
+        if(currentParam != paramsFun.size()) {
+            throw new RuntimeException("Se encontraron " + currentParam + " argumentos, se esperaban " + paramsFun.size() + ".");
+        }
+
+        paramsFun = new ArrayList<>();
+
+        this.visitChildren(currentFunction.getContext());
+        Value returnValue = this.visit(currentFunction.getReturnContext());
+
+        if(!returnValue.getType().equals(currentFunction.getReturnType()))
+            throw new RuntimeException("Se esperaba el tipo de retorno + " + currentFunction.getReturnType() + ", se encontró "
+                    + returnValue.getType() + " en la función " + id + ".");
+
+        memory.removeLocalMemory();
+
+        return returnValue;
+    }
+
+    @Override
+    public Value visitArgs_fun(PsycoderParser.Args_funContext ctx) {
+        Value val = ctx.expression() != null ? this.visit(ctx.expression()) : null;
+
+        if(currentParam == paramsFun.size() && paramsFun.size() != 0)
+            throw new RuntimeException("Se esperaban " + paramsFun.size() + " argumentos.");
+
+
+        if(paramsFun.size() != 0) {
+            Tuple t = paramsFun.get(currentParam);
+            currentParam++;
+
+            //Value currentVal = this.visit(ctx.expression());
+            if(!val.getType().equals(t.type)) throw new RuntimeException("Se esperaba " + t.type + " y se encontró " + val.getType() + ".");
+
+            memory.addId(t.id, val);
+        }
+
+        return this.visitChildren(ctx);
+    }
+
+    @Override
+    public Value visitReturn_declaration(PsycoderParser.Return_declarationContext ctx) {
+        return this.visit(ctx.expression());
+    }
+
+    /**
+     * Manejo de estructuras
+     */
+    public String currentStructBuild;
+
+    @Override
+    public Value visitStructElement(PsycoderParser.StructElementContext ctx) {
+        currentStructBuild = ctx.ID().getText();
+        structMemory.put(currentStructBuild, new HashMap<>());
+        Value toRet = this.visitChildren(ctx);
+        currentStructBuild = null;
+        return toRet;
+    }
+
+    @Override
+    public Value visitStruct_declaration(PsycoderParser.Struct_declarationContext ctx) {
+        for(int i = 0; i < ctx.ID().size(); ++i) {
+            String currentType = ctx.type().get(i).getText();
+            String currentId = ctx.ID().get(i).getText();
+
+            if(!currentType.equals("entero") && !currentType.equals("real") && !currentType.equals("caracter")
+                    && !currentType.equals("cadena") && !currentType.equals("booleano") && !structMemory.containsKey(currentType)) {
+                throw new RuntimeException("El tipo " + currentType + " no ha sido declarado.");
+            }
+            if(currentType.equals(currentStructBuild)) {
+                throw new RuntimeException("No hay soporte a estructuras circulares");
+            }
+            Map<String, String> currentStruct = structMemory.get(currentStructBuild);
+            if(currentStruct.containsKey(currentId)) {
+                throw new RuntimeException("El identificador \"" + currentId + "\" ya ha sido declarado dentro de la estructura.");
+            }
+
+            structMemory.get(currentStructBuild).put(currentId, currentType);
+        }
+        return this.visitChildren(ctx);
+    }
 }

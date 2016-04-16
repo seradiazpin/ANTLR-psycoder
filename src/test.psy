@@ -1,8 +1,23 @@
+estructura loquesea
+    entero a;
+    entero b;
+    real a;
+fin_estructura
+
+funcion entero mundo() hacer
+    imprimir("mundo");
+    retornar 0;
+fin_funcion
+
+funcion entero hola() hacer
+    imprimir("hola");
+    retornar mundo();
+fin_funcion
 
 funcion_principal
-    booleano a = falso;
-    a = verdadero;
-    imprimir(a);
+    entero b = 3;
+    entero ks = hola();
+    imprimir(ks, b);
 fin_principal
 
 /*
