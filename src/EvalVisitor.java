@@ -43,7 +43,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         if(ctx.expression() == null) { // asignación por omisión
             memory.addId(id, currentTypeToAssign);
         } else { // asignación por expresión
-            System.out.println(this.visit(ctx.expression()).getType()+", "+id+", "+this.visit(ctx.expression()).toString());
+            //System.out.println(this.visit(ctx.expression()).getType()+", "+id+", "+this.visit(ctx.expression()).toString());
             String typec = this.visit(ctx.expression()).getType();
             if(!typec.equals(currentTypeToAssign)){
                 throw new RuntimeException("Se esperaba " + currentTypeToAssign + " se encontro "+ typec);
@@ -110,10 +110,29 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     }
 
     @Override
+    public Value visitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx) {
+        try {
+            return new Value(-Integer.valueOf(ctx.getText()));
+        }catch (Exception e){
+            throw new RuntimeException("Entero fuera de rango");
+        }
+    }
+
+    @Override
     public Value visitReal_terminal(PsycoderParser.Real_terminalContext ctx) {
         Double d = Double.valueOf(ctx.getText());
         if(d >= -2147483648 && d <= 2147483647){
             return new Value(Double.valueOf(ctx.getText()));
+        }else{
+            throw new RuntimeException("Real fuera de rango");
+        }
+    }
+
+    @Override
+    public Value visitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx) {
+        Double d = Double.valueOf(ctx.getText());
+        if(d >= -2147483648 && d <= 2147483647){
+            return new Value(-Double.valueOf(ctx.getText()));
         }else{
             throw new RuntimeException("Real fuera de rango");
         }
@@ -217,7 +236,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitNegExp(PsycoderParser.NegExpContext ctx) {
-        Value value = this.visit(ctx.expression());
+        Value value = this.visit(ctx.expression_bool());
         if(!value.toString().equals("verdadero")&&!value.toString().equals("falso")){
             throw new RuntimeException("Solo se puede negar un valor booleano, se encontro "+value.toString());
         }else if(value.toString().equals("verdadero")) {
@@ -229,7 +248,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitNegativeExp(PsycoderParser.NegativeExpContext ctx) {
-        Value value = this.visit(ctx.primary());
+        Value value = this.visit(ctx.expression());
         if(!value.isDouble() && !value.isInteger()){
             throw new RuntimeException("negatividad solo a numeros, se encontro "+value.toString());
         }else{
@@ -239,8 +258,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx) {
-        Value left = this.visit(ctx.expression(0));
-        Value right = this.visit(ctx.expression(1));
+        Value left = this.visit(ctx.expression_product());
+        Value right = this.visit(ctx.primary());
         switch (ctx.op.getText().charAt(0)) {
             case '*':
                 if(left.isDouble() && right.isDouble()){
@@ -259,6 +278,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                     return new Value(left.asInteger() * (int)right.toString().charAt(0));
                 }else if(left.isCharacter() && right.isInteger()){
                     return new Value((int)left.toString().charAt(0) * right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) * (int)right.toString().charAt(0));
                 }else {
                     throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
                 }
@@ -279,6 +300,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                     return new Value(left.asInteger() / (int)right.toString().charAt(0));
                 }else if(left.isCharacter() && right.isInteger()){
                     return new Value((int)left.toString().charAt(0) / right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) / (int)right.toString().charAt(0));
                 }else {
                     throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
                 }
@@ -299,6 +322,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                     return new Value(left.asInteger() % (int)right.toString().charAt(0));
                 }else if(left.isCharacter() && right.isInteger()){
                     return new Value((int)left.toString().charAt(0) % right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) % (int)right.toString().charAt(0));
                 }else {
                     throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
                 }
@@ -309,8 +334,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitAdditionExp(PsycoderParser.AdditionExpContext ctx) {
-        Value left = this.visit(ctx.expression(0));
-        Value right = this.visit(ctx.expression(1));
+        Value left = this.visit(ctx.expression_addition());
+        Value right = this.visit(ctx.expression_product());
         switch (ctx.op.getText().charAt(0)) {
             case '+':
                 if(left.isDouble() && right.isDouble()){
@@ -329,6 +354,10 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                     return new Value(left.asInteger() + (int)right.toString().charAt(0));
                 }else if(left.isCharacter() && right.isInteger()){
                     return new Value((int)left.toString().charAt(0) + right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) + (int)right.toString().charAt(0));
+                }else if(left.isString() && right.isString()){
+                    return new Value(left.toString()+ right.toString());
                 }else {
                     throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
                 }
@@ -349,6 +378,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                     return new Value(left.asInteger() - (int)right.toString().charAt(0));
                 }else if(left.isCharacter() && right.isInteger()){
                     return new Value((int)left.toString().charAt(0) - right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) - (int)right.toString().charAt(0));
                 }else {
                     throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
                 }
@@ -357,25 +388,166 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         }
     }
 
+
+
     @Override
     public Value visitAndExp(PsycoderParser.AndExpContext ctx) {
-        Value left = this.visit(ctx.expression(0));
-        Value right = this.visit(ctx.expression(1));
-        if(!left.isBoolean() && !right.isBoolean()){
-            throw new RuntimeException("Expresion no booleana");
+        Value left = this.visit(ctx.expression_bool());
+        Value right = this.visit(ctx.expression_rel());
+        if(!left.isBoolean() || !right.isBoolean()){
+            throw new RuntimeException("Expresion no booleana :"+left.toString()+" || "+right.toString());
         }
         return new Value(left.asBoolean() && right.asBoolean());
     }
 
     @Override
     public Value visitOrExp(PsycoderParser.OrExpContext ctx) {
-        Value left = this.visit(ctx.expression(0));
-        Value right = this.visit(ctx.expression(1));
-        if(!left.isBoolean() && !right.isBoolean()){
-            throw new RuntimeException("Expresion no booleana");
+        Value left = this.visit(ctx.expression());
+        Value right = this.visit(ctx.expression_bool());
+        if(!left.isBoolean() || !right.isBoolean()){
+            throw new RuntimeException("Expresion no booleana:"+left.toString()+" && "+right.toString());
         }
         return new Value(left.asBoolean() || right.asBoolean());
     }
 
 
+    @Override
+    public Value visitRelationalExp(PsycoderParser.RelationalExpContext ctx) {
+        Value left = this.visit(ctx.expression_addition(0));
+        Value right = this.visit(ctx.expression_addition(1));
+        switch (ctx.op.getType()) {
+            case PsycoderParser.GT:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() > right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() > right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() > right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() > right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) > right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() > (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() > (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) > right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) > (int)right.toString().charAt(0));
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                }
+            case PsycoderParser.GTEQ:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() >= right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() >= right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() >= right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() >= right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) >= right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() >= (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() >= (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) >= right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) >= (int)right.toString().charAt(0));
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                }
+            case PsycoderParser.LT:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() < right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() < right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() < right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() < right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) < right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() < (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() < (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) < right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) < (int)right.toString().charAt(0));
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                }
+            case PsycoderParser.LTEQ:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() <= right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() <= right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() <= right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() <= right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) <= right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() <= (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() <= (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) <= right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) <= (int)right.toString().charAt(0));
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                }
+            default:
+                throw new RuntimeException("unknown operator: " +ctx.op.getText());
+        }
+    }
+
+    @Override
+    public Value visitEqualitylExp(PsycoderParser.EqualitylExpContext ctx) {
+        Value left = this.visit(ctx.expression_addition(0));
+        Value right = this.visit(ctx.expression_addition(1));
+        switch (ctx.op.getType()) {
+            case PsycoderParser.EQ:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble().equals(right.asDouble()));
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger().equals(right.asInteger()));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() == (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) == right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) == (int)right.toString().charAt(0));
+                }else if(left.isBoolean() && right.isBoolean()){
+                    return new Value(left.asBoolean().equals(right.asBoolean()));
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                }
+            case PsycoderParser.NEQ:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(!left.asDouble().equals(right.asDouble()));
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(!left.asInteger().equals(right.asInteger()));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() != (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) != right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) != (int)right.toString().charAt(0));
+                }else if(left.isBoolean() && right.isBoolean()){
+                    return new Value(!left.asBoolean().equals(right.asBoolean()));
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                }
+            default:
+                throw new RuntimeException("unknown operator: " +ctx.op.getText());
+        }
+    }
 }

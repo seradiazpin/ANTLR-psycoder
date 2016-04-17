@@ -127,7 +127,7 @@ case_l    : 'caso' terminal_value ':' cmp_declaration case_l
 cmp_declaration   : declaration cmp_declaration
                 |
                 ;
-
+/*
 expression
     :   primary                                             #primaryExp
     | '-'primary                                            #NegativeExp
@@ -136,12 +136,55 @@ expression
     |   <assoc=right> '!' expression                        #negExp
     |   expression op=('*'|'/'|'%') expression              #multiplicationExp
     |   expression op=('+'|'-') expression                  #additionExp
-    |   expression op=(LTEQ | GTEQ | GT | LT) expression    #relationalExp
-    |   expression op=(EQ | NEQ) expression                 #equalityExp
+    |   expression_addition op=(LTEQ | GTEQ | GT | LT) expression_addition    #relationalExp
+    |   expression_addition op=(EQ | NEQ) expression_addition                 #equalityExp
     |   expression '&&' expression                           #andExp
     |   expression '||' expression                            #orExp
-    |   <assoc=right> identifier '=' expression             #assigExp
     ;
+
+expression_addition
+    :expression_addition op=('+'|'-') expression_product
+    | expression_product
+    ;
+expression_product
+    :expression_product op=('*'|'/'|'%') primary
+    | primary
+    ;
+
+*/
+
+expression
+    : primary                           #primaryExp
+    | expression '||' expression_bool   #orExp
+    | <assoc=right> identifier '=' expression #assigExp
+    | expression_bool                   #assigbool
+    | expression_addition               #assiadd
+    |   function_call '.' identifier                        #functionDotOpExp
+    |   function_call                                       #functionExp
+    ;
+
+expression_bool
+    :expression_bool '&&' expression_rel #andExp
+    | expression_rel    #otherandexp
+    ;
+
+expression_rel
+    :expression_addition op=(EQ|NEQ) expression_addition                #equalitylExp
+    |expression_addition op=(LTEQ | GTEQ | GT | LT) expression_addition   #relationalExp
+    |<assoc=right> '!' expression_bool                                  #negExp
+    |primary #terminal_bool
+    ;
+
+expression_addition
+    :expression_addition op=('+'|'-') expression_product #additionExp
+    |expression_product #otherop
+    ;
+expression_product
+    :expression_product op=('*'|'/'|'%') primary #multiplicationExp
+    |primary   #otherexp
+    ;
+
+
 
 function_call
     :  ID '('args_fun')'
@@ -155,8 +198,9 @@ args_fun_pri : ',' expression args_fun_pri
              |
              ;
 
-primary : terminal_value #terminalPriExp
-        |'(' expression ')' #parenPriExp
+primary : '(' expression ')'    #parenPriExp
+        |'-'expression          #NegativeExp
+        |terminal_value         #terminalPriExp
         ;
 
 identifier_id   : ID identifier_id_pri;
@@ -172,6 +216,8 @@ identifier_pri  : '.' identifier
 terminal_value    : identifier  #id_terminal
                   | TK_ENTERO   #entero_terminal
                   | TK_REAL     #real_terminal
+                  | '-'TK_ENTERO   #neg_entero_terminal
+                  | '-'TK_REAL     #neg_real_terminal
                   | TK_CADENA   #cadena_terminal
                   | TK_CARACTER #caracter_terminal
                   | 'verdadero' #verdadero_terminal
