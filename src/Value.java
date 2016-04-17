@@ -120,4 +120,12 @@ public class Value {
     public Object getValue() {
         return value;
     }
+
+    public void checkRangeInt(Integer a){
+        System.out.println("ENTRE A COMPROBAR"+ a.toString());
+        if(a < -2147483648 && a > 2147483647) throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
+    }
+    public void checkRangeDouble(Double a){
+        if(a < -2147483648 && a > 2147483647) throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
+    }
 }

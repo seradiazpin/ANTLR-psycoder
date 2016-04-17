@@ -1,7 +1,11 @@
 import java.util.*;
 
+
+
 /**
  * Created by sergioalejandrodiazpinilla on 12/04/16.
+ * todo Comprobar el rango del numero al hacer operaciones
+ * todo
  */
 public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     public static final double SMALL_VALUE = 0.00000000001;
@@ -37,7 +41,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         String id = ctx.ID().getText();
 
         if(memory.containsId(id)) {
-            throw new RuntimeException("El identificador " + id + " ya existe y no se puede declarar de nuevo.");
+            throw new RuntimeException("<linea:col> Error semantico: la ​variable ​con nombre \""+
+                    id+"\" ya ha sido declarada.");
         }
 
         if(ctx.expression() == null) { // asignación por omisión
@@ -46,7 +51,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
             //System.out.println(this.visit(ctx.expression()).getType()+", "+id+", "+this.visit(ctx.expression()).toString());
             String typec = this.visit(ctx.expression()).getType();
             if(!typec.equals(currentTypeToAssign)){
-                throw new RuntimeException("Se esperaba " + currentTypeToAssign + " se encontro "+ typec);
+                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: " + currentTypeToAssign + " se encontro "+ typec);
             }
             memory.addId(id, this.visit(ctx.expression()));
         }
@@ -60,9 +65,9 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         Value val = memory.getId(id);
         String typec = this.visit(ctx.expression()).getType();
         if(!val.getType().equals(typec)){
-            throw new RuntimeException("Se esperaba " + val.getType() + " se encontro "+ typec);
+            throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: " + val.getType() + " se encontro "+ typec);
         }
-        //todo es esto el problema
+        //todo lo cambie para poder evitar el error del None type que produce object
         Value newVal = this.visit(ctx.expression());
         if(typec.equals("booleano")){
             val.setValue(newVal.asBoolean());
@@ -98,14 +103,13 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         return value;
     }
 
-    //todo recordar rangos de los enteros y los reales
 
     @Override
     public Value visitEntero_terminal(PsycoderParser.Entero_terminalContext ctx) {
         try {
             return new Value(Integer.valueOf(ctx.getText()));
         }catch (Exception e){
-            throw new RuntimeException("Entero fuera de rango");
+            throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
         }
     }
 
@@ -114,7 +118,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         try {
             return new Value(-Integer.valueOf(ctx.getText()));
         }catch (Exception e){
-            throw new RuntimeException("Entero fuera de rango");
+            throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
         }
     }
 
@@ -124,7 +128,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         if(d >= -2147483648 && d <= 2147483647){
             return new Value(Double.valueOf(ctx.getText()));
         }else{
-            throw new RuntimeException("Real fuera de rango");
+            throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
         }
     }
 
@@ -134,7 +138,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         if(d >= -2147483648 && d <= 2147483647){
             return new Value(-Double.valueOf(ctx.getText()));
         }else{
-            throw new RuntimeException("Real fuera de rango");
+            throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
         }
     }
 
@@ -359,7 +363,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isString() && right.isString()){
                     return new Value(left.toString()+ right.toString());
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
                 }
             case '-':
                 if(left.isDouble() && right.isDouble()){
@@ -395,7 +400,13 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         Value left = this.visit(ctx.expression_bool());
         Value right = this.visit(ctx.expression_rel());
         if(!left.isBoolean() || !right.isBoolean()){
-            throw new RuntimeException("Expresion no booleana :"+left.toString()+" || "+right.toString());
+            if(!left.isBoolean()){
+                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba:+" +
+                        "booleano; se encontro: "+left.getType());
+            }else{
+                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba:+" +
+                        "booleano; se encontro: "+right.getType());
+            }
         }
         return new Value(left.asBoolean() && right.asBoolean());
     }
@@ -405,7 +416,13 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         Value left = this.visit(ctx.expression());
         Value right = this.visit(ctx.expression_bool());
         if(!left.isBoolean() || !right.isBoolean()){
-            throw new RuntimeException("Expresion no booleana:"+left.toString()+" && "+right.toString());
+            if(!left.isBoolean()){
+                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba:+" +
+                        "booleano; se encontro: "+left.getType());
+            }else{
+                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba:+" +
+                        "booleano; se encontro: "+right.getType());
+            }
         }
         return new Value(left.asBoolean() || right.asBoolean());
     }
@@ -436,7 +453,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isCharacter() && right.isCharacter()){
                     return new Value((int)left.toString().charAt(0) > (int)right.toString().charAt(0));
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
                 }
             case PsycoderParser.GTEQ:
                 if(left.isDouble() && right.isDouble()){
@@ -458,7 +475,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isCharacter() && right.isCharacter()){
                     return new Value((int)left.toString().charAt(0) >= (int)right.toString().charAt(0));
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
                 }
             case PsycoderParser.LT:
                 if(left.isDouble() && right.isDouble()){
@@ -480,7 +497,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isCharacter() && right.isCharacter()){
                     return new Value((int)left.toString().charAt(0) < (int)right.toString().charAt(0));
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
                 }
             case PsycoderParser.LTEQ:
                 if(left.isDouble() && right.isDouble()){
@@ -502,10 +519,10 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isCharacter() && right.isCharacter()){
                     return new Value((int)left.toString().charAt(0) <= (int)right.toString().charAt(0));
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
                 }
             default:
-                throw new RuntimeException("unknown operator: " +ctx.op.getText());
+                throw new RuntimeException("Operador desconosido: " +ctx.op.getText());
         }
     }
 
@@ -528,7 +545,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isBoolean() && right.isBoolean()){
                     return new Value(left.asBoolean().equals(right.asBoolean()));
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
                 }
             case PsycoderParser.NEQ:
                 if(left.isDouble() && right.isDouble()){
@@ -544,10 +561,12 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isBoolean() && right.isBoolean()){
                     return new Value(!left.asBoolean().equals(right.asBoolean()));
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para expreciones booleanas");
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
                 }
             default:
                 throw new RuntimeException("unknown operator: " +ctx.op.getText());
         }
     }
+
+
 }

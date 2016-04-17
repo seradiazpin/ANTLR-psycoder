@@ -159,8 +159,8 @@ expression
     | <assoc=right> identifier '=' expression #assigExp
     | expression_bool                   #assigbool
     | expression_addition               #assiadd
-    |   function_call '.' identifier                        #functionDotOpExp
-    |   function_call                                       #functionExp
+    | function_call '.' identifier                        #functionDotOpExp
+    | function_call                                       #functionExp
     ;
 
 expression_bool
