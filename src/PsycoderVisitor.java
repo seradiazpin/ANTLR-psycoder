@@ -283,6 +283,13 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTerminal_bool(PsycoderParser.Terminal_boolContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code NegativeExp}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegativeExp(PsycoderParser.NegativeExpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code additionExp}
 	 * labeled alternative in {@link PsycoderParser#expression_addition}.
 	 * @param ctx the parse tree
@@ -336,19 +343,26 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenPriExp(PsycoderParser.ParenPriExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code NegativeExp}
-	 * labeled alternative in {@link PsycoderParser#primary}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNegativeExp(PsycoderParser.NegativeExpContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code terminalPriExp}
 	 * labeled alternative in {@link PsycoderParser#primary}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code neg_entero_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code neg_real_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#identifier_id}.
 	 * @param ctx the parse tree
@@ -394,20 +408,6 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitReal_terminal(PsycoderParser.Real_terminalContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code neg_entero_terminal}
-	 * labeled alternative in {@link PsycoderParser#terminal_value}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code neg_real_terminal}
-	 * labeled alternative in {@link PsycoderParser#terminal_value}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code cadena_terminal}
 	 * labeled alternative in {@link PsycoderParser#terminal_value}.

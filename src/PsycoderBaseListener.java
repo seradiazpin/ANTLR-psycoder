@@ -531,6 +531,18 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNegativeExp(PsycoderParser.NegativeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNegativeExp(PsycoderParser.NegativeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAdditionExp(PsycoderParser.AdditionExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -627,18 +639,6 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNegativeExp(PsycoderParser.NegativeExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNegativeExp(PsycoderParser.NegativeExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -646,6 +646,30 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -730,30 +754,6 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitReal_terminal(PsycoderParser.Real_terminalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

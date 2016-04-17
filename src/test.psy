@@ -1,6 +1,6 @@
 funcion_principal
-imprimir(a);
-
+entero a = 2147483647 ;
+entero b = a * a ;
 fin_principal
 /*
 

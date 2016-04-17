@@ -264,6 +264,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     public Value visitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx) {
         Value left = this.visit(ctx.expression_product());
         Value right = this.visit(ctx.primary());
+        Value ans;
         switch (ctx.op.getText().charAt(0)) {
             case '*':
                 if(left.isDouble() && right.isDouble()){
@@ -273,19 +274,36 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isInteger() && right.isDouble()){
                     return new Value(left.asInteger() * right.asDouble());
                 }else if(left.isInteger() && right.isInteger()){
-                    return new Value(left.asInteger()*right.asInteger());
+                    Double temp = Double.valueOf(left.asInteger()) * Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isDouble()){
                     return new Value((int)left.toString().charAt(0) * right.asDouble());
                 }else if(left.isDouble() && right.isCharacter()){
                     return new Value(left.asDouble() * (int)right.toString().charAt(0));
                 }else if(left.isInteger() && right.isCharacter()){
-                    return new Value(left.asInteger() * (int)right.toString().charAt(0));
+                    Double temp = Double.valueOf(left.asInteger()) * (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isInteger()){
-                    return new Value((int)left.toString().charAt(0) * right.asInteger());
+                    Double temp = (int)left.toString().charAt(0) * Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isCharacter()){
-                    return new Value((int)left.toString().charAt(0) * (int)right.toString().charAt(0));
+                    Double temp = (int)left.toString().charAt(0) * Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
                 }
             case '/':
                 if(left.isDouble() && right.isDouble()){
@@ -295,19 +313,36 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isInteger() && right.isDouble()){
                     return new Value(left.asInteger() / right.asDouble());
                 }else if(left.isInteger() && right.isInteger()){
-                    return new Value(left.asInteger() / right.asInteger());
+                    Double temp = Double.valueOf(left.asInteger()) / Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isDouble()){
                     return new Value((int)left.toString().charAt(0) / right.asDouble());
                 }else if(left.isDouble() && right.isCharacter()){
                     return new Value(left.asDouble() / (int)right.toString().charAt(0));
                 }else if(left.isInteger() && right.isCharacter()){
-                    return new Value(left.asInteger() / (int)right.toString().charAt(0));
+                    Double temp = Double.valueOf(left.asInteger()) / (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isInteger()){
-                    return new Value((int)left.toString().charAt(0) / right.asInteger());
+                    Double temp = (int)left.toString().charAt(0) / Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isCharacter()){
-                    return new Value((int)left.toString().charAt(0) / (int)right.toString().charAt(0));
+                    Double temp = (int)left.toString().charAt(0) / Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
                 }
             case '%':
                 if(left.isDouble() && right.isDouble()){
@@ -317,19 +352,36 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isInteger() && right.isDouble()){
                     return new Value(left.asInteger() % right.asDouble());
                 }else if(left.isInteger() && right.isInteger()){
-                    return new Value(left.asInteger() % right.asInteger());
+                    Double temp = Double.valueOf(left.asInteger()) % Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isDouble()){
                     return new Value((int)left.toString().charAt(0) % right.asDouble());
                 }else if(left.isDouble() && right.isCharacter()){
                     return new Value(left.asDouble() % (int)right.toString().charAt(0));
                 }else if(left.isInteger() && right.isCharacter()){
-                    return new Value(left.asInteger() % (int)right.toString().charAt(0));
+                    Double temp = Double.valueOf(left.asInteger()) % (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isInteger()){
-                    return new Value((int)left.toString().charAt(0) % right.asInteger());
+                    Double temp = (int)left.toString().charAt(0) % Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isCharacter()){
-                    return new Value((int)left.toString().charAt(0) % (int)right.toString().charAt(0));
+                    Double temp = (int)left.toString().charAt(0) % Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
                 }
             default:
                 throw new RuntimeException("unknown operator: " +ctx.op.getText());
@@ -340,6 +392,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     public Value visitAdditionExp(PsycoderParser.AdditionExpContext ctx) {
         Value left = this.visit(ctx.expression_addition());
         Value right = this.visit(ctx.expression_product());
+        Value ans;
         switch (ctx.op.getText().charAt(0)) {
             case '+':
                 if(left.isDouble() && right.isDouble()){
@@ -349,17 +402,33 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isInteger() && right.isDouble()){
                     return new Value(left.asInteger() + right.asDouble());
                 }else if(left.isInteger() && right.isInteger()){
-                    return new Value(left.asInteger() + right.asInteger());
+                    Double temp = Double.valueOf(left.asInteger()) + Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isDouble()){
                     return new Value((int)left.toString().charAt(0) + right.asDouble());
                 }else if(left.isDouble() && right.isCharacter()){
                     return new Value(left.asDouble() + (int)right.toString().charAt(0));
                 }else if(left.isInteger() && right.isCharacter()){
-                    return new Value(left.asInteger() + (int)right.toString().charAt(0));
+                    Double temp = Double.valueOf(left.asInteger()) + (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isInteger()){
-                    return new Value((int)left.toString().charAt(0) + right.asInteger());
+                    Double temp = (int)left.toString().charAt(0) + Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isCharacter()){
-                    return new Value((int)left.toString().charAt(0) + (int)right.toString().charAt(0));
+                    Double temp = (int)left.toString().charAt(0) + Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isString() && right.isString()){
                     return new Value(left.toString()+ right.toString());
                 }else {
@@ -374,19 +443,36 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
                 }else if(left.isInteger() && right.isDouble()){
                     return new Value(left.asInteger() - right.asDouble());
                 }else if(left.isInteger() && right.isInteger()){
-                    return new Value(left.asInteger() - right.asInteger());
+                    Double temp = Double.valueOf(left.asInteger()) - Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isDouble()){
                     return new Value((int)left.toString().charAt(0) - right.asDouble());
                 }else if(left.isDouble() && right.isCharacter()){
                     return new Value(left.asDouble() - (int)right.toString().charAt(0));
                 }else if(left.isInteger() && right.isCharacter()){
-                    return new Value(left.asInteger() - (int)right.toString().charAt(0));
+                    Double temp = Double.valueOf(left.asInteger()) - (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isInteger()){
-                    return new Value((int)left.toString().charAt(0) - right.asInteger());
+                    Double temp = (int)left.toString().charAt(0) - Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else if(left.isCharacter() && right.isCharacter()){
-                    return new Value((int)left.toString().charAt(0) - (int)right.toString().charAt(0));
+                    Double temp = (int)left.toString().charAt(0) - Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
                 }else {
-                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
                 }
             default:
                 throw new RuntimeException("unknown operator: " +ctx.op.getText());

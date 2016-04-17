@@ -15,6 +15,12 @@ public class Value {
     private Object value;
 
     public Value(Object value) {
+        if(value instanceof Integer){
+            checkRangeInt(Integer.valueOf(value.toString()));
+        }
+        if(value instanceof Double){
+            checkRangeDouble(Double.valueOf(value.toString()));
+        }
         this.setValue(value);
     }
 
@@ -122,10 +128,9 @@ public class Value {
     }
 
     public void checkRangeInt(Integer a){
-        System.out.println("ENTRE A COMPROBAR"+ a.toString());
-        if(a < -2147483648 && a > 2147483647) throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
+        if(a < -2147483648 || a > 2147483647) throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
     }
     public void checkRangeDouble(Double a){
-        if(a < -2147483648 && a > 2147483647) throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
+        if(a < -2147483648 || a > 2147483647) throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
     }
 }

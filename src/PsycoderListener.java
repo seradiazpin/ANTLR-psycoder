@@ -467,6 +467,18 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitTerminal_bool(PsycoderParser.Terminal_boolContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code NegativeExp}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 */
+	void enterNegativeExp(PsycoderParser.NegativeExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NegativeExp}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 */
+	void exitNegativeExp(PsycoderParser.NegativeExpContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code additionExp}
 	 * labeled alternative in {@link PsycoderParser#expression_addition}.
 	 * @param ctx the parse tree
@@ -557,18 +569,6 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitParenPriExp(PsycoderParser.ParenPriExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code NegativeExp}
-	 * labeled alternative in {@link PsycoderParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterNegativeExp(PsycoderParser.NegativeExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code NegativeExp}
-	 * labeled alternative in {@link PsycoderParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitNegativeExp(PsycoderParser.NegativeExpContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code terminalPriExp}
 	 * labeled alternative in {@link PsycoderParser#primary}.
 	 * @param ctx the parse tree
@@ -580,6 +580,30 @@ public interface PsycoderListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code neg_entero_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code neg_entero_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code neg_real_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code neg_real_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PsycoderParser#identifier_id}.
 	 * @param ctx the parse tree
@@ -656,30 +680,6 @@ public interface PsycoderListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitReal_terminal(PsycoderParser.Real_terminalContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code neg_entero_terminal}
-	 * labeled alternative in {@link PsycoderParser#terminal_value}.
-	 * @param ctx the parse tree
-	 */
-	void enterNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code neg_entero_terminal}
-	 * labeled alternative in {@link PsycoderParser#terminal_value}.
-	 * @param ctx the parse tree
-	 */
-	void exitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code neg_real_terminal}
-	 * labeled alternative in {@link PsycoderParser#terminal_value}.
-	 * @param ctx the parse tree
-	 */
-	void enterNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code neg_real_terminal}
-	 * labeled alternative in {@link PsycoderParser#terminal_value}.
-	 * @param ctx the parse tree
-	 */
-	void exitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code cadena_terminal}
 	 * labeled alternative in {@link PsycoderParser#terminal_value}.

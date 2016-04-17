@@ -177,6 +177,7 @@ expression_rel
 
 expression_addition
     :expression_addition op=('+'|'-') expression_product #additionExp
+    |'-'expression          #NegativeExp
     |expression_product #otherop
     ;
 expression_product
@@ -199,8 +200,9 @@ args_fun_pri : ',' expression args_fun_pri
              ;
 
 primary : '(' expression ')'    #parenPriExp
-        |'-'expression          #NegativeExp
         |terminal_value         #terminalPriExp
+        | '-'TK_ENTERO   #neg_entero_terminal
+        | '-'TK_REAL     #neg_real_terminal
         ;
 
 identifier_id   : ID identifier_id_pri;
@@ -216,8 +218,6 @@ identifier_pri  : '.' identifier
 terminal_value    : identifier  #id_terminal
                   | TK_ENTERO   #entero_terminal
                   | TK_REAL     #real_terminal
-                  | '-'TK_ENTERO   #neg_entero_terminal
-                  | '-'TK_REAL     #neg_real_terminal
                   | TK_CADENA   #cadena_terminal
                   | TK_CARACTER #caracter_terminal
                   | 'verdadero' #verdadero_terminal
