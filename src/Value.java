@@ -3,12 +3,11 @@
  */
 public class Value {
 
-    public static Value VOID = new Value(new Object());
-    public static Value REAL = new Value(0.0);
-    public static Value INTEGER = new Value(0);
-    public static Value STRING = new Value("");
-    public static Value CHAR = new Value(' ');
-    public static Value BOOLEAN = new Value(false);
+    public static double REAL = 0.0;
+    public static int INTEGER = 0;
+    public static String STRING = "";
+    public static char CHAR = ' ';
+    public static boolean BOOLEAN = false;
 
     private Object value;
 

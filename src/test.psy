@@ -1,7 +1,10 @@
+estructura tupla
+    entero primero;
+    entero segundo;
+fin_estructura
+
 estructura loquesea
-    entero a;
-    entero b;
-    real a;
+    tupla tup;
 fin_estructura
 
 funcion entero mundo() hacer
@@ -15,6 +18,13 @@ funcion entero hola() hacer
 fin_funcion
 
 funcion_principal
+    //tupla a;
+    loquesea loq;
+    loq.tup.primero = 100;
+    //a.primero = 55;
+    //a.segundo = 65;
+    //imprimir(a.primero, a.segundo);
+    imprimir(loq.tup.primero, loq.tup.segundo);
     entero b = 3;
     entero ks = hola();
     imprimir(ks, b);

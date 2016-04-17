@@ -8,6 +8,11 @@ public class Struct {
 
     public Struct() {}
 
+    public Struct(Map<String, Value> myVar, String name) {
+        this.myVar = myVar;
+        this.name = name;
+    }
+
     public Struct(ArrayList<String> myVar){
         this.myVar = new HashMap<String, Value>();
 
@@ -20,8 +25,8 @@ public class Struct {
         for(String x: myVar){
             this.myVar.put(x,toAssign.get(x));
         }
-
     }
+
     public Struct(ArrayList<String> myVar, String name){
         this(myVar);
         this.name = name;
@@ -32,10 +37,11 @@ public class Struct {
     }
 
     public Value get(String key){
-        if(this.myVar.get(key) == null){
-            throw new RuntimeException("No existe el identificador para esta estructura");
-        }
         return this.myVar.get(key) ;
+    }
+
+    public boolean containsId(String key) {
+        return this.myVar.containsKey(key);
     }
 
     public void setName(String name) {

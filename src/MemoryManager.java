@@ -34,15 +34,15 @@ public class MemoryManager {
         }
 
         if (type.equals("booleano")) {
-            memory.getMemory().put(id, Value.BOOLEAN);
+            memory.getMemory().put(id, new Value(Value.BOOLEAN));
         } else if (type.equals("entero")) {
-            memory.getMemory().put(id, Value.INTEGER);
+            memory.getMemory().put(id, new Value(Value.INTEGER));
         } else if (type.equals("real")) {
-            memory.getMemory().put(id, Value.REAL);
+            memory.getMemory().put(id, new Value(Value.REAL));
         } else if (type.equals("cadena")) {
-            memory.getMemory().put(id, Value.STRING);
+            memory.getMemory().put(id, new Value(Value.STRING));
         } else if (type.equals("caracter")) {
-            memory.getMemory().put(id, Value.CHAR);
+            memory.getMemory().put(id, new Value(Value.CHAR));
         } else {
             Struct s = new Struct();
             s.setName(type);

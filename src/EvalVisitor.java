@@ -1,3 +1,6 @@
+import org.antlr.v4.codegen.model.ArgAction;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import javax.xml.bind.ValidationEvent;
 import java.util.*;
 
@@ -31,6 +34,41 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         return null;
     }
 
+    private Value createDefaultStruct(String type) {
+        if(!structMemory.containsKey(type))
+            throw new RuntimeException("La estructura " + type + " no esta declarada.");
+
+        Map<String, String> properties = structMemory.get(type);
+        Map<String, Value> variables = new HashMap<>();
+
+        for(String property : properties.keySet()) {
+            String currType = properties.get(property);
+
+            switch (currType) {
+                case "entero":
+                    variables.put(property, new Value(Value.INTEGER));
+                    break;
+                case "real":
+                    variables.put(property, new Value(Value.REAL));
+                    break;
+                case "cadena":
+                    variables.put(property, new Value(Value.STRING));
+                    break;
+                case "caracter":
+                    variables.put(property, new Value(Value.CHAR));
+                    break;
+                case "booleano":
+                    variables.put(property, new Value(Value.BOOLEAN));
+                    break;
+                default:
+                    variables.put(property, createDefaultStruct(currType));
+                    break;
+            }
+        }
+
+        return new Value(new Struct(variables, type));
+    }
+
     @Override
     public Value visitAssign_type(PsycoderParser.Assign_typeContext ctx) {
         String id = ctx.ID().getText();
@@ -40,9 +78,20 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         }
 
         if(ctx.expression() == null) { // asignación por omisión
-            memory.addId(id, currentTypeToAssign);
+            if(!this.currentTypeToAssign.equals("entero") && !this.currentTypeToAssign.equals("real") && !this.currentTypeToAssign.equals("caracter")
+                    && !this.currentTypeToAssign.equals("cadena") &&  !this.currentTypeToAssign.equals("booleano")) { // caso de asignar estructura
+
+                memory.addId(id, createDefaultStruct(this.currentTypeToAssign));
+            } else { // caso de asignación por omisión de tipo primitivo
+                memory.addId(id, this.currentTypeToAssign);
+            }
         } else { // asignación por expresión
-            memory.addId(id, this.visit(ctx.expression()));
+            Value toAssign = this.visit(ctx.expression());
+            if(!toAssign.getType().equals(this.currentTypeToAssign)) {
+                throw new RuntimeException("El tipo de la expresión es " + toAssign.getType() +
+                        ", se esperaba " + this.currentTypeToAssign + ".");
+            }
+            memory.addId(id, toAssign);
         }
 
         return ctx.assign_type_pri() != null ? this.visit(ctx.assign_type_pri()) : null;
@@ -50,8 +99,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitAssign_id(PsycoderParser.Assign_idContext ctx) {
-        String id = ctx.identifier().getText();
-        Value val = memory.getId(id);
+        //String id = ctx.identifier().getText();
+        Value val = this.visit(ctx.identifier());
         val.setValue(this.visit(ctx.expression()));
 
         return this.visit(ctx.assign_id_pri());
@@ -59,12 +108,54 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitId_terminal(PsycoderParser.Id_terminalContext ctx) {
-        String id = ctx.getText();
-        Value value = memory.getId(id);
-        if(value == null) {
-            throw new RuntimeException("El identificador " + id + " no ha sido declarado");
-        }
+        Value value = this.visit(ctx.identifier());
+        //Value value = memory.getId(id);
         return value;
+    }
+
+    /**
+     * Devuelve un elemento de acuerdo al identificador, este solo es usado cuando se
+     * hace asignación sin tipo, por lo que es correcto devolverlo
+     */
+    @Override
+    public Value visitIdentifier(PsycoderParser.IdentifierContext ctx) {
+        List<TerminalNode> ids = ctx.ID();
+        String id = ids.get(0).getText();
+
+        if(!memory.containsId(id)) {
+            throw new RuntimeException("El identificador \"" + id + "\" no ha sido declarado.");
+        }
+
+        Value element = memory.getId(id);
+        if(element.isStruct()) {
+            Value structValue = element;
+            String prevId = "Nothing"; // default to debug
+            for(int i = 1; i < ids.size(); ++i) {
+                String currentId = ids.get(i).getText();
+
+                if(!structValue.isStruct()) {
+                    throw new RuntimeException("El operador \".\" no es válido sobre \"" + prevId + "\" " +
+                            "ya que este es un tipo primitivo.");
+                }
+
+                if(!structValue.asStruct().containsId(currentId)) {
+                    throw new RuntimeException("el identificador \"" + ids.get(i).getText() + "\" no hace parte de la " +
+                            "estructura \"" + structValue.asStruct() + "\".");
+                }
+
+                structValue = structValue.asStruct().get(currentId);
+                prevId = currentId;
+            }
+
+            element = structValue;
+        } else {
+            if(ids.size() > 1) {
+                throw new RuntimeException("El identificador \"" + id + "\" es un " +
+                        element.getType() + " no una estructura.");
+            }
+        }
+
+        return element;
     }
 
     //todo recordar rangos de los enteros y los reales

@@ -174,15 +174,7 @@ args_fun_pri : ',' args_fun
              ;
 
 
-
-identifier_id   : ID identifier_id_pri;
-identifier_id_pri   : '.' identifier_id
-                    |
-                    ;
-identifier  : ID identifier_pri;
-identifier_pri  : '.' identifier
-                |
-                ;
+identifier  : ID ('.' ID)*;
 
 
 terminal_value    : identifier  #id_terminal

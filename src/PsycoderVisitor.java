@@ -309,29 +309,11 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#identifier_id}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdentifier_id(PsycoderParser.Identifier_idContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#identifier_id_pri}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdentifier_id_pri(PsycoderParser.Identifier_id_priContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#identifier}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIdentifier(PsycoderParser.IdentifierContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#identifier_pri}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdentifier_pri(PsycoderParser.Identifier_priContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code id_terminal}
 	 * labeled alternative in {@link PsycoderParser#terminal_value}.

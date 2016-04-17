@@ -511,26 +511,6 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#identifier_id}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdentifier_id(PsycoderParser.Identifier_idContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#identifier_id}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdentifier_id(PsycoderParser.Identifier_idContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#identifier_id_pri}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdentifier_id_pri(PsycoderParser.Identifier_id_priContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#identifier_id_pri}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdentifier_id_pri(PsycoderParser.Identifier_id_priContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link PsycoderParser#identifier}.
 	 * @param ctx the parse tree
 	 */
@@ -540,16 +520,6 @@ public interface PsycoderListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIdentifier(PsycoderParser.IdentifierContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#identifier_pri}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdentifier_pri(PsycoderParser.Identifier_priContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#identifier_pri}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdentifier_pri(PsycoderParser.Identifier_priContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code id_terminal}
 	 * labeled alternative in {@link PsycoderParser#terminal_value}.
