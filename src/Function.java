@@ -8,14 +8,13 @@ public class Function {
     private List<Tuple> params;
     private PsycoderParser.Cmp_declarationContext context;
 
-    private PsycoderParser.Return_declarationContext returnContext;
+    //private PsycoderParser.Return_declarationContext returnContext;
 
-    public Function(String returnType, List<Tuple> params, PsycoderParser.Cmp_declarationContext context,
-                    PsycoderParser.Return_declarationContext returnContext) {
+    public Function(String returnType, List<Tuple> params, PsycoderParser.Cmp_declarationContext context) {
         this.returnType = returnType;
         this.params = params;
         this.context = context;
-        this.returnContext = returnContext;
+        //this.returnContext = returnContext;
     }
 
     public String getReturnType() {
@@ -30,7 +29,7 @@ public class Function {
         return context;
     }
 
-    public PsycoderParser.Return_declarationContext getReturnContext() {
+    /*public PsycoderParser.Return_declarationContext getReturnContext() {
         return returnContext;
-    }
+    }*/
 }

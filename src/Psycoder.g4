@@ -32,7 +32,7 @@ struct_declaration
         : (type ID ';')+
         ;
 
-function_declaration: type ID '(' params ')' 'hacer' cmp_declaration return_declaration 'fin_funcion'
+function_declaration: type ID '(' params ')' 'hacer' cmp_declaration 'fin_funcion'
            ;
 
 params  : mandatory_params?
@@ -79,16 +79,16 @@ declaration : assign ';'
             | for_declaration
             | dowhile_declaration
             | switch_declaration
-            | break_declaration
+            | return_declaration
             ;
 
 
 if_declaration  :'si' '('expression ')' 'entonces' cmp_declaration declaration_if;
 read_declaration    : 'leer' '('identifier')'';';
 print_declaration   : 'imprimir' '(' str_struct ')' ';';
-while_declaration   : 'mientras' '('expression ')' 'hacer' cmp_declaration 'fin_mientras';
-for_declaration     : 'para' '('assign';'expression ';'end_loop')' 'hacer' cmp_declaration 'fin_para';
-dowhile_declaration : 'hacer' cmp_declaration 'mientras''('expression ')' ';';
+while_declaration   : 'mientras' '(' expression ')' 'hacer' cmp_declaration break_declaration? 'fin_mientras';
+for_declaration     : 'para' '('assign';'expression ';'end_loop')' 'hacer' cmp_declaration break_declaration? 'fin_para';
+dowhile_declaration : 'hacer' cmp_declaration break_declaration? 'mientras''('expression ')' ';';
 switch_declaration  : 'seleccionar' '('identifier')' 'entre' case_l 'fin_seleccionar';
 break_declaration   : 'romper'';';
 return_declaration  : 'retornar' expression ';';
@@ -109,8 +109,8 @@ str_struct_pri  : ',' str_struct
                 |
                 ;
 
-case_l    : 'caso' terminal_value ':' cmp_declaration case_l
-        | 'defecto' ':' cmp_declaration
+case_l    : 'caso' terminal_value ':' cmp_declaration break_declaration? case_l
+        | 'defecto' ':' cmp_declaration break_declaration?
         |
         ;
 

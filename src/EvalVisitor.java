@@ -99,7 +99,6 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitAssign_id(PsycoderParser.Assign_idContext ctx) {
-        //String id = ctx.identifier().getText();
         Value val = this.visit(ctx.identifier());
         val.setValue(this.visit(ctx.expression()));
 
@@ -249,6 +248,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     private List<Tuple> paramsFun = new ArrayList<>();
     private int currentParam = 0;
+    private Value returnedValue = null;
+    private boolean isReturning = false;
 
     @Override
     public Value visitFunction_declaration(PsycoderParser.Function_declarationContext ctx) {
@@ -258,7 +259,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         paramsFun.clear();
         this.visit(ctx.params());
 
-        Function fun = new Function(returnType, this.paramsFun, ctx.cmp_declaration(), ctx.return_declaration());
+        Function fun = new Function(returnType, this.paramsFun, ctx.cmp_declaration());
         functionMemory.put(id, fun);
         return null;
     }
@@ -283,13 +284,19 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         paramsFun = new ArrayList<>();
 
         this.visitChildren(currentFunction.getContext());
-        Value returnValue = this.visit(currentFunction.getReturnContext());
+        if(!this.isReturning) {
+            throw new RuntimeException("La función \"" + id + "\" debe tener una sentencia \"retornar\".");
+        }
+
+        Value returnValue = this.returnedValue;
+        //this.returnedValue = null;
+        this.isReturning = false;
 
         if(!returnValue.getType().equals(currentFunction.getReturnType()))
             throw new RuntimeException("Se esperaba el tipo de retorno + " + currentFunction.getReturnType() + ", se encontró "
                     + returnValue.getType() + " en la función " + id + ".");
 
-        memory.removeLocalMemory();
+        memory.removeFunctionMemory();
 
         return returnValue;
     }
@@ -317,7 +324,14 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitReturn_declaration(PsycoderParser.Return_declarationContext ctx) {
-        return this.visit(ctx.expression());
+        this.returnedValue = this.visit(ctx.expression());
+        this.isReturning = true;
+
+        if(!memory.isCurrentFunction()) {
+            throw new RuntimeException("La sentencia retornar debe estar dentro de una función y no en funcion_principal");
+        }
+
+        return null;
     }
 
     /**
@@ -355,5 +369,24 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
             structMemory.get(currentStructBuild).put(currentId, currentType);
         }
         return this.visitChildren(ctx);
+    }
+
+    /**
+     * Ciclos de control
+     */
+    @Override
+    public Value visitIf_declaration(PsycoderParser.If_declarationContext ctx) {
+        Value val = this.visit(ctx.expression());
+        if(val.isBoolean()) {
+            throw new RuntimeException("La expresión dentro del if debe ser booleana y es " + val.getType() + ".");
+        }
+        /*
+        if(val.asBoolean()) {
+            this.visit(ctx.cmp_declaration());
+            return
+        } else {
+
+        }*/
+        return null;
     }
 }

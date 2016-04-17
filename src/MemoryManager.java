@@ -7,14 +7,17 @@ import java.util.Stack;
 public class MemoryManager {
     private Stack<ContextMemory> localMemory;
     private Stack<ContextMemory> auxiliar;
+    private int functions;
 
     public MemoryManager() {
-        localMemory = new Stack<ContextMemory>();
-        auxiliar = new Stack<ContextMemory>();
-        localMemory.push(new ContextMemory(new HashMap<String, Value>(), false));
+        this.localMemory = new Stack<ContextMemory>();
+        this.auxiliar = new Stack<ContextMemory>();
+        this.localMemory.push(new ContextMemory(new HashMap<String, Value>(), false));
+        this.functions = 1;
     }
 
     public void addLocalMemory(boolean removable) {
+        if(!removable) this.functions++;
         localMemory.push(new ContextMemory(new HashMap<String, Value>(), removable));
     }
 
@@ -86,6 +89,24 @@ public class MemoryManager {
 
     public void removeLocalMemory() {
         if(localMemory.empty()) throw new IllegalStateException("no hay más memoria");
+        if(!localMemory.peek().isRemovable()) throw new RuntimeException("no se puede remover memoria de la función con localMemory");
+
+        localMemory.pop();
+    }
+
+    public boolean isCurrentFunction() {
+        return !(functions <= 1);
+    }
+
+    public void removeFunctionMemory() {
+        if(localMemory.empty()) throw new IllegalStateException("no hay más memoria");
+        if(functions <= 1) throw new RuntimeException("no se puede remover memoria");
+
+        functions--;
+        while(localMemory.peek().isRemovable()) {
+            localMemory.pop();
+        }
+
         localMemory.pop();
     }
 }

@@ -26,7 +26,8 @@ funcion_principal
     //imprimir(a.primero, a.segundo);
     imprimir(loq.tup.primero, loq.tup.segundo);
     entero b = 3;
-    entero ks = hola();
+    entero ks = 4;
+    ks = hola();
     imprimir(ks, b);
 fin_principal
 
