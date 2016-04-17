@@ -372,7 +372,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     }
 
     /**
-     * Ciclos de control
+     * Declaracion if
      */
 
     private boolean isBreaking = false;
@@ -420,5 +420,34 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
             return this.visit(ctx.cmp_declaration());
         }
         else return null;
+    }
+
+    /**
+     * declaración while
+     */
+
+    @Override
+    public Value visitWhile_declaration(PsycoderParser.While_declarationContext ctx) {
+        Value condition = this.visit(ctx.expression());
+        if(!condition.isBoolean()) {
+            throw new RuntimeException("La condición del while debe ser booleana, se recibió " + condition.getType() + ".");
+        }
+
+        memory.addLocalMemory(true);
+
+        while(condition.asBoolean()) {
+            this.visit(ctx.cmp_declaration());
+            condition = this.visit(ctx.expression());
+
+            if(isBreaking || isReturning || !condition.asBoolean() ) {
+                if(isBreaking) {
+                    isBreaking = !isBreaking;
+                }
+                memory.removeLocalMemory();
+                return null;
+            }
+        }
+
+        return null;
     }
 }

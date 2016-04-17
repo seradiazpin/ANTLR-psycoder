@@ -34,6 +34,15 @@ funcion_principal
     entero ks = 4;
     ks = hola();
 
+    mientras(verdadero) hacer
+        mientras(verdadero) hacer
+            imprimir(b);
+            romper;
+        fin_mientras
+        romper;
+        imprimir(ks);
+    fin_mientras
+
     booleano fal = falso;
     imprimir(ks);
 fin_principal
