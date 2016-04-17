@@ -374,19 +374,51 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     /**
      * Ciclos de control
      */
+
+    private boolean isBreaking = false;
+
+    @Override
+    public Value visitCmp_declaration(PsycoderParser.Cmp_declarationContext ctx) {
+        return isBreaking || isReturning ? null : super.visitCmp_declaration(ctx);
+    }
+
+    @Override
+    public Value visitDeclaration(PsycoderParser.DeclarationContext ctx) {
+
+        if(ctx.break_declaration() == null)
+            return super.visitDeclaration(ctx);
+        else {
+            this.isBreaking = true;
+            return null;
+        }
+    }
+
     @Override
     public Value visitIf_declaration(PsycoderParser.If_declarationContext ctx) {
         Value val = this.visit(ctx.expression());
-        if(val.isBoolean()) {
+        if(!val.isBoolean()) {
             throw new RuntimeException("La expresión dentro del if debe ser booleana y es " + val.getType() + ".");
         }
-        /*
-        if(val.asBoolean()) {
-            this.visit(ctx.cmp_declaration());
-            return
-        } else {
 
-        }*/
-        return null;
+        memory.addLocalMemory(true);
+        Value ret;
+
+        if(val.asBoolean()) {
+            ret = this.visit(ctx.cmp_declaration());
+        } else {
+            ret = this.visit(ctx.declaration_if());
+        }
+
+        memory.removeLocalMemory();
+
+        return ret;
+    }
+
+    @Override
+    public Value visitDeclaration_if(PsycoderParser.Declaration_ifContext ctx) {
+        if(ctx.cmp_declaration() != null) {
+            return this.visit(ctx.cmp_declaration());
+        }
+        else return null;
     }
 }

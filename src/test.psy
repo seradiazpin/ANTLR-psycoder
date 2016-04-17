@@ -9,7 +9,12 @@ fin_estructura
 
 funcion entero mundo() hacer
     imprimir("mundo");
-    retornar 0;
+    booleano ver = falso;
+    si(ver) entonces
+        retornar 1;
+    si_no
+        retornar 0;
+    fin_si
 fin_funcion
 
 funcion entero hola() hacer
@@ -28,27 +33,7 @@ funcion_principal
     entero b = 3;
     entero ks = 4;
     ks = hola();
-    imprimir(ks, b);
-fin_principal
 
-/*
-funcion_principal
-seleccionar(i) entre
-    caso 1: imprimir("1");
-    caso 2: imprimir("2");
-    caso 4: romper;
-    defecto:
-    fin_seleccionar
+    booleano fal = falso;
+    imprimir(ks);
 fin_principal
-//------------------------------
-funcion_principal
-para(i = 1;i<= 10;id)hacer
-    imprimir(i);
-fin_para
-fin_principal
-
-funcion entero hola(entero a) hacer
-    imprimir(a);
-    //Mirar el return
-fin_funcion
-*/
