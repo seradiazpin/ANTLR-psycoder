@@ -9,15 +9,23 @@ grammar Psycoder;
 */
 
 
+// SE ELIMINO EL - DE LOS ENTERO Y REALES MIRAR
+
 COMMENT : '/*' .*? '*/' -> channel(HIDDEN) ;
 WS : [ \t\n\r]+ -> channel(HIDDEN) ;
 LineComment: '//' ~[\r\n]* -> channel(HIDDEN);
 ID : [a-zA-Z_]+ [a-zA-Z0-9_]* ;
-TK_ENTERO   : '-'?[0-9]+ ;
-TK_REAL : '-'?[0-9]+'.'[0-9]+;
+TK_ENTERO   : [0-9]+ ;
+TK_REAL : [0-9]+'.'[0-9]+;
 TK_CADENA   : '"' (~'"'|'\\"')* '"';
 TK_CARACTER : '\''(|.)'\'';
-
+EQ : '==';
+NEQ : '!=';
+GT : '>';
+LT : '<';
+GTEQ : '>=';
+LTEQ : '<=';
+MINUS: '-';
 
 
 program : element* 'funcion_principal' cmp_declaration 'fin_principal' EOF
@@ -46,39 +54,23 @@ mandatory_params_pri    : ',' mandatory_params
                         |
                         ;
 
-assign   : type ID assign_pri
-         | ID assign_pri
+assign   : type assign_type #typedAssign
+         | assign_id        #unTypedAssign
          ;
 
-assign_pri  : '=' expression assign_pri_pri
-            | assign_pri_pri
-            |
+assign_type  : ID ('=' expression)? assign_type_pri
             ;
 
-assign_pri_pri  : ',' ID assign_id
+assign_type_pri  : ',' assign_type
                 |
                 ;
 
-assign_id   : '=' expression assign_pri_pri
-            | assign_pri_pri
-            |
+assign_id   : identifier '=' expression assign_id_pri
             ;
 
-assign_special  : '=' expression
-                | ID assign_pri
-                ;
-
-assign_fun  : '('args_fun')'
-            | assign_special
-            ;
-
-args_fun    : expression args_fun_pri
-            |
-            ;
-
-args_fun_pri    : ',' expression args_fun_pri
-                |
-                ;
+assign_id_pri  : ',' assign_id
+               |
+               ;
 
 type    : 'entero'
         | 'real'
@@ -121,7 +113,7 @@ end_loop    : ID
             | TK_REAL
             ;
 
-str_struct  : expression str_struct_pri;
+str_struct  : expression? str_struct_pri;
 
 str_struct_pri  : ',' str_struct
                 |
@@ -136,50 +128,35 @@ cmp_declaration   : declaration cmp_declaration
                 |
                 ;
 
-/*
-expression : terminal_value exp_pri
-    | '('exp')' exp_pri
-    | '!' '('exp')' exp_pri
-    | '-''('exp')' exp_pri
-    ;
-
-exp_pri : '||' expression exp_pri
-        | '&&' expression exp_pri
-        | '+' expression exp_pri
-        | '-' expression exp_pri
-        | '*' expression exp_pri
-        | '/' expression exp_pri
-        | '<' expression exp_pri
-        | '!=' expression exp_pri
-        | '<=' expression exp_pri
-        | '>' expression exp_pri
-        | '>=' expression exp_pri
-        | '%' expression exp_pri
-        | '!=' expression exp_pri
-        | '==' expression exp_pri
-        |
-        ;
-*/
-
 expression
     :   primary                                             #primaryExp
+    | '-'primary                                            #NegativeExp
     |   function_call '.' identifier                        #functionDotOpExp
     |   function_call                                       #functionExp
     |   <assoc=right> '!' expression                        #negExp
     |   expression op=('*'|'/'|'%') expression              #multiplicationExp
     |   expression op=('+'|'-') expression                  #additionExp
-    |   expression op=('<=' | '>=' | '>' | '<') expression  #relationalExp
-    |   expression op=('==' | '!=') expression              #equalityExp
-    |   expression '&&' expression                          #andExp
-    |   expression '||' expression                          #orExp
+    |   expression op=(LTEQ | GTEQ | GT | LT) expression    #relationalExp
+    |   expression op=(EQ | NEQ) expression                 #equalityExp
+    |   expression '&&' expression                           #andExp
+    |   expression '||' expression                            #orExp
     |   <assoc=right> identifier '=' expression             #assigExp
     ;
 
 function_call
-    :  ID '('args_fun')';
+    :  ID '('args_fun')'
+    ;
 
-primary : '(' expression ')' #parenPriExp
-        | terminal_value #terminalPriExp
+args_fun : expression args_fun_pri
+         |
+         ;
+
+args_fun_pri : ',' expression args_fun_pri
+             |
+             ;
+
+primary : terminal_value #terminalPriExp
+        |'(' expression ')' #parenPriExp
         ;
 
 identifier_id   : ID identifier_id_pri;

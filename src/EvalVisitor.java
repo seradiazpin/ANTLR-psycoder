@@ -31,6 +31,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         return null;
     }
 
+
     @Override
     public Value visitAssign_type(PsycoderParser.Assign_typeContext ctx) {
         String id = ctx.ID().getText();
@@ -42,17 +43,47 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         if(ctx.expression() == null) { // asignación por omisión
             memory.addId(id, currentTypeToAssign);
         } else { // asignación por expresión
+            System.out.println(this.visit(ctx.expression()).getType()+", "+id+", "+this.visit(ctx.expression()).toString());
+            String typec = this.visit(ctx.expression()).getType();
+            if(!typec.equals(currentTypeToAssign)){
+                throw new RuntimeException("Se esperaba " + currentTypeToAssign + " se encontro "+ typec);
+            }
             memory.addId(id, this.visit(ctx.expression()));
         }
 
-        return this.visitChildren(ctx);
+        return this.visit(ctx.assign_type_pri());
     }
 
     @Override
     public Value visitAssign_id(PsycoderParser.Assign_idContext ctx) {
         String id = ctx.identifier().getText();
         Value val = memory.getId(id);
-        val.setValue(this.visit(ctx.expression()));
+        String typec = this.visit(ctx.expression()).getType();
+        if(!val.getType().equals(typec)){
+            throw new RuntimeException("Se esperaba " + val.getType() + " se encontro "+ typec);
+        }
+        //todo es esto el problema
+        Value newVal = this.visit(ctx.expression());
+        if(typec.equals("booleano")){
+            val.setValue(newVal.asBoolean());
+        }else if(typec.equals("entero")){
+            val.setValue(newVal.asInteger());
+        }else if(typec.equals("real")){
+            val.setValue(newVal.asDouble());
+        }else if(typec.equals("cadena")){
+            val.setValue(newVal.asString());
+        }else if(typec.equals("caracter")){
+            val.setValue(newVal.toString().charAt(0));
+        }else{
+            if (newVal.isStruct() && memory.getId(newVal.asStruct().getName()) == null) {
+                if(memory.getId(newVal.asStruct().getName()) == null){
+                    throw new RuntimeException("type: "+id +" not created");
+                }else{
+                    throw new RuntimeException("variable: "+id + " is " +typec+" and "+newVal.toString()+" is "+newVal.getType());
+                }
+            }
+            val.setValue(newVal.asStruct());
+        }
 
         return this.visitChildren(ctx);
     }
@@ -71,12 +102,21 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitEntero_terminal(PsycoderParser.Entero_terminalContext ctx) {
-        return new Value(Integer.valueOf(ctx.getText()));
+        try {
+            return new Value(Integer.valueOf(ctx.getText()));
+        }catch (Exception e){
+            throw new RuntimeException("Entero fuera de rango");
+        }
     }
 
     @Override
     public Value visitReal_terminal(PsycoderParser.Real_terminalContext ctx) {
-        return new Value(Double.valueOf(ctx.getText()));
+        Double d = Double.valueOf(ctx.getText());
+        if(d >= -2147483648 && d <= 2147483647){
+            return new Value(Double.valueOf(ctx.getText()));
+        }else{
+            throw new RuntimeException("Real fuera de rango");
+        }
     }
 
     @Override
@@ -115,11 +155,14 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitStr_struct(PsycoderParser.Str_structContext ctx) {
+        if(ctx.expression() == null){
+            return Value.VOID;
+        }
         Value value = this.visit(ctx.expression());
         if(value.toString().contains("\\n")){
             System.out.print(value.toString().replace("\\n","\n"));
         }else {
-            System.out.print(value + " ");
+            System.out.print(value.toString() + " ");
         }
         return visitChildren(ctx);
     }
@@ -152,6 +195,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         return null;
     }
 
+
+
     /**
      * Operadores de expresiones
      */
@@ -164,4 +209,173 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         Struct struct = val.asStruct();
 
     }*/
+
+    @Override
+    public Value visitParenPriExp(PsycoderParser.ParenPriExpContext ctx) {
+        return this.visit(ctx.expression());
+    }
+
+    @Override
+    public Value visitNegExp(PsycoderParser.NegExpContext ctx) {
+        Value value = this.visit(ctx.expression());
+        if(!value.toString().equals("verdadero")&&!value.toString().equals("falso")){
+            throw new RuntimeException("Solo se puede negar un valor booleano, se encontro "+value.toString());
+        }else if(value.toString().equals("verdadero")) {
+            return new Value(false);
+        }else{
+            return new Value(true);
+        }
+    }
+
+    @Override
+    public Value visitNegativeExp(PsycoderParser.NegativeExpContext ctx) {
+        Value value = this.visit(ctx.primary());
+        if(!value.isDouble() && !value.isInteger()){
+            throw new RuntimeException("negatividad solo a numeros, se encontro "+value.toString());
+        }else{
+            return value.isInteger()? new Value(-value.asInteger()):new Value(-value.asDouble());
+        }
+    }
+
+    @Override
+    public Value visitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx) {
+        Value left = this.visit(ctx.expression(0));
+        Value right = this.visit(ctx.expression(1));
+        switch (ctx.op.getText().charAt(0)) {
+            case '*':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() * right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() * right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() * right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger()*right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) * right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() * (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() * (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) * right.asInteger());
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                }
+            case '/':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() / right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() / right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() / right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() / right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) / right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() / (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() / (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) / right.asInteger());
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                }
+            case '%':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() % right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() % right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() % right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() % right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) % right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() % (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() % (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) % right.asInteger());
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                }
+            default:
+                throw new RuntimeException("unknown operator: " +ctx.op.getText());
+        }
+    }
+
+    @Override
+    public Value visitAdditionExp(PsycoderParser.AdditionExpContext ctx) {
+        Value left = this.visit(ctx.expression(0));
+        Value right = this.visit(ctx.expression(1));
+        switch (ctx.op.getText().charAt(0)) {
+            case '+':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() + right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() + right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() + right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() + right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) + right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() + (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() + (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) + right.asInteger());
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                }
+            case '-':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() - right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() - right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() - right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() - right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) - right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() - (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() - (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) - right.asInteger());
+                }else {
+                    throw new RuntimeException("operador: " +ctx.op.getText()+" solo para numeros enteros o reales");
+                }
+            default:
+                throw new RuntimeException("unknown operator: " +ctx.op.getText());
+        }
+    }
+
+    @Override
+    public Value visitAndExp(PsycoderParser.AndExpContext ctx) {
+        Value left = this.visit(ctx.expression(0));
+        Value right = this.visit(ctx.expression(1));
+        if(!left.isBoolean() && !right.isBoolean()){
+            throw new RuntimeException("Expresion no booleana");
+        }
+        return new Value(left.asBoolean() && right.asBoolean());
+    }
+
+    @Override
+    public Value visitOrExp(PsycoderParser.OrExpContext ctx) {
+        Value left = this.visit(ctx.expression(0));
+        Value right = this.visit(ctx.expression(1));
+        if(!left.isBoolean() && !right.isBoolean()){
+            throw new RuntimeException("Expresion no booleana");
+        }
+        return new Value(left.asBoolean() || right.asBoolean());
+    }
+
+
 }

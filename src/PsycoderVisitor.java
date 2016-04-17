@@ -1,4 +1,4 @@
-// Generated from Psycoder.g4 by ANTLR 4.5.3
+// Generated from src/Psycoder.g4 by ANTLR 4.5.3
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -220,6 +220,13 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunctionDotOpExp(PsycoderParser.FunctionDotOpExpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code NegativeExp}
+	 * labeled alternative in {@link PsycoderParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegativeExp(PsycoderParser.NegativeExpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code primaryExp}
 	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
@@ -287,19 +294,19 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArgs_fun_pri(PsycoderParser.Args_fun_priContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code parenPriExp}
-	 * labeled alternative in {@link PsycoderParser#primary}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParenPriExp(PsycoderParser.ParenPriExpContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code terminalPriExp}
 	 * labeled alternative in {@link PsycoderParser#primary}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parenPriExp}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParenPriExp(PsycoderParser.ParenPriExpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#identifier_id}.
 	 * @param ctx the parse tree

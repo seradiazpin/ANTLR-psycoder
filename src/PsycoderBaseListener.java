@@ -1,4 +1,4 @@
-// Generated from Psycoder.g4 by ANTLR 4.5.3
+// Generated from src/Psycoder.g4 by ANTLR 4.5.3
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -423,6 +423,18 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNegativeExp(PsycoderParser.NegativeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNegativeExp(PsycoderParser.NegativeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPrimaryExp(PsycoderParser.PrimaryExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -543,18 +555,6 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParenPriExp(PsycoderParser.ParenPriExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitParenPriExp(PsycoderParser.ParenPriExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -562,6 +562,18 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParenPriExp(PsycoderParser.ParenPriExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParenPriExp(PsycoderParser.ParenPriExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

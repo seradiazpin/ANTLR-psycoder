@@ -10,6 +10,8 @@ public class Value {
     public static Value CHAR = new Value(' ');
     public static Value BOOLEAN = new Value(false);
 
+    public static Value REALDESP = new Value(0.0000000000000001);
+
     private Object value;
 
     public Value(Object value) {
@@ -22,6 +24,9 @@ public class Value {
 
     public Double asDouble() {
         return (Double) getValue();
+    }
+    public Integer asInteger() {
+        return (Integer) getValue();
     }
 
     public String asString() {
@@ -65,7 +70,7 @@ public class Value {
         }else if (this.isStruct()){
             Struct temp = (Struct) this.getValue();
             return temp.toString();
-        }else{
+        }else {
             return "NONE";
         }
     }
@@ -108,7 +113,6 @@ public class Value {
 
         return String.valueOf(getValue());
     }
-
     public void setValue(Object value) {
         this.value = value;
     }
