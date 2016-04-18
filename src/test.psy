@@ -22,6 +22,18 @@ funcion entero hola() hacer
     retornar mundo();
 fin_funcion
 
+funcion entero select() hacer
+    entero a = 0;
+    seleccionar(a) entre
+        caso 5:
+            retornar 10;
+        caso 10:
+            retornar 15;
+        defecto:
+            retornar 0;
+    fin_seleccionar
+fin_funcion
+
 funcion_principal
     //tupla a;
     loquesea loq;
@@ -34,12 +46,26 @@ funcion_principal
     entero ks = 4;
     ks = hola();
 
+    imprimir("for");
     booleano valor = verdadero;
     entero emel = 1;
     para(emel = 0; valor; 1) hacer
         imprimir("for: ", emel);
         valor = falso;
     fin_para
-
     imprimir("emel ", emel);
+
+    imprimir("do-while");
+    valor = verdadero;
+    emel = 1;
+    hacer
+        imprimir("do-while: ", emel);
+        emel = 2;
+        valor = falso;
+    mientras(valor);
+    imprimir("emel ", emel);
+
+    imprimir("switch");
+    emel = 2;
+    imprimir(select());
 fin_principal

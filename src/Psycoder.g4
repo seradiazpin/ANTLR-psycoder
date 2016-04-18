@@ -90,7 +90,7 @@ print_declaration   : 'imprimir' '(' str_struct ')' ';';
 while_declaration   : 'mientras' '(' expression ')' 'hacer' cmp_declaration 'fin_mientras';
 for_declaration     : 'para' '('type? ID '=' expression';'expression ';'end_loop')' 'hacer' cmp_declaration 'fin_para';
 dowhile_declaration : 'hacer' cmp_declaration 'mientras''('expression ')' ';';
-switch_declaration  : 'seleccionar' '('identifier')' 'entre' case_l 'fin_seleccionar';
+switch_declaration  : 'seleccionar' '('identifier')' 'entre' ('caso' terminal_value ':' cmp_declaration)* ('defecto' ':' cmp_declaration)? 'fin_seleccionar';
 break_declaration   : 'romper'';';
 return_declaration  : 'retornar' expression ';';
 
@@ -109,12 +109,12 @@ str_struct  : expression str_struct_pri;
 str_struct_pri  : ',' str_struct
                 |
                 ;
-
+/*
 case_l    : 'caso' terminal_value ':' cmp_declaration case_l
         | 'defecto' ':' cmp_declaration
         |
         ;
-
+*/
 cmp_declaration : declaration cmp_declaration
                 |
                 ;

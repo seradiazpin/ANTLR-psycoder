@@ -363,18 +363,6 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCase_l(PsycoderParser.Case_lContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCase_l(PsycoderParser.Case_lContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterCmp_declaration(PsycoderParser.Cmp_declarationContext ctx) { }
 	/**
 	 * {@inheritDoc}

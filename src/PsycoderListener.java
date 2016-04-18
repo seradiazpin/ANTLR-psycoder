@@ -305,16 +305,6 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitStr_struct_pri(PsycoderParser.Str_struct_priContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PsycoderParser#case_l}.
-	 * @param ctx the parse tree
-	 */
-	void enterCase_l(PsycoderParser.Case_lContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PsycoderParser#case_l}.
-	 * @param ctx the parse tree
-	 */
-	void exitCase_l(PsycoderParser.Case_lContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link PsycoderParser#cmp_declaration}.
 	 * @param ctx the parse tree
 	 */

@@ -219,13 +219,6 @@ public class PsycoderBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCase_l(PsycoderParser.Case_lContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitCmp_declaration(PsycoderParser.Cmp_declarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

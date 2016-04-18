@@ -424,7 +424,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     }
 
     /**
-     * declaración while
+     * while declaration
      */
 
     @Override
@@ -451,6 +451,10 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
         return null;
     }
+
+    /**
+     * for declaration
+     */
 
     @Override
     public Value visitFor_declaration(PsycoderParser.For_declarationContext ctx) {
@@ -503,7 +507,6 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         }
 
         memory.removeLocalMemory();
-
         return null;
     }
 
@@ -519,5 +522,91 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
             return ctx.TK_ENTERO() != null ? new Value(Integer.valueOf(ctx.TK_ENTERO().getText()))
                                             : new Value(Double.valueOf(ctx.TK_REAL().getText()));
         }
+    }
+
+    /**
+     * do while declaration
+     */
+    @Override
+    public Value visitDowhile_declaration(PsycoderParser.Dowhile_declarationContext ctx) {
+        Value condition = this.visit(ctx.expression());
+        if(!condition.isBoolean()) {
+            throw new RuntimeException("La condición del \"mientras\" debe ser booleana, se recibió " + condition.getType() + ".");
+        }
+
+        memory.addLocalMemory(true);
+
+        do {
+            this.visit(ctx.cmp_declaration());
+            if(isBreaking || isReturning) {
+                if(isBreaking) {
+                    isBreaking = !isBreaking;
+                }
+                memory.removeLocalMemory();
+                return null;
+            }
+
+            condition = this.visit(ctx.expression());
+        } while (condition.asBoolean());
+
+        memory.removeLocalMemory();
+        return null;
+    }
+
+    /**
+     * switch case declaration
+     */
+    @Override
+    public Value visitSwitch_declaration(PsycoderParser.Switch_declarationContext ctx) {
+        Value variable = this.visit(ctx.identifier());
+        if(variable.getValue() instanceof Value) { // ESTO ES HORRRIIIIIIBLEEEEEE
+            variable = (Value)variable.getValue();
+        }
+
+        List<PsycoderParser.Cmp_declarationContext> contexts = ctx.cmp_declaration();
+        List<PsycoderParser.Terminal_valueContext> comparisons = ctx.terminal_value();
+
+        if(variable.isStruct()) {
+            throw new RuntimeException("No hay soporte para estructuras dentro del seleccionar");
+        }
+
+        for(int i = 0; i < comparisons.size(); ++i) {
+            Value currentCase = this.visit(comparisons.get(i));
+            if(!currentCase.getType().equals(variable.getType())) {
+                throw new RuntimeException("El tipo es \"" + currentCase.getType() + "\", se esperaba " + variable.getType() + ".");
+            }
+
+            if(currentCase.getValue().equals(variable.getValue())) {
+                memory.addLocalMemory(true);
+
+                this.visit(contexts.get(i));
+                if(isBreaking || isReturning) {
+                    if(isBreaking) {
+                        isBreaking = !isBreaking;
+                    }
+                    memory.removeLocalMemory();
+                    return null;
+                }
+
+                memory.removeLocalMemory();
+            }
+        }
+
+        if(comparisons.size() != contexts.size()) {
+            memory.addLocalMemory(true);
+
+            this.visit(contexts.get(contexts.size() - 1));
+            if(isBreaking || isReturning) {
+                if(isBreaking) {
+                    isBreaking = !isBreaking;
+                }
+                memory.removeLocalMemory();
+                return null;
+            }
+
+            memory.removeLocalMemory();
+        }
+
+        return null;
     }
 }

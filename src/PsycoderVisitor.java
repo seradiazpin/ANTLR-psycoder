@@ -188,12 +188,6 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStr_struct_pri(PsycoderParser.Str_struct_priContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PsycoderParser#case_l}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCase_l(PsycoderParser.Case_lContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#cmp_declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
