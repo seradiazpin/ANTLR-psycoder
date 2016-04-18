@@ -204,7 +204,6 @@ primary : '(' expression ')'    #parenPriExp
         | '-'TK_ENTERO   #neg_entero_terminal
         | '-'TK_REAL     #neg_real_terminal
         ;
-
 identifier_id   : ID identifier_id_pri;
 identifier_id_pri   : '.' identifier_id
                     |

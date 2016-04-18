@@ -1,6 +1,7 @@
 funcion_principal
-entero a = 2147483647 ;
-entero b = a * a ;
+ entero a = 1, b=2, c;
+ b = a = 2;
+ imprimir(a,b- - 1,c);
 fin_principal
 /*
 

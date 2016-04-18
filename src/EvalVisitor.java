@@ -50,10 +50,16 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         } else { // asignación por expresión
             //System.out.println(this.visit(ctx.expression()).getType()+", "+id+", "+this.visit(ctx.expression()).toString());
             String typec = this.visit(ctx.expression()).getType();
+            Value ans = this.visit(ctx.expression());
             if(!typec.equals(currentTypeToAssign)){
-                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: " + currentTypeToAssign + " se encontro "+ typec);
+                if(typec.equals("entero") && currentTypeToAssign.equals("real")){
+                    ans = new Value(Double.valueOf(ans.asInteger()));
+                }else {
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: " + currentTypeToAssign + " se encontro " + typec);
+                }
             }
-            memory.addId(id, this.visit(ctx.expression()));
+
+            memory.addId(id, ans);
         }
 
         return this.visit(ctx.assign_type_pri());
