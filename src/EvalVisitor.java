@@ -1,4 +1,5 @@
 import org.antlr.v4.codegen.model.ArgAction;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import javax.xml.bind.ValidationEvent;
@@ -94,7 +95,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
             memory.addId(id, toAssign);
         }
 
-        return ctx.assign_type_pri() != null ? this.visit(ctx.assign_type_pri()) : null;
+        return ctx.assign_type_pri() != null ? this.visit(ctx.assign_type_pri()) : memory.getId(id);
     }
 
     @Override
@@ -430,7 +431,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     public Value visitWhile_declaration(PsycoderParser.While_declarationContext ctx) {
         Value condition = this.visit(ctx.expression());
         if(!condition.isBoolean()) {
-            throw new RuntimeException("La condición del while debe ser booleana, se recibió " + condition.getType() + ".");
+            throw new RuntimeException("La condición del \"mientras\" debe ser booleana, se recibió " + condition.getType() + ".");
         }
 
         memory.addLocalMemory(true);
@@ -449,5 +450,74 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         }
 
         return null;
+    }
+
+    @Override
+    public Value visitFor_declaration(PsycoderParser.For_declarationContext ctx) {
+        List<PsycoderParser.ExpressionContext> exps = ctx.expression();
+
+        Value condition = this.visit(exps.get(exps.size() == 2 ? 1 : 0));
+        Value toAssign = this.visit(exps.get(0));
+        String id = ctx.ID().getText();
+        if(!condition.isBoolean()) {
+            throw new RuntimeException("La condición del \"para\" debe ser booleana, se recibió " + condition.getType() + ".");
+        }
+
+        memory.addLocalMemory(true);
+
+        if(!(toAssign.isInteger() || toAssign.isDouble())) {
+            throw new RuntimeException("El tipo de la asignación del \"para\" debe ser entero o real, se recibió " + toAssign.getType() + ".");
+        }
+
+        if(ctx.type() != null) {
+            memory.addId(id, toAssign);
+        } else {
+            if(!memory.containsId(id)) {
+                throw new RuntimeException("El identificador \"" + id + "\" no ha sido declarado.");
+            }
+
+            Value obtained = memory.getId(id);
+            obtained.setValue(toAssign.getValue());
+            toAssign = obtained;
+        }
+
+        while (condition.asBoolean()) {
+            this.visit(ctx.cmp_declaration());
+            condition = this.visit(exps.get(exps.size() == 2 ? 1 : 0));
+
+            if(!(!isBreaking && !isReturning)) {
+                if(isBreaking) {
+                    isBreaking = !isBreaking;
+                }
+                memory.removeLocalMemory();
+                return null;
+            }
+
+            Value toIncrease = this.visit(ctx.end_loop());
+
+            if(toAssign.isInteger()) {
+                toAssign.setValue(toAssign.asInteger() + toIncrease.asInteger());
+            } else {
+                toAssign.setValue(toAssign.asDouble() + toIncrease.asDouble());
+            }
+        }
+
+        memory.removeLocalMemory();
+
+        return null;
+    }
+
+    @Override
+    public Value visitEnd_loop(PsycoderParser.End_loopContext ctx) {
+        if(ctx.ID() != null) {
+            String id = ctx.ID().getText();
+            if(!memory.containsId(id)) {
+                throw new RuntimeException("El identificador \"" + id + "\" no existe.");
+            }
+            return memory.getId(id);
+        } else {
+            return ctx.TK_ENTERO() != null ? new Value(Integer.valueOf(ctx.TK_ENTERO().getText()))
+                                            : new Value(Double.valueOf(ctx.TK_REAL().getText()));
+        }
     }
 }

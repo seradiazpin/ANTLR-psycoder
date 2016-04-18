@@ -34,15 +34,12 @@ funcion_principal
     entero ks = 4;
     ks = hola();
 
-    mientras(verdadero) hacer
-        mientras(verdadero) hacer
-            imprimir(b);
-            romper;
-        fin_mientras
-        romper;
-        imprimir(ks);
-    fin_mientras
+    booleano valor = verdadero;
+    entero emel = 1;
+    para(emel = 0; valor; 1) hacer
+        imprimir("for: ", emel);
+        valor = falso;
+    fin_para
 
-    booleano fal = falso;
-    imprimir(ks);
+    imprimir("emel ", emel);
 fin_principal

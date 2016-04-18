@@ -26,6 +26,7 @@ public class Value {
     public String asString() {
         return String.valueOf(getValue());
     }
+    public Integer asInteger() { return (Integer) getValue(); }
 
     public Struct asStruct() {
         return (Struct) getValue();
@@ -109,7 +110,12 @@ public class Value {
     }
 
     public void setValue(Object value) {
-        this.value = value;
+        if(value.toString().equals("falso"))
+            this.value = false;
+        else if(value.toString().equals("verdadero"))
+            this.value = true;
+        else
+            this.value = value;
     }
 
     public Object getValue() {

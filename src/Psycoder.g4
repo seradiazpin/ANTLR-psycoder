@@ -88,7 +88,7 @@ if_declaration  :'si' '('expression ')' 'entonces' cmp_declaration declaration_i
 read_declaration    : 'leer' '('identifier')'';';
 print_declaration   : 'imprimir' '(' str_struct ')' ';';
 while_declaration   : 'mientras' '(' expression ')' 'hacer' cmp_declaration 'fin_mientras';
-for_declaration     : 'para' '('assign';'expression ';'end_loop')' 'hacer' cmp_declaration 'fin_para';
+for_declaration     : 'para' '('type? ID '=' expression';'expression ';'end_loop')' 'hacer' cmp_declaration 'fin_para';
 dowhile_declaration : 'hacer' cmp_declaration 'mientras''('expression ')' ';';
 switch_declaration  : 'seleccionar' '('identifier')' 'entre' case_l 'fin_seleccionar';
 break_declaration   : 'romper'';';
