@@ -71,7 +71,8 @@ public class MemoryManager {
         while (!auxiliar.empty()) localMemory.push(auxiliar.pop());
 
         if(val == null) {
-            throw new RuntimeException("No existe el identificador " + id);
+            throw new RuntimeException("<line:col> Error semantico: la variable con nombre " +
+                    "\""+id+"\" no ha sido declarada.");
         }
 
         return val;

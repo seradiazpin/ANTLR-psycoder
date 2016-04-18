@@ -5,8 +5,12 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import javax.xml.bind.ValidationEvent;
 import java.util.*;
 
+
+
 /**
  * Created by sergioalejandrodiazpinilla on 12/04/16.
+ * todo Comprobar el rango del numero al hacer operaciones
+ * todo
  */
 public class EvalVisitor extends PsycoderBaseVisitor<Value> {
     public static final double SMALL_VALUE = 0.00000000001;
@@ -75,7 +79,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         String id = ctx.ID().getText();
 
         if(memory.containsId(id)) {
-            throw new RuntimeException("El identificador " + id + " ya existe y no se puede declarar de nuevo.");
+            throw new RuntimeException("<linea:col> Error semantico: la ​variable ​con nombre \""+
+                    id+"\" ya ha sido declarada.");
         }
 
         if(ctx.expression() == null) { // asignación por omisión
@@ -88,9 +93,13 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
             }
         } else { // asignación por expresión
             Value toAssign = this.visit(ctx.expression());
-            if(!toAssign.getType().equals(this.currentTypeToAssign)) {
-                throw new RuntimeException("El tipo de la expresión es " + toAssign.getType() +
-                        ", se esperaba " + this.currentTypeToAssign + ".");
+            String typec = toAssign.getType();
+            if(!typec.equals(this.currentTypeToAssign)) {
+                if(typec.equals("entero") && currentTypeToAssign.equals("real")){
+                    toAssign = new Value(Double.valueOf(toAssign.asInteger()));
+                }else {
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: " + currentTypeToAssign + " se encontro " + typec);
+                }
             }
             memory.addId(id, toAssign);
         }
@@ -112,6 +121,7 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         //Value value = memory.getId(id);
         return value;
     }
+
 
     /**
      * Devuelve un elemento de acuerdo al identificador, este solo es usado cuando se
@@ -162,12 +172,40 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitEntero_terminal(PsycoderParser.Entero_terminalContext ctx) {
-        return new Value(Integer.valueOf(ctx.getText()));
+        try {
+            return new Value(Integer.valueOf(ctx.getText()));
+        }catch (Exception e){
+            throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
+        }
+    }
+
+    @Override
+    public Value visitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx) {
+        try {
+            return new Value(-Integer.valueOf(ctx.getText()));
+        }catch (Exception e){
+            throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
+        }
     }
 
     @Override
     public Value visitReal_terminal(PsycoderParser.Real_terminalContext ctx) {
-        return new Value(Double.valueOf(ctx.getText()));
+        Double d = Double.valueOf(ctx.getText());
+        if(d >= -2147483648 && d <= 2147483647){
+            return new Value(Double.valueOf(ctx.getText()));
+        }else{
+            throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
+        }
+    }
+
+    @Override
+    public Value visitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx) {
+        Double d = Double.valueOf(ctx.getText());
+        if(d >= -2147483648 && d <= 2147483647){
+            return new Value(-Double.valueOf(ctx.getText()));
+        }else{
+            throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
+        }
     }
 
     @Override
@@ -206,11 +244,14 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
 
     @Override
     public Value visitStr_struct(PsycoderParser.Str_structContext ctx) {
+        if(ctx.expression() == null){
+            return null;
+        }
         Value value = this.visit(ctx.expression());
         if(value.toString().contains("\\n")){
             System.out.print(value.toString().replace("\\n","\n"));
         }else {
-            System.out.print(value + " ");
+            System.out.print(value.toString() + " ");
         }
         return this.visitChildren(ctx);
     }
@@ -452,6 +493,8 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         return null;
     }
 
+
+
     /**
      * for declaration
      */
@@ -608,5 +651,426 @@ public class EvalVisitor extends PsycoderBaseVisitor<Value> {
         }
 
         return null;
+    }
+
+    @Override
+    public Value visitParenPriExp(PsycoderParser.ParenPriExpContext ctx) {
+        return this.visit(ctx.expression());
+    }
+
+    @Override
+    public Value visitNegExp(PsycoderParser.NegExpContext ctx) {
+        Value value = this.visit(ctx.expression_bool());
+        if(!value.toString().equals("verdadero")&&!value.toString().equals("falso")){
+            throw new RuntimeException("Solo se puede negar un valor booleano, se encontro "+value.toString());
+        }else if(value.toString().equals("verdadero")) {
+            return new Value(false);
+        }else{
+            return new Value(true);
+        }
+    }
+
+    @Override
+    public Value visitNegativeExp(PsycoderParser.NegativeExpContext ctx) {
+        Value value = this.visit(ctx.expression());
+        if(!value.isDouble() && !value.isInteger()){
+            throw new RuntimeException("negatividad solo a numeros, se encontro "+value.toString());
+        }else{
+            return value.isInteger()? new Value(-value.asInteger()):new Value(-value.asDouble());
+        }
+    }
+
+    @Override
+    public Value visitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx) {
+        Value left = this.visit(ctx.expression_product());
+        Value right = this.visit(ctx.primary());
+        Value ans;
+        switch (ctx.op.getText().charAt(0)) {
+            case '*':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() * right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() * right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() * right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    Double temp = Double.valueOf(left.asInteger()) * Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) * right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() * (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    Double temp = Double.valueOf(left.asInteger()) * (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isInteger()){
+                    Double temp = (int)left.toString().charAt(0) * Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isCharacter()){
+                    Double temp = (int)left.toString().charAt(0) * Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else {
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
+                }
+            case '/':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() / right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() / right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() / right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    Double temp = Double.valueOf(left.asInteger()) / Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) / right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() / (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    Double temp = Double.valueOf(left.asInteger()) / (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isInteger()){
+                    Double temp = (int)left.toString().charAt(0) / Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isCharacter()){
+                    Double temp = (int)left.toString().charAt(0) / Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else {
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
+                }
+            case '%':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() % right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() % right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() % right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    Double temp = Double.valueOf(left.asInteger()) % Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) % right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() % (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    Double temp = Double.valueOf(left.asInteger()) % (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isInteger()){
+                    Double temp = (int)left.toString().charAt(0) % Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isCharacter()){
+                    Double temp = (int)left.toString().charAt(0) % Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else {
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
+                }
+            default:
+                throw new RuntimeException("unknown operator: " +ctx.op.getText());
+        }
+    }
+
+    @Override
+    public Value visitAdditionExp(PsycoderParser.AdditionExpContext ctx) {
+        Value left = this.visit(ctx.expression_addition());
+        Value right = this.visit(ctx.expression_product());
+        Value ans;
+        switch (ctx.op.getText().charAt(0)) {
+            case '+':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() + right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() + right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() + right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    Double temp = Double.valueOf(left.asInteger()) + Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) + right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() + (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    Double temp = Double.valueOf(left.asInteger()) + (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isInteger()){
+                    Double temp = (int)left.toString().charAt(0) + Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isCharacter()){
+                    Double temp = (int)left.toString().charAt(0) + Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isString() && right.isString()){
+                    return new Value(left.toString()+ right.toString());
+                }else {
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
+                }
+            case '-':
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() - right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() - right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() - right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    Double temp = Double.valueOf(left.asInteger()) - Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) - right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() - (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    Double temp = Double.valueOf(left.asInteger()) - (int)right.toString().charAt(0);
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isInteger()){
+                    Double temp = (int)left.toString().charAt(0) - Double.valueOf(right.asInteger());
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else if(left.isCharacter() && right.isCharacter()){
+                    Double temp = (int)left.toString().charAt(0) - Double.valueOf((int)right.toString().charAt(0));
+                    Integer ansInt = temp.intValue();
+                    ans = new Value(temp);
+                    ans.checkRangeDouble(temp);
+                    return new Value(ansInt);
+                }else {
+                    throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba: "+
+                            left.getType()+"; se encontro: "+right.getType()+".");
+                }
+            default:
+                throw new RuntimeException("unknown operator: " +ctx.op.getText());
+        }
+    }
+
+
+
+    @Override
+    public Value visitAndExp(PsycoderParser.AndExpContext ctx) {
+        Value left = this.visit(ctx.expression_bool());
+        Value right = this.visit(ctx.expression_rel());
+        if(!left.isBoolean() || !right.isBoolean()){
+            if(!left.isBoolean()){
+                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba:+" +
+                        "booleano; se encontro: "+left.getType());
+            }else{
+                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba:+" +
+                        "booleano; se encontro: "+right.getType());
+            }
+        }
+        return new Value(left.asBoolean() && right.asBoolean());
+    }
+
+    @Override
+    public Value visitOrExp(PsycoderParser.OrExpContext ctx) {
+        Value left = this.visit(ctx.expression());
+        Value right = this.visit(ctx.expression_bool());
+        if(!left.isBoolean() || !right.isBoolean()){
+            if(!left.isBoolean()){
+                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba:+" +
+                        "booleano; se encontro: "+left.getType());
+            }else{
+                throw new RuntimeException("<linea:col> Error semantico: tipos de datos incompatibles. Se esperaba:+" +
+                        "booleano; se encontro: "+right.getType());
+            }
+        }
+        return new Value(left.asBoolean() || right.asBoolean());
+    }
+
+
+    @Override
+    public Value visitRelationalExp(PsycoderParser.RelationalExpContext ctx) {
+        Value left = this.visit(ctx.expression_addition(0));
+        Value right = this.visit(ctx.expression_addition(1));
+        switch (ctx.op.getType()) {
+            case PsycoderParser.GT:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() > right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() > right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() > right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() > right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) > right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() > (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() > (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) > right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) > (int)right.toString().charAt(0));
+                }else {
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
+                }
+            case PsycoderParser.GTEQ:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() >= right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() >= right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() >= right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() >= right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) >= right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() >= (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() >= (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) >= right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) >= (int)right.toString().charAt(0));
+                }else {
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
+                }
+            case PsycoderParser.LT:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() < right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() < right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() < right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() < right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) < right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() < (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() < (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) < right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) < (int)right.toString().charAt(0));
+                }else {
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
+                }
+            case PsycoderParser.LTEQ:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble() <= right.asDouble());
+                }else if(left.isDouble() && right.isInteger()){
+                    return new Value(left.asDouble() <= right.asInteger());
+                }else if(left.isInteger() && right.isDouble()){
+                    return new Value(left.asInteger() <= right.asDouble());
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger() <= right.asInteger());
+                }else if(left.isCharacter() && right.isDouble()){
+                    return new Value((int)left.toString().charAt(0) <= right.asDouble());
+                }else if(left.isDouble() && right.isCharacter()){
+                    return new Value(left.asDouble() <= (int)right.toString().charAt(0));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() <= (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) <= right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) <= (int)right.toString().charAt(0));
+                }else {
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
+                }
+            default:
+                throw new RuntimeException("Operador desconosido: " +ctx.op.getText());
+        }
+    }
+
+    @Override
+    public Value visitEqualitylExp(PsycoderParser.EqualitylExpContext ctx) {
+        Value left = this.visit(ctx.expression_addition(0));
+        Value right = this.visit(ctx.expression_addition(1));
+        switch (ctx.op.getType()) {
+            case PsycoderParser.EQ:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(left.asDouble().equals(right.asDouble()));
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(left.asInteger().equals(right.asInteger()));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() == (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) == right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) == (int)right.toString().charAt(0));
+                }else if(left.isBoolean() && right.isBoolean()){
+                    return new Value(left.asBoolean().equals(right.asBoolean()));
+                }else {
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
+                }
+            case PsycoderParser.NEQ:
+                if(left.isDouble() && right.isDouble()){
+                    return new Value(!left.asDouble().equals(right.asDouble()));
+                }else if(left.isInteger() && right.isInteger()){
+                    return new Value(!left.asInteger().equals(right.asInteger()));
+                }else if(left.isInteger() && right.isCharacter()){
+                    return new Value(left.asInteger() != (int)right.toString().charAt(0));
+                }else if(left.isCharacter() && right.isInteger()){
+                    return new Value((int)left.toString().charAt(0) != right.asInteger());
+                }else if(left.isCharacter() && right.isCharacter()){
+                    return new Value((int)left.toString().charAt(0) != (int)right.toString().charAt(0));
+                }else if(left.isBoolean() && right.isBoolean()){
+                    return new Value(!left.asBoolean().equals(right.asBoolean()));
+                }else {
+                    throw new RuntimeException("<line:col> Error semantico: expresion relacional mal formada.");
+                }
+            default:
+                throw new RuntimeException("unknown operator: " +ctx.op.getText());
+        }
     }
 }

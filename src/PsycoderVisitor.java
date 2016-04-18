@@ -194,26 +194,19 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCmp_declaration(PsycoderParser.Cmp_declarationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code multiplicationExp}
+	 * Visit a parse tree produced by the {@code assigbool}
 	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx);
+	T visitAssigbool(PsycoderParser.AssigboolContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code andExp}
+	 * Visit a parse tree produced by the {@code assiadd}
 	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAndExp(PsycoderParser.AndExpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code equalityExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEqualityExp(PsycoderParser.EqualityExpContext ctx);
+	T visitAssiadd(PsycoderParser.AssiaddContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code functionDotOpExp}
 	 * labeled alternative in {@link PsycoderParser#expression}.
@@ -229,33 +222,12 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrimaryExp(PsycoderParser.PrimaryExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code negExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNegExp(PsycoderParser.NegExpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code relationalExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRelationalExp(PsycoderParser.RelationalExpContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code orExp}
 	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitOrExp(PsycoderParser.OrExpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code additionExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAdditionExp(PsycoderParser.AdditionExpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code assigExp}
 	 * labeled alternative in {@link PsycoderParser#expression}.
@@ -271,6 +243,83 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunctionExp(PsycoderParser.FunctionExpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code andExp}
+	 * labeled alternative in {@link PsycoderParser#expression_bool}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAndExp(PsycoderParser.AndExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code otherandexp}
+	 * labeled alternative in {@link PsycoderParser#expression_bool}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOtherandexp(PsycoderParser.OtherandexpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code equalitylExp}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualitylExp(PsycoderParser.EqualitylExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code relationalExp}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelationalExp(PsycoderParser.RelationalExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code negExp}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegExp(PsycoderParser.NegExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code terminal_bool}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTerminal_bool(PsycoderParser.Terminal_boolContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NegativeExp}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegativeExp(PsycoderParser.NegativeExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code additionExp}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAdditionExp(PsycoderParser.AdditionExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code otherop}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOtherop(PsycoderParser.OtheropContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code multiplicationExp}
+	 * labeled alternative in {@link PsycoderParser#expression_product}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code otherexp}
+	 * labeled alternative in {@link PsycoderParser#expression_product}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOtherexp(PsycoderParser.OtherexpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code parenPriExp}
 	 * labeled alternative in {@link PsycoderParser#primary}.
 	 * @param ctx the parse tree
@@ -284,6 +333,20 @@ public interface PsycoderVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code neg_entero_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code neg_real_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PsycoderParser#function_call}.
 	 * @param ctx the parse tree

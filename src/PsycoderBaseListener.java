@@ -375,37 +375,25 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx) { }
+	@Override public void enterAssigbool(PsycoderParser.AssigboolContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx) { }
+	@Override public void exitAssigbool(PsycoderParser.AssigboolContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAndExp(PsycoderParser.AndExpContext ctx) { }
+	@Override public void enterAssiadd(PsycoderParser.AssiaddContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAndExp(PsycoderParser.AndExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEqualityExp(PsycoderParser.EqualityExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEqualityExp(PsycoderParser.EqualityExpContext ctx) { }
+	@Override public void exitAssiadd(PsycoderParser.AssiaddContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -435,30 +423,6 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNegExp(PsycoderParser.NegExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNegExp(PsycoderParser.NegExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRelationalExp(PsycoderParser.RelationalExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRelationalExp(PsycoderParser.RelationalExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterOrExp(PsycoderParser.OrExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -466,18 +430,6 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitOrExp(PsycoderParser.OrExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAdditionExp(PsycoderParser.AdditionExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAdditionExp(PsycoderParser.AdditionExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -507,6 +459,138 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAndExp(PsycoderParser.AndExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAndExp(PsycoderParser.AndExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOtherandexp(PsycoderParser.OtherandexpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOtherandexp(PsycoderParser.OtherandexpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEqualitylExp(PsycoderParser.EqualitylExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqualitylExp(PsycoderParser.EqualitylExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRelationalExp(PsycoderParser.RelationalExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelationalExp(PsycoderParser.RelationalExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNegExp(PsycoderParser.NegExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNegExp(PsycoderParser.NegExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTerminal_bool(PsycoderParser.Terminal_boolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTerminal_bool(PsycoderParser.Terminal_boolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNegativeExp(PsycoderParser.NegativeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNegativeExp(PsycoderParser.NegativeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAdditionExp(PsycoderParser.AdditionExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAdditionExp(PsycoderParser.AdditionExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOtherop(PsycoderParser.OtheropContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOtherop(PsycoderParser.OtheropContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOtherexp(PsycoderParser.OtherexpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOtherexp(PsycoderParser.OtherexpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterParenPriExp(PsycoderParser.ParenPriExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -526,6 +610,30 @@ public class PsycoderBaseListener implements PsycoderListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

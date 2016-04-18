@@ -9,9 +9,17 @@ public class Value {
     public static char CHAR = ' ';
     public static boolean BOOLEAN = false;
 
+    public static Value REALDESP = new Value(0.0000000000000001);
+
     private Object value;
 
     public Value(Object value) {
+        if(value instanceof Integer){
+            checkRangeInt(Integer.valueOf(value.toString()));
+        }
+        if(value instanceof Double){
+            checkRangeDouble(Double.valueOf(value.toString()));
+        }
         this.setValue(value);
     }
 
@@ -26,7 +34,10 @@ public class Value {
     public String asString() {
         return String.valueOf(getValue());
     }
-    public Integer asInteger() { return (Integer) getValue(); }
+
+    public Integer asInteger() {
+        return (Integer) getValue();
+    }
 
     public Struct asStruct() {
         return (Struct) getValue();
@@ -65,7 +76,7 @@ public class Value {
         }else if (this.isStruct()){
             Struct temp = (Struct) this.getValue();
             return temp.toString();
-        }else{
+        }else {
             return "NONE";
         }
     }
@@ -108,7 +119,6 @@ public class Value {
 
         return String.valueOf(getValue());
     }
-
     public void setValue(Object value) {
         if(value.toString().equals("falso"))
             this.value = false;
@@ -120,5 +130,12 @@ public class Value {
 
     public Object getValue() {
         return value;
+    }
+
+    public void checkRangeInt(Integer a){
+        if(a < -2147483648 || a > 2147483647) throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
+    }
+    public void checkRangeDouble(Double a){
+        if(a < -2147483648 || a > 2147483647) throw new RuntimeException("<line> Error semantico: variable por fuera de su rango valido.");
     }
 }

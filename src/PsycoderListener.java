@@ -315,41 +315,29 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitCmp_declaration(PsycoderParser.Cmp_declarationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code multiplicationExp}
+	 * Enter a parse tree produced by the {@code assigbool}
 	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx);
+	void enterAssigbool(PsycoderParser.AssigboolContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code multiplicationExp}
+	 * Exit a parse tree produced by the {@code assigbool}
 	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx);
+	void exitAssigbool(PsycoderParser.AssigboolContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code andExp}
+	 * Enter a parse tree produced by the {@code assiadd}
 	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterAndExp(PsycoderParser.AndExpContext ctx);
+	void enterAssiadd(PsycoderParser.AssiaddContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code andExp}
+	 * Exit a parse tree produced by the {@code assiadd}
 	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitAndExp(PsycoderParser.AndExpContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code equalityExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterEqualityExp(PsycoderParser.EqualityExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code equalityExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitEqualityExp(PsycoderParser.EqualityExpContext ctx);
+	void exitAssiadd(PsycoderParser.AssiaddContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code functionDotOpExp}
 	 * labeled alternative in {@link PsycoderParser#expression}.
@@ -375,30 +363,6 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitPrimaryExp(PsycoderParser.PrimaryExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code negExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterNegExp(PsycoderParser.NegExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code negExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitNegExp(PsycoderParser.NegExpContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code relationalExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterRelationalExp(PsycoderParser.RelationalExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code relationalExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitRelationalExp(PsycoderParser.RelationalExpContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code orExp}
 	 * labeled alternative in {@link PsycoderParser#expression}.
 	 * @param ctx the parse tree
@@ -410,18 +374,6 @@ public interface PsycoderListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOrExp(PsycoderParser.OrExpContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code additionExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterAdditionExp(PsycoderParser.AdditionExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code additionExp}
-	 * labeled alternative in {@link PsycoderParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitAdditionExp(PsycoderParser.AdditionExpContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code assigExp}
 	 * labeled alternative in {@link PsycoderParser#expression}.
@@ -447,6 +399,138 @@ public interface PsycoderListener extends ParseTreeListener {
 	 */
 	void exitFunctionExp(PsycoderParser.FunctionExpContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code andExp}
+	 * labeled alternative in {@link PsycoderParser#expression_bool}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndExp(PsycoderParser.AndExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code andExp}
+	 * labeled alternative in {@link PsycoderParser#expression_bool}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndExp(PsycoderParser.AndExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code otherandexp}
+	 * labeled alternative in {@link PsycoderParser#expression_bool}.
+	 * @param ctx the parse tree
+	 */
+	void enterOtherandexp(PsycoderParser.OtherandexpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code otherandexp}
+	 * labeled alternative in {@link PsycoderParser#expression_bool}.
+	 * @param ctx the parse tree
+	 */
+	void exitOtherandexp(PsycoderParser.OtherandexpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code equalitylExp}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualitylExp(PsycoderParser.EqualitylExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code equalitylExp}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualitylExp(PsycoderParser.EqualitylExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code relationalExp}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelationalExp(PsycoderParser.RelationalExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code relationalExp}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelationalExp(PsycoderParser.RelationalExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code negExp}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 */
+	void enterNegExp(PsycoderParser.NegExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code negExp}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 */
+	void exitNegExp(PsycoderParser.NegExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code terminal_bool}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 */
+	void enterTerminal_bool(PsycoderParser.Terminal_boolContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code terminal_bool}
+	 * labeled alternative in {@link PsycoderParser#expression_rel}.
+	 * @param ctx the parse tree
+	 */
+	void exitTerminal_bool(PsycoderParser.Terminal_boolContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NegativeExp}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 */
+	void enterNegativeExp(PsycoderParser.NegativeExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NegativeExp}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 */
+	void exitNegativeExp(PsycoderParser.NegativeExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code additionExp}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdditionExp(PsycoderParser.AdditionExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code additionExp}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdditionExp(PsycoderParser.AdditionExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code otherop}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 */
+	void enterOtherop(PsycoderParser.OtheropContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code otherop}
+	 * labeled alternative in {@link PsycoderParser#expression_addition}.
+	 * @param ctx the parse tree
+	 */
+	void exitOtherop(PsycoderParser.OtheropContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code multiplicationExp}
+	 * labeled alternative in {@link PsycoderParser#expression_product}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code multiplicationExp}
+	 * labeled alternative in {@link PsycoderParser#expression_product}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplicationExp(PsycoderParser.MultiplicationExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code otherexp}
+	 * labeled alternative in {@link PsycoderParser#expression_product}.
+	 * @param ctx the parse tree
+	 */
+	void enterOtherexp(PsycoderParser.OtherexpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code otherexp}
+	 * labeled alternative in {@link PsycoderParser#expression_product}.
+	 * @param ctx the parse tree
+	 */
+	void exitOtherexp(PsycoderParser.OtherexpContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code parenPriExp}
 	 * labeled alternative in {@link PsycoderParser#primary}.
 	 * @param ctx the parse tree
@@ -470,6 +554,30 @@ public interface PsycoderListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTerminalPriExp(PsycoderParser.TerminalPriExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code neg_entero_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code neg_entero_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeg_entero_terminal(PsycoderParser.Neg_entero_terminalContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code neg_real_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code neg_real_terminal}
+	 * labeled alternative in {@link PsycoderParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeg_real_terminal(PsycoderParser.Neg_real_terminalContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PsycoderParser#function_call}.
 	 * @param ctx the parse tree

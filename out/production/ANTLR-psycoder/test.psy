@@ -1,24 +1,59 @@
+funcion_principal
+ entero a = 1, b=2, c;
+ b = a = 2;
+ imprimir(a,b- - 1,c);
+fin_principal
+/*
 
 funcion_principal
-    booleano a = verdadero;
-    entero i = 0;
-    leer(i);
-    String bol;
-    imprimir(i);
-    a = falso;
-    //a = verdadero;
-    caracter b = '1';
-    cadena d = "123456789";
-    b = '2';
-    a = falso;
-    imprimir(a, b, d);
-    cadena s = "HOLA";
-    imprimir(s,89,"QUE\n PASO ",a);
-    bol = 1;
-    imprimir("SOY",bol);
+    booleano a = falso;
+    imprimir(!(verdadero && verdadero));
+    imprimir(verdadero && falso);
+    imprimir(falso && verdadero);
+    imprimir(falso && falso);
+    imprimir(verdadero || verdadero);
+    imprimir(verdadero || falso);
+    imprimir(falso || verdadero);
+    imprimir(falso || falso);
+    imprimir(verdadero && verdadero);
+    imprimir(a && a);
+    imprimir(!a && !a);
+    imprimir(!a && a);
 fin_principal
 
-/*
+funcion_principal
+    imprimir("Suma real + entero",1+2.14);
+    imprimir("Suma caracter + entero",'a'+2);
+    imprimir("Suma real + real",1.0+2.14);
+    imprimir("Suma caracter + real",'a'+2.14);
+    imprimir("-----------------------------");
+    imprimir("Resta real + entero",1-2.14);
+    imprimir("Resta caracter + entero",'a'-2);
+    imprimir("Resta real + real",1.0-(-2.14));
+    imprimir("Reasta caracter + real",'a'-2.14);
+    imprimir("-----------------------------");
+    imprimir("Mult real + entero",1*2.14);
+    imprimir("Mult caracter + entero",'a'*2);
+    imprimir("Mult real + real",1.0*2.14);
+    imprimir("Mult caracter + real",'a'*2.14);
+    imprimir("-----------------------------");
+    imprimir("Div real + entero",1/2.14);
+    imprimir("Div caracter + entero",'a'/2);
+    imprimir("Div real + real",1.0/2.14);
+    imprimir("Div caracter + real",'a'/2.14);
+    imprimir("-----------------------------");
+    imprimir("Mod real + entero",1%2.14);
+    imprimir("Mod caracter + entero",'a'%2);
+    imprimir("Mod real + real",1.0%2.14);
+    imprimir("Mod caracter + real",'a'%2.14);
+    imprimir("-----------------------------");
+    imprimir("Negacion V",!verdadero);
+    imprimir("Negacion F",!verdadero);
+
+
+fin_principal
+
+
 funcion_principal
 seleccionar(i) entre
     caso 1: imprimir("1");
